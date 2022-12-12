@@ -79,7 +79,7 @@
 1. 下载kubesphere-ingress.yaml
 
     ```bash
-    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashborad/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
+    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
     ```
 2. 编辑 kubesphere-ingress.yaml,调整域名:example.com 为您拥有域名
 3. 部署 kubesphere ingress
@@ -105,7 +105,9 @@
     $ <copy> sudo vi /etc/hosts</copy> 
     141.147.172.67  oke-kubesphere.example.com
     ```
+
 2. 浏览器访问 Kubesphere 验证
+
     在浏览器中打开链接<http://your-ingress>
     例如： <http://oke-kubesphere.example.com>
     输入初始用户名和密码，并登录
