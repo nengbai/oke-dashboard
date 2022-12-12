@@ -109,8 +109,13 @@
 2. 浏览器访问 Kubesphere 验证
 
     在浏览器中打开链接<http://your-ingress>
+
     例如： <http://oke-kubesphere.example.com>
+
     输入初始用户名和密码，并登录
+
         用户名： admin
+
         密码： P@88w0rd
+        
     第一次登录需要修改新密码。
