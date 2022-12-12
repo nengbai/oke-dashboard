@@ -3,7 +3,7 @@
 ## $1. KubeSphere系统要求
 
 1. KubeSphere 3.3 要求Kubernetes version 满足 v1.19.x, v1.20.x, v1.21.x, *v1.22.x,*v1.23.x, and * v1.24.x. 最优选择是 Kubernetes v1.21.x 或更高版本。
- ```bash
+    ```bash
     $ <copy>kubectl version </copy>
     Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:36:36Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/amd64"}
     Kustomize Version: v4.5.7
