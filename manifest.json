@@ -3,19 +3,19 @@
     "tutorials": [
         {
             "title": "OKE Metrics Services配置",
-            "filename": "/docs/oke-metrics.md" 
+            "filename": "./docs/oke-metrics.md" 
         },
         {           
             "title": "OKE Dashboard配置",
-            "filename": "/docs/oke-dashboard.md"
+            "filename": "./docs/oke-dashboard.md"
         },
         {           
             "title": "OKE KubeSphere配置",
-            "filename": "/docs/oke-kubesphere.md"
+            "filename": "./docs/oke-kubesphere.md"
         },
         {           
             "title": "OKE Kubeboard配置",
-            "filename": "/docs/oke-kubeboard.md"
+            "filename": "./docs/oke-kubeboard.md"
         }
     ]
 }
