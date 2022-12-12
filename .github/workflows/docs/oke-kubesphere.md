@@ -1,63 +1,52 @@
 # KubeSphere on Oracle OKE
 
-This guide walks you through the steps of deploying KubeSphere on Oracle Kubernetes Engine.
-Create a Kubernetes Cluster
+## $1. KubeSphere系统要求
 
-    A standard Kubernetes cluster in OKE is a prerequisite of installing KubeSphere. Go to the navigation menu and refer to the image below to create a cluster.
+1、KubeSphere 3.3 要求Kubernetes version 满足 v1.19.x, v1.20.x, v1.21.x, *v1.22.x,*v1.23.x, and * v1.24.x. 最优选择是 Kubernetes v1.21.x 或更高版本。
 
-    oke-cluster
+    ```bash
+    $ <copy>kubectl version </copy>
+    Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:36:36Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/amd64"}
+    Kustomize Version: v4.5.7
+    Server Version: version.Info{Major:"1", Minor:"24", GitVersion:"v1.24.1", GitCommit:"b13b16197b0e07f78f7ced71255ce69516fdd9e6", GitTreeState:"clean", BuildDate:"2022-05-30T10:16:45Z", GoVersion:"go1.18.2 BoringCrypto", Compiler:"gc", Platform:"linux/amd64"}
+    ```
 
-    In the pop-up window, select Quick Create and click Launch Workflow.
+2、可用资源 CPU > 1 Core 和 Memory > 2 G. x86_64 CPUs are supported, 当前不支持Arm CPUs。
 
-    oke-quickcreate
+    ```bash
+    $ <copy> kubectl get nodes </copy>
+    NAME         STATUS   ROLES   AGE   VERSION
+    10.0.10.12   Ready    node    55d   v1.24.1
+    10.0.10.68   Ready    node    55d   v1.24.1
+    10.0.10.73   Ready    node    55d   v1.24.1
+    ```
 
-    Note
-    In this example, Quick Create is used for demonstration which will automatically create all the resources necessary for a cluster in Oracle Cloud. If you select Custom Create, you need to create all the resources (such as VCN and LB Subnets) by yourself.
+3、Kubernetes cluster有 default StorageClass。
 
-    Next, you need to set the cluster with basic information. Here is an example for your reference. When you finish, click Next.
+    ```bash
+    $ <copy> kubectl get sc </copy>
+    NAME              PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    oci               oracle.com/oci         Delete          Immediate               false                 55d
+    oci-bv (default)  blockvolume.csi.oraclecloud.com   Delete  WaitForFirstConsumer   true                55d
+    ```
 
-    set-basic-info
+## $2. 安装 KubeSphere on OKE
 
-    Note
-        To install KubeSphere 3.3 on Kubernetes, your Kubernetes version must be v1.19.x, v1.20.x, v1.21.x, * v1.22.x, * v1.23.x, and * v1.24.x. For Kubernetes versions with an asterisk, some features of edge nodes may be unavailable due to incompatability. Therefore, if you want to use edge nodes, you are advised to install Kubernetes v1.21.x or earlier.
-        It is recommended that you should select Public for Visibility Type, which will assign a public IP address for every node. The IP address can be used later to access the web console of KubeSphere.
-        In Oracle Cloud, a Shape is a template that determines the number of CPUs, amount of memory, and other resources that are allocated to an instance. VM.Standard.E2.2 (2 CPUs and 16G Memory) is used in this example. For more information, see Standard Shapes.
-        3 nodes are included in this example. You can add more nodes based on your own needs especially in a production environment.
+1、安装 KubeSphere install初始化
+   注意：下面<v3.3.1>需要根据OKE版本要求替换成对应版本，参见$1. KubeSphere系统要求.
 
-    Review cluster information and click Create Cluster if no adjustment is needed.
+    ```bash
+    $ <copy> kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml </copy>
+    ```
 
-    create-cluster
-
-    After the cluster is created, click Close.
-
-    cluster-ready
-
-    Make sure the Cluster Status is Active and click Access Cluster.
-
-    access-cluster
-
-    In the pop-up window, select Cloud Shell Access to access the cluster. Click Launch Cloud Shell and copy the code provided by Oracle Cloud.
-
-    cloud-shell-access
-
-    In Cloud Shell, paste the command so that we can execute the installation command later.
-
-    cloud-shell-oke
-
-    Warning
-    If you do not copy and execute the command above, you cannot proceed with the steps below.
-
-Install KubeSphere on OKE
-
-    Install KubeSphere using kubectl. The following commands are only for the default minimal installation.
-
-    kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml
+2、部署 KubeSphere
 
     kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/cluster-configuration.yaml
 
-    Inspect the logs of installation:
+3、监控 KubeSphere状态
 
-    kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app in (ks-install, ks-installer)' -o jsonpath='{.items[0].metadata.name}') -f
+    ```bash
+    $ <copy>kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app in (ks-install, ks-installer)' -o jsonpath='{.items[0].metadata.name}') -f </copy>
 
     When the installation finishes, you can see the following message:
 
@@ -65,7 +54,7 @@ Install KubeSphere on OKE
     ###              Welcome to KubeSphere!           ###
     #####################################################
 
-    Console: http://10.0.10.2:30880
+    Console: <http://10.0.10.12:30880>
     Account: admin
     Password: P@88w0rd
 
@@ -80,53 +69,47 @@ Install KubeSphere on OKE
     #####################################################
     https://kubesphere.io             20xx-xx-xx xx:xx:xx
 
-Access KubeSphere Console
-
-Now that KubeSphere is installed, you can access the web console of KubeSphere either through NodePort or LoadBalancer.
-
-    Check the service of KubeSphere console through the following command:
+    Access KubeSphere Console
+    ```
+4、检查 KubeSphere svc状态
 
     kubectl get svc -n kubesphere-system
 
-    The output may look as below. You can change the type to LoadBalancer so that the external IP address can be exposed.
+## $3. 部署 KubeSphere Ingress
 
-    console-nodeport
+1、下载kubesphere-ingress.yaml
 
-    Tip
-    It can be seen above that the service ks-console is being exposed through a NodePort, which means you can access the console directly via NodeIP:NodePort (the public IP address of any node is applicable). You may need to open port 30880 in firewall rules.
+    ```bash
+    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashborad/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
+    ```
+2、编辑 kubesphere-ingress.yaml,调整域名:example.com 为您拥有域名
+3、部署 kubesphere ingress
 
-    Execute the command to edit the service configuration.
+    ```bash
+    $ <copy> kubectl apply -f kubesphere-ingress.yaml </copy> 
+    ingress.networking.k8s.io/oke-kubesphere-ingress created
+    ```
+3、检查Ingress状态
 
-    kubectl edit svc ks-console -o yaml -n kubesphere-system
+    ```bash 
+    $ <copy> kubectl -n kubesphere-sys get ing </copy> 
+    NAME                     CLASS   HOSTS                        ADDRESS             PORTS      AGE
+    oke-kubesphere-ingress   nginx   oke-kubesphere.example.com   141.147.172.67        80       2m44s
+    ```
 
-    Navigate to type and change NodePort to LoadBalancer. Save the configuration after you finish.
+## $3. 验证
 
-    change-svc-type
+1、增加域名解释
+长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac中增加域名解释为例。
 
-    Execute the following command again and you can see the IP address displayed as below.
-
-    kubectl get svc -n kubesphere-system
-
-    console-service
-
-    Log in to the console through the external IP address with the default account and password (admin/P@88w0rd). In the cluster overview page, you can see the dashboard.
-**************************************************
-Collecting installation results ...
-#####################################################
-###              Welcome to KubeSphere!           ###
-#####################################################
-
-Console: http://10.0.10.12:30880
-Account: admin
-Password: P@88w0rd
-NOTES：
-  1. After you log into the console, please check the
-     monitoring status of service components in
-     "Cluster Management". If any service is not
-     ready, please wait patiently until all components 
-     are up and running.
-  2. Please change the default password after login.
-
-#####################################################
-https://kubesphere.io             2022-12-12 09:07:53
-#####################################################
+    ```bash
+    $ <copy> sudo vi /etc/hosts</copy> 
+    141.147.172.67  oke-kubesphere.example.com
+    ```
+2、浏览器访问 Kubesphere 验证
+    在浏览器中打开链接<http://your-ingress>
+    例如： <http://oke-kubesphere.example.com>
+    输入初始用户名和密码，并登录
+        用户名： admin
+        密码： P@88w0rd
+    第一次登录需要修改新密码。
