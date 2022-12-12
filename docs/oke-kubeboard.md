@@ -5,7 +5,6 @@
 ### $1.1、选择3个OKE Worker增加role标识etcd
 
 1、获取节点信息
-
     ```bash
     $ <copy> kubectl get nodes </copy>
     ```
