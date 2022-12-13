@@ -3,6 +3,7 @@
 ## 1. KubeSphere系统要求
 
 1. KubeSphere 3.3 要求Kubernetes version 满足 v1.19.x, v1.20.x, v1.21.x, *v1.22.x,*v1.23.x, and * v1.24.x. 最优选择是 Kubernetes v1.21.x 或更高版本。
+
     ```bash
     $ <copy>kubectl version </copy>
     Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:36:36Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/amd64"}
@@ -35,12 +36,12 @@
    注意：下面<v3.3.1>需要根据OKE版本要求替换成对应版本，参见$1. KubeSphere系统要求.
 
     ```bash
-    $ <copy> kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml </copy>
+    <copy> kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml </copy>
     ```
 
 2. 部署 KubeSphere
 
-    kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/cluster-configuration.yaml
+    kubectl apply -f <https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/cluster-configuration.yaml>
 
 3. 监控 KubeSphere状态
 
@@ -70,6 +71,7 @@
 
     Access KubeSphere Console
     ```
+
 4. 检查 KubeSphere svc状态
 
     kubectl get svc -n kubesphere-system
@@ -79,8 +81,9 @@
 1. 下载kubesphere-ingress.yaml
 
     ```bash
-    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
+    <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
     ```
+
 2. 编辑 kubesphere-ingress.yaml,调整域名:example.com 为您拥有域名
 3. 部署 kubesphere ingress
 
@@ -88,9 +91,10 @@
     $ <copy> kubectl apply -f kubesphere-ingress.yaml </copy> 
     ingress.networking.k8s.io/oke-kubesphere-ingress created
     ```
+
 4. 检查Ingress状态
 
-    ```bash 
+    ```bash
     $ <copy> kubectl -n kubesphere-sys get ing </copy> 
     NAME                     CLASS   HOSTS                        ADDRESS             PORTS      AGE
     oke-kubesphere-ingress   nginx   oke-kubesphere.example.com   141.147.172.67        80       2m44s
@@ -101,19 +105,17 @@
 1. 增加域名解释
 长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac中增加域名解释为例。
 
-```bash
-$ <copy> sudo vi /etc/hosts</copy> 
-141.147.172.67  oke-kubesphere.example.com
-```
+    ```bash
+    $ <copy> sudo vi /etc/hosts</copy> 
+    141.147.172.67  oke-kubesphere.example.com
+    ```
 
 2. 浏览器访问 Kubesphere 验证
 
-在浏览器中打开链接<http://your-ingress>
-<br> 例如： <http://oke-kubesphere.example.com> 输入初始用户名和密码，并登录</br>
-<br>第一次登录需要修改新密码。</br>
+在浏览器中打开链接<http://your-ingress> </br>
+例如： <http://oke-kubesphere.example.com> 输入初始用户名和密码，并登录</br>
+注意：第一次登录需要修改新密码。</br>
 
-｜ 用户名｜密码｜
+｜ 用户名｜缺省密码｜
 ｜:-----|:---|
 ｜ admin｜P@88w0rd｜
-
-    
