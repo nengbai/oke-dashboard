@@ -2,15 +2,15 @@
 
 ## 1. Mestrics Server概述
 
-Kubernetes v1.8开始，使用Metrics API的形式获取，对资源监控（例如Pods CPU和内存使用率)。集群中的控制器通过Metrics Server监控进行决策，实现弹性伸缩(例如，Horizontal Pod Autoscaler，)。OKE 完全兼容Metrics Server，可以使用这个组件监控。
+   Kubernetes v1.8开始，使用Metrics API的形式获取，对资源监控（例如Pods CPU和内存使用率)。集群中的控制器通过Metrics Server监控进行决策，实现弹性伸缩(例如，Horizontal Pod Autoscaler，)。OKE 完全兼容Metrics Server，可以使用这个组件监控。
 
-项目地址：<https://github.com/kubernetes-sigs/metrics-server>
-需要注意：
+   项目地址：<https://github.com/kubernetes-sigs/metrics-server>
+   需要注意：
 
-* metric-server提供实时指标.
-* 每个节点实时数据是由该节点上的cadvisor采集，metric-server只是发请求给cadvisor并将metric格式的数据转换成。
-* aggregate api
-  aggregate api提供接口其它组件调用（kube-scheduler、HorizontalPodAutoscaler、Kubernetes集群客户端等），可获取集群监控数据。
+  * metric-server提供实时指标.
+  * 每个节点实时数据是由该节点上的cadvisor采集，metric-server只是发请求给cadvisor并将metric格式的数据转换成。
+  * aggregate api
+    aggregate api提供接口其它组件调用（kube-scheduler、HorizontalPodAutoscaler、Kubernetes集群客户端等），可获取集群监控数据。
 
 ## 2. OKE Metrics Serve部署
 
