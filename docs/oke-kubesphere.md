@@ -99,12 +99,12 @@
 ## 4. 验证
 
 1. 增加域名解释
-   长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac中增加域名解释为例。
+长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac中增加域名解释为例。
 
-    ```bash
-    $ <copy> sudo vi /etc/hosts</copy> 
-    141.147.172.67  oke-kubesphere.example.com
-    ```
+```bash
+$ <copy> sudo vi /etc/hosts</copy> 
+141.147.172.67  oke-kubesphere.example.com
+```
 
 2. 浏览器访问 Kubesphere 验证
 
