@@ -1,6 +1,6 @@
 # KubeSphere on Oracle OKE
 
-## $1. KubeSphere系统要求
+## 1. KubeSphere系统要求
 
 1. KubeSphere 3.3 要求Kubernetes version 满足 v1.19.x, v1.20.x, v1.21.x, *v1.22.x,*v1.23.x, and * v1.24.x. 最优选择是 Kubernetes v1.21.x 或更高版本。
     ```bash
@@ -29,7 +29,7 @@
     oci-bv (default)  blockvolume.csi.oraclecloud.com   Delete  WaitForFirstConsumer   true                55d
     ```
 
-## $2. 安装 KubeSphere on OKE
+## 2. 安装 KubeSphere on OKE
 
 1. 安装 KubeSphere install初始化
    注意：下面<v3.3.1>需要根据OKE版本要求替换成对应版本，参见$1. KubeSphere系统要求.
@@ -74,7 +74,7 @@
 
     kubectl get svc -n kubesphere-system
 
-## $3. 部署 KubeSphere Ingress
+## 3. 部署 KubeSphere Ingress
 
 1. 下载kubesphere-ingress.yaml
 
@@ -96,7 +96,7 @@
     oke-kubesphere-ingress   nginx   oke-kubesphere.example.com   141.147.172.67        80       2m44s
     ```
 
-## $3. 验证
+## 4. 验证
 
 1. 增加域名解释
    长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac中增加域名解释为例。
@@ -110,7 +110,7 @@
 
     在浏览器中打开链接<http://your-ingress>
     <br> 例如： <http://oke-kubesphere.example.com> 输入初始用户名和密码，并登录</br>
-    
+
         ｜ 用户名｜密码｜
         | :-----|:--- -|
         ｜ admin｜P@88w0rd｜

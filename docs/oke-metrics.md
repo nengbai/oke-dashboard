@@ -1,6 +1,6 @@
 # OKE Kubernetes核心指标监控——Metrics Server
 
-## $1. Mestrics Server概述
+## 1. Mestrics Server概述
 
 Kubernetes v1.8开始，使用Metrics API的形式获取，对资源监控（例如Pods CPU和内存使用率)。集群中的控制器通过Metrics Server监控进行决策，实现弹性伸缩(例如，Horizontal Pod Autoscaler，)。OKE 完全兼容Metrics Server，可以使用这个组件监控。
 
@@ -12,9 +12,9 @@ Kubernetes v1.8开始，使用Metrics API的形式获取，对资源监控（例
 * aggregate api
   aggregate api提供接口其它组件调用（kube-scheduler、HorizontalPodAutoscaler、Kubernetes集群客户端等），可获取集群监控数据。
 
-## $2. OKE Metrics Serve部署
+## 2. OKE Metrics Serve部署
 
-### $2.1 部署Metrics Server
+### 2.1 部署Metrics Server
 
 1、下载对应的稳定版本，目前稳定版本是v0.5.2：
 参照<https://github.com/kubernetes-sigs/metrics-server> 中Compatibility Matrix对应信息.
@@ -235,7 +235,7 @@ spec:
   apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
   ```
 
-### $2.2 验证Metrics Server组件部署成功
+### 2.2 验证Metrics Server
 
 1、检查 apiserver是否有 metrics.k8s.io/v1beta1
 
@@ -274,19 +274,19 @@ Error from server (ServiceUnavailable): the server is currently unable to handle
 
 可以看到kubectl top命令可以正常执行，说明metrics server 部署成功没有问题。
 
-## $3. Metrics Serve 原理
+## 3. Metrics Serve 原理
 
 Metrics Serve从 Kubelet Summary API(类似/ap1/v1/nodes/nodename/stats/summary)采集指标信息，然后聚合，聚合数据将存储在内存中，且以metric-api的形式暴露对外提供访问。Metrics server复用api-server的库来实现自己的功能，比如鉴权、版本等。
 因为存放在内存中，因此监控数据是没有持久化的，可以通过第三方存储来拓展。
 Metrics-Server架构：
 从Kubelet、cAdvisor获取度量数据，再由Metric Server提供给Dashboard、HPA控制器等使用. Metrics Server相当于做了一次数据的转换，把cadvisor格式的数据转换成了kubernetes的api的json格式.
 
-## $4. Metrics Serve 如何获取监控数据
+## 4. Metrics Serve 如何获取监控数据
 
 Metrics-Server通过kubelet获取监控数据。kubernetes 1.7版本之前，在每个节点都安装了一个叫做cAdvisor的程序，负责获取节点和容器的CPU，内存等数据; 1.7版本及之后，将cAdvisor精简化内置于kubelet中，可直接从kubelet中获取数据。
 
 通过访问Metrics-Server的方式，HPA，kubectl top等对象就可以正常工作了。
 
-## $5. 总结
+## 5. 总结
 
 OKE的监控体系:Metrics-server属于Core metrics(核心指标)，提供API metrics.k8s.io，仅提供Node和Pod的CPU和内存使用情况。而其他Custom Metrics(自定义指标)由Prometheus等组件来完成。
