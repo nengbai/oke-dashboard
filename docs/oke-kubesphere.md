@@ -1,4 +1,5 @@
 # KubeSphere on Oracle OKE
+KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及监控，告警为一体开源的云原生产品，推荐优先选用。
 
 ## 1. KubeSphere系统要求
 
