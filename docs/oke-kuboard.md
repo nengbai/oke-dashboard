@@ -115,6 +115,10 @@
 
 ### 2.4 Kuboard增加Ingress
 
+前提是: 已经在OKE集群中部署OKE Ingress控制器,如果没有准备好OKE Ingress控制器，请参照下面link部署：</br>
+<https://minqiaowang.github.io/oci-k8s-cn/workshops/freetier/?lab=deploy-complex-app#Task1:OKEIngress>
+
+
 1. 编辑kuboard-ingress.yaml,调整域名:example.com 为您拥有域名
 2. 执行kuboard-ingress.yaml
 

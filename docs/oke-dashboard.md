@@ -81,7 +81,7 @@ example:
 
 3. 网页验证
 
-在您本地终端电脑上(与第6步骤执行同一台电脑)，用浏览器(firefox or chrome)中打开下面网址
+在您本地终端电脑上(与上面2步骤执行同一台电脑)，用浏览器(firefox or chrome)中打开下面网址
 
 ``` text
 <copy> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ </copy>

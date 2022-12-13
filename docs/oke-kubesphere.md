@@ -80,6 +80,10 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
     ```
 ## 3. 部署 KubeSphere Ingress
 
+前提是: 已经在OKE集群中部署OKE Ingress控制器,如果没有准备好OKE Ingress控制器，请参照下面link部署：</br>
+<https://minqiaowang.github.io/oci-k8s-cn/workshops/freetier/?lab=deploy-complex-app#Task1:OKEIngress>
+
+
 1. 下载kubesphere-ingress.yaml
 
     ```bash
