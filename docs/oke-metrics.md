@@ -9,7 +9,7 @@
 
   * metric-server提供实时指标.
   * 每个节点实时数据是由该节点上的cadvisor采集，metric-server只是发请求给cadvisor并将metric格式的数据转换成。
-  * aggregate api
+  * aggregate api</br>
     aggregate api提供接口其它组件调用（kube-scheduler、HorizontalPodAutoscaler、Kubernetes集群客户端等），可获取集群监控数据。
 
 ## 2. OKE Metrics Serve部署
