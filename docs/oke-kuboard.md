@@ -123,7 +123,7 @@ $ <copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/b
     ```bash
     $ <copy> kubectl -n kuboard get ing </copy> 
     NAME                  CLASS   HOSTS                     ADDRESS          PORTS     AGE
-    okrd-ingress   nginx   oke-kxample.com   141.147.172.67   80, 443   2m44s
+    oke-kuboard-ingress   nginx   oke-kuboard.example.com   141.147.172.67   80, 443   2m44s
     ```
 
 ## 3. 验证
@@ -136,9 +136,9 @@ $ <copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/b
     141.147.172.67  oke-kuboard.example.com
     ```
 2. 浏览器访问 Kuboard 验证
-    在浏览器中打开链接<http://your-ingress>
-    <br>例如： <http://oke-kuboard.example.com> 输入初始用户名和密码，并登录:
+在浏览器中打开链接<http://your-ingress>
+<br>例如： <http://oke-kuboard.example.com> 输入初始用户名和密码，并登录:</br>
 
-        | 用户名|缺省密码|
-        | :-----|:--|
-        | admin|Kuboard123|
+    | 用户名|缺省密码|
+    | :-----|:--|
+    | admin|Kuboard123|
