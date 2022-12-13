@@ -16,16 +16,17 @@
 
 ### 2.1 部署Metrics Server
 
-1、下载对应的稳定版本，目前稳定版本是v0.5.2：
+1、下载对应的稳定版本，目前稳定版本是v0.5.2：</br>
 参照<https://github.com/kubernetes-sigs/metrics-server> 中Compatibility Matrix对应信息.
 
   ```bash
-  wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.2/components.yaml
+  $<copy> curl -o components.yaml https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.2/components.yaml </copy>
   ```
 
-components.yaml 修改部署清单内容：
+注意：如果没有特殊要求，不用执行下面这一步，components.yaml 修改部署清单内容：
 
-```text
+```bash
+$ <copy> vim components.yaml </copy>
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -220,10 +221,7 @@ spec:
 2、部署 Metrics Server
 
   ```bash
-  kubectl apply -f components.yaml
-  ```
-
-  ```text
+  $<copy> kubectl apply -f components.yaml </copy>
   serviceaccount/metrics-server created
   clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
   clusterrole.rbac.authorization.k8s.io/system:metrics-server created
@@ -240,7 +238,8 @@ spec:
 1、检查 apiserver是否有 metrics.k8s.io/v1beta1
 
   ```bash
-  kubectl api-versions|grep metrics
+  $<copy> kubectl api-versions|grep metrics </copy>
+  metrics.k8s.io/v1beta1
   ```
 
   如果可以看到：*metrics.k8s.io/v1beta1，群组已经注册到原生apiserver上。
@@ -248,10 +247,7 @@ spec:
 2、查看metrics server pod是否运行正常
 
   ```bash
-  kubectl get pods -n=kube-system |grep metrics
-  ```
-
-  ```text
+  $ <copy> kubectl get pods -n=kube-system |grep metrics </copy>
    metrics-server-855cc6b9d-g6xsf    1/1     Running   0          18h
   ```
 
@@ -262,14 +258,11 @@ spec:
 Error from server (ServiceUnavailable): the server is currently unable to handle the request (get nodes.metrics.k8s.io)
 
   ```bash
-   [root@master1 ~]# kubectl top nodes
-  ```
-
-  ```text
-    NAME      CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
-    master1   272m         3%     4272Mi          29%
-    node1     384m         5%     9265Mi          30%
-    node2     421m         5%     14476Mi         48%
+  $<copy> kubectl top nodes </copy>
+  NAME         CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+  10.0.10.12   156m         7%     4257Mi          27%       
+  10.0.10.68   202m         10%    5229Mi          33%       
+  10.0.10.73   160m         8%     4896Mi          31%
   ```
 
 可以看到kubectl top命令可以正常执行，说明metrics server 部署成功没有问题。
