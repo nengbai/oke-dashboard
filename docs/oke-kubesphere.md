@@ -6,7 +6,7 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
 1. KubeSphere 3.3 要求Kubernetes version 满足 v1.19.x, v1.20.x, v1.21.x, *v1.22.x,*v1.23.x, and * v1.24.x. 最优选择是 Kubernetes v1.21.x 或更高版本。
 
     ```bash
-    $ <copy>kubectl version </copy>
+    $ <copy> kubectl version </copy>
     Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:36:36Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/amd64"}
     Kustomize Version: v4.5.7
     Server Version: version.Info{Major:"1", Minor:"24", GitVersion:"v1.24.1", GitCommit:"b13b16197b0e07f78f7ced71255ce69516fdd9e6", GitTreeState:"clean", BuildDate:"2022-05-30T10:16:45Z", GoVersion:"go1.18.2 BoringCrypto", Compiler:"gc", Platform:"linux/amd64"}
@@ -37,7 +37,7 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
    注意：下面<v3.3.1>需要根据OKE版本要求替换成对应版本，参见$1. KubeSphere系统要求.
 
     ```bash
-    <copy> kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml </copy>
+    $ <copy> kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/kubesphere-installer.yaml </copy>
     ```
 
 2. 部署 KubeSphere
@@ -75,14 +75,15 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
 
 4. 检查 KubeSphere svc状态
 
-    kubectl get svc -n kubesphere-system
-
+    ```bash
+    $ <copy> kubectl get svc -n kubesphere-system </copy>
+    ```
 ## 3. 部署 KubeSphere Ingress
 
 1. 下载kubesphere-ingress.yaml
 
     ```bash
-    <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
+    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
     ```
 
 2. 编辑 kubesphere-ingress.yaml,调整域名:example.com 为您拥有域名
