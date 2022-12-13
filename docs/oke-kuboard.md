@@ -140,5 +140,5 @@ $ <copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/b
     <br>例如： <http://oke-kuboard.example.com></br>
     <br>输入初始用户名和密码，并登录</br>
     |用户名 | 密码 |
-    |:-------|:--------|
+    |:-----|:--|
     | admin|Kuboard123|
