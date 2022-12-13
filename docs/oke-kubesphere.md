@@ -115,7 +115,6 @@
 在浏览器中打开链接<http://your-ingress> </br>
 例如： <http://oke-kubesphere.example.com> 输入初始用户名和密码，并登录</br>
 注意：第一次登录需要修改新密码。</br>
-
 | 用户名|缺省密码|
-| :-----|:--|
-| admin|P@88w0rd|
+|:-----|:------|
+|admin|P@88w0rd|
