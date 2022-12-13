@@ -13,7 +13,8 @@ curl -o create_cert.sh https://github.com/nengbai/oke-dashborad/blob/main/dashbo
 
 ## 2.根据域名生成证书
 
-    注意：用自己域名替换 example.com
+注意：用您自己域名替换 example.com
+
 ``` bash
 $ <copy> bash create_cert.sh oke-admin dashboard example.com kubernetes-dashboard </copy> 
 ```
@@ -28,6 +29,13 @@ $ <copy>  kubectl apply -f recommended.yaml </copy>
 
 ``` bash
 $ <copy> kubectl -n kubernetes-dashboard get pod,svc </copy> 
+NAME                                            READY   STATUS    RESTARTS   AGE
+pod/dashboard-metrics-scraper-8c47d4b5d-xt8h4   1/1     Running   0          56d
+pod/kubernetes-dashboard-67bd8fc546-2d6rt       1/1     Running   0          56d
+
+NAME                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/dashboard-metrics-scraper   ClusterIP   10.96.201.40    <none>        8000/TCP   56d
+service/kubernetes-dashboard        ClusterIP   10.96.161.240   <none>        443/TCP    56d
 ```
 
 ## 5. 创建OKE 用户及其资源授权
@@ -38,19 +46,23 @@ $ <copy>  kubectl apply -f oke-admin.yaml </copy>
 
 ## 6. 启动本地Proxy
 
+在您本地终端执行下面命令（需要kubectl环境）
 ``` bash
 $ <copy> kubectl proxy </copy> 
+Starting to serve on 127.0.0.1:8001
 ````
 
 ## 7. 网页验证
 
-浏览器(firefox or chrome)中打开下面网址
+在您本地终端电脑上(与第6步骤执行同一台电脑)，用浏览器(firefox or chrome)中打开下面网址
 
 ``` text
 <copy> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ </copy>
 ```
 
 ## 8. 获取登录 token
+
+本地在您本地终端执行下面命令，获取登录token.
 
 ``` bash
 $ <copy> curl 127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/serviceaccounts/oke-admin/token -H "Content-Type:application/json" -X POST -d '{}' </copy> 
@@ -59,6 +71,47 @@ example:
 ```
 
 ## 9. 增加 OKE Dashboard ingress 访问方式
+
+Dashboard缺省只能通过Proxy转发本地访问（第6和第7步骤），为了方便管理，需要给OKE Dashboard增加https访问的Ingress.
+
+1. 调整访问域名
+
+编辑dashboard-ingress.yaml， 替换 example.com 为您在第2步 生成证书时对应的域名。
+
+```bash
+$ <copy> vim dashboard-ingress.yaml </copy>
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oke-dashboard-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    # 开启use-regex，启用path的正则匹配
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - oke-dashboard.example.com
+    secretName: oke-admin
+  rules:
+  - host: "oke-dashboard.example.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443
+```
+
+2. 增加 Ingress
 
 ``` 
 $ <copy> kubectl apply -f dashboard-ingress.yaml </copy> 
