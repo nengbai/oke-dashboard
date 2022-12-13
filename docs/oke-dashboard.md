@@ -6,8 +6,9 @@ Kubernetes 从v1.24.0 开始使用的安装方式于之前很很大不同，OKE 
 
 ```bash
 $ <copy> curl -o recommended.yaml https://github.com/nengbai/oke-dashborad/blob/main/dashboard/recommended.yaml
-$  curl -o oke-admin.yaml  https://github.com/nengbai/oke-dashborad/blob/main/dashboard/oke-admin.yaml
-$  curl -o create_cert.sh https://github.com/nengbai/oke-dashborad/blob/main/dashboard/create_cert.sh </copy>
+curl -o oke-admin.yaml  https://github.com/nengbai/oke-dashborad/blob/main/dashboard/oke-admin.yaml
+curl -o dashboard-ingress.yaml https://github.com/nengbai/oke-dashborad/blob/main/dashboard/dashboard-ingress.yaml
+curl -o create_cert.sh https://github.com/nengbai/oke-dashborad/blob/main/dashboard/create_cert.sh </copy>
 ```
 
 ## 2.根据域名生成证书
