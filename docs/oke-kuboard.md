@@ -135,9 +135,8 @@ $ <copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/b
     141.147.172.67  oke-kuboard.example.com
     ```
 2. 浏览器访问 Kuboard 验证
-    
     在浏览器中打开链接<http://your-ingress>
     <br>例如： <http://oke-kuboard.example.com> 输入初始用户名和密码，并登录:
-    |用户名 | 密码 |
+    |用户名|缺省密码|
     |:-----|:--|
-    | admin|Kuboard123|
+    |admin|Kuboard123|
