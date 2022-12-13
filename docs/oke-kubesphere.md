@@ -42,7 +42,7 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
 
 2. 部署 KubeSphere
     ```bash
-    $ <copy>kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/cluster-configuration.yaml> </copy>
+    $ <copy>kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.3.1/cluster-configuration.yaml </copy>
     ```
 3. 监控 KubeSphere状态
 
