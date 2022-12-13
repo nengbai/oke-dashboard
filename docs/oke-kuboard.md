@@ -146,6 +146,6 @@
 在浏览器中打开链接<http://your-ingress>
 
 例如： <http://oke-kuboard.example.com> 输入初始用户名和密码，并登录:</br>
-    | 用户名|缺省密码|
-    | :-----|:--|
-    | admin|Kuboard123|
+| 用户名|缺省密码|
+| :-----|:--|
+| admin|Kuboard123|
