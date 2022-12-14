@@ -90,7 +90,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
 ## 3. OKE Cluster Autoscaler部署
 
-为了实现自动缩放pod实现自动缩放，您需要部署Kubernetes Metrics Server(参见<https://nengbai.github.io/oke-dashboard/?lab=oke-metrics>)，以从集群中的每个工作节点收集资源度量。部署Kubernetes Metrics Server之后，您可以使用：
+   为了实现自动缩放pod实现自动缩放，您需要部署Kubernetes Metrics Server(参见<https://nengbai.github.io/oke-dashboard/?lab=oke-metrics>)，以从集群中的每个工作节点收集资源度量。部署Kubernetes Metrics Server之后，您可以参照下面步骤部署OKE Cluster Autoscaler：
 
 ### 3.1 OKE Cluster Autoscaler配置
 
