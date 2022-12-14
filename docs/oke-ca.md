@@ -88,11 +88,11 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     </copy>
     ```
 
-## 2. 部署 OKE Cluster Autoscaler
+## 3. OKE Cluster Autoscaler部署
 
 为了实现自动缩放pod实现自动缩放，您需要部署Kubernetes Metrics Server(参见<https://nengbai.github.io/oke-dashboard/?lab=oke-metrics>)，以从集群中的每个工作节点收集资源度量。部署Kubernetes Metrics Server之后，您可以使用：
 
-### 2.1 OKE Cluster Autoscaler配置
+### 3.1 OKE Cluster Autoscaler配置
 
 1. 定制 OKE Cluster Autoscaler配置 cluster-autoscaler.yaml
 
@@ -305,7 +305,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     - --nodes=1:5:{{ node pool ocid 1 }}
     ```
 
-### 2.2 OKE Cluster Autoscaler部署
+### 3.2 部署OKE Cluster Autoscaler
 
 1. 部署 Kubernetes Cluster Autoscaler
 
@@ -331,7 +331,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     $<copy> kubectl -n kube-system get cm cluster-autoscaler-status -o yaml </copy>
     ```
 
-### 2.3 OKE Node 弹性自动扩容
+### 3.3 OKE Node 弹性自动扩容
 
 1. 确定worker nodes数
 
@@ -392,7 +392,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     $<copy> kubectl get nodes </copy>
     ```
 
-### 2.4 OKE Node 弹性自动缩容
+### 3.4 OKE Node 弹性自动缩容
 
 1. 调整Nginx应用 deployment pods 数量
 
