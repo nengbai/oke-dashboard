@@ -268,9 +268,9 @@ Kubernetes Cluster Autoscaler暂不支持参数：
             - name: OKE_USE_INSTANCE_PRINCIPAL
                 value: "true"
             - name: OCI_SDK_APPEND_USER_AGENT
-                value: "oci-oke-cluster-autoscaler"
-        </copy>
-    ```
+                value: "oci-oke-cluster-autoscaler"  
+    </copy>
+```
 
 2. 增加 cluster-autoscaler containers command 特定参数
    a. 在cluster-autoscaler.yaml中增加cloud-provider为oci-oke
