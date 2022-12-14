@@ -4,12 +4,12 @@ OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应�
 
 ## 1. OKE Cluster Autoscaler 设计规划
 
-### 1.1 集群自动扩容或者缩放条件
+### 1.1 OKE集群节点自动扩容或者缩放条件
 
 1. 扩容：由于资源不足，某些Pod无法在任何当前节点上进行调度.
 2. 缩容: Node节点资源利用率较低时，且此node节点上存在的pod都能被重新调度到其他node节点上运行.
 
-### 1.2 什么时候集群节点不会被 CA 删除
+### 1.2 什么时候OKE集群节点不会被Cluster Autoscaler删除
 
 1. 节点上有Pod被 PodDisruptionBudget 控制器限制。
 2. 节点上有命名空间是 kube-system 的pods。
@@ -18,7 +18,7 @@ OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应�
 5. 节点上Pod驱逐后无处可去，即没有其他node能调度这个pod
 6. 节点有注解："cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"(在CA 1.0.3或更高版本中受支持)
 
-### 1.3 如何保证节点不受OKE Cluster Autoscaler删除
+### 1.3 如何保证OKE集群节点不受OKE Cluster Autoscaler删除
 
 特定标签保护：从CA 1.0开始，节点可以打上以下标签：
 
