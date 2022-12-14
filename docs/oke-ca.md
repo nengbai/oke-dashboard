@@ -370,43 +370,43 @@ apiVersion: apps/v1
 
 3. 部署Nginx 应用
 
-```bash
-$<copy> kubectl create -f nginx.yaml </copy>
-```
+    ```bash
+    $<copy> kubectl create -f nginx.yaml </copy>
+    ```
 
 4. 增加 deployment pods数量 从10 到100
 
-```bash
-$<copy> kubectl scale deployment nginx-deployment --replicas=100 </copy>
-```
+    ```bash
+    $<copy> kubectl scale deployment nginx-deployment --replicas=100 </copy>
+    ```
 
 5. 观察deployment 状态
 
-```bash
-$<copy> kubectl get deployment nginx-deployment --watch </copy>
-```
+    ```bash
+    $<copy> kubectl get deployment nginx-deployment --watch </copy>
+    ```
 
 6. 检查worker nodes 数量
 
-```bash
-$<copy> kubectl get nodes </copy>
-```
+    ```bash
+    $<copy> kubectl get nodes </copy>
+    ```
 
 ### 2.4 OKE Node 弹性自动缩容
 
 1. 调整Nginx应用 deployment pods 数量
 
-        ```bash
-            $<copy> kubectl scale deployment nginx-deployment --replicas=10 </copy>
-        ```
+    ```bash
+    $<copy> kubectl scale deployment nginx-deployment --replicas=10 </copy>
+    ```
     或者删除Nginx 应用：
 
-        ```bash
-        $<copy> kubectl delete deployment nginx-deployment </copy>
-        ```
+    ```bash
+    $<copy> kubectl delete deployment nginx-deployment </copy>
+    ```
 
 2. 确认worker nodes数量减少到初始数量
 
-        ```bash
-        $<copy> kubectl get nodes </copy>
-        ```
+    ```bash
+    $<copy> kubectl get nodes </copy>
+    ```
