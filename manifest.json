@@ -16,6 +16,10 @@
         {           
             "title": "OKE Kuboard配置",
             "filename": "./docs/oke-kuboard.md"
+        },
+        {           
+            "title": "OKE Node 自动弹性伸缩",
+            "filename": "./docs/oke-ca.md"
         }
     ]
 }
