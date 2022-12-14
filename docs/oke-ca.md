@@ -50,7 +50,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 *--gpu-total : 不支持GPU.
 *--expander=price : 不支持根据成本自动调度.
 
-## 2. OCI OKE Cluster Autoscaler 权限
+## 2. 赋予OKE Cluster Autoscaler 操作相关资源权限
 
 ### 2.1 创建dynamic group
 
