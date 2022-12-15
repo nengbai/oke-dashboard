@@ -97,7 +97,9 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 1. 下载 OKE Cluster Autoscaler cluster-autoscaler.yaml
 
     ```bash
-    $ <copy> curl -o cluster-autoscaler.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/cluster-autoscaler.yaml</copy>
+    $ <copy> curl -o cluster-autoscaler.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/cluster-autoscaler.yaml
+    curl -o nginx.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/nginx.yaml
+    </copy>
     ```
 
 2. 编辑 OKE Cluster Autoscaler配置 cluster-autoscaler.yaml
@@ -350,7 +352,15 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     $<copy> kubectl get nodes  </copy>
     ```
 
-2. 定义一个 Nginx 应用
+2. 创建测试 Namespace 
+
+    例如：nginx
+
+    ```bash
+    $<copy> kubectl create ns nginx </copy>
+    ```
+
+3. 定义一个 Nginx 应用
 
     ```text
     <copy>
