@@ -445,7 +445,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 4. 增加 deployment pods数量 从10 到100
 
     ```bash
-    $<copy> kubectl get pod -n nginx
+    $<copy> kubectl get pod -n nginx｜wc -l 
     kubectl scale deployment nginx-deployment --replicas=100 -n nginx </copy>
     ```
 
@@ -480,7 +480,12 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     $<copy> kubectl delete deployment nginx-deployment -n nginx </copy>
     ```
 
-2. 确认worker nodes数量减少到初始数量
+2. 检查Kubernetes Cluster Autoscaler日志信息
+
+    ```bash
+    $<copy> kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler </copy>
+    ```
+3. 确认worker nodes数量减少到初始数量(需要等待，大约在25分钟左右，优先删除是autoscaler增加的节点)
 
     ```bash
     $<copy> kubectl get nodes </copy>
