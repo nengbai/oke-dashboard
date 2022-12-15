@@ -56,11 +56,11 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
 1. 创建dynamic group
 
-a. Identity & Security. click Dynamic Groups.
+    a. Identity & Security. click Dynamic Groups.
 
-b. 选择所在的隔离区间（Compartment）
+    b. 选择所在的隔离区间（Compartment）
 
-创建dynamic group,输入dynamic group name，例如：oke-cluster-autoscaler-dyn-grp
+    创建dynamic group,输入dynamic group name，例如：oke-cluster-autoscaler-dyn-grp
 
     ```text
     <copy>
