@@ -484,6 +484,14 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
     ```bash
     $<copy> kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler </copy>
+    I1215 08:16:23.104671       1 pre_filtering_processor.go:57] Node 10.0.10.73 should not be processed by cluster autoscaler (no node group config)
+    I1215 08:16:23.104725       1 scale_down.go:448] Node 10.0.10.211 - cpu utilization 0.146000
+    I1215 08:16:23.105208       1 scale_down.go:509] Scale-down calculation: ignoring 3 nodes unremovable in the last 5m0s
+    I1215 08:16:23.105339       1 static_autoscaler.go:522] 10.0.10.211 is unneeded since 2022-12-15 08:12:40.621793266 +0000 UTC m=+5355.825155070 duration 3m42.479860286s
+    I1215 08:16:23.105389       1 static_autoscaler.go:533] Scale down status: unneededOnly=false lastScaleUpTime=2022-12-15 07:21:50.551646995 +0000 UTC m=+2305.755008799 lastScaleDownDeleteTime=2022-12-15 08:12:30.343455121 +0000 UTC m=+5345.546816965 lastScaleDownFailTime=2022-12-15 05:43:47.576028691 +0000 UTC m=-3577.220609485 scaleDownForbidden=false isDeleteInProgress=false scaleDownInCooldown=false
+    I1215 08:16:23.105438       1 static_autoscaler.go:546] Starting scale down
+    I1215 08:16:23.105503       1 scale_down.go:828] *10.0.10.211 was unneeded for *3m42.479860286s
+    I1215 08:16:23.105563       1 scale_down.go:917] No candidates for scale down
     ```
 3. 确认worker nodes数量减少到初始数量(需要等待，大约在25分钟左右，优先删除是autoscaler增加的节点)
 
