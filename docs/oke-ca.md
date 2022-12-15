@@ -94,10 +94,16 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
 ### 3.1 OKE Cluster Autoscaler配置
 
-1. 定制 OKE Cluster Autoscaler配置 cluster-autoscaler.yaml
+1. 下载 OKE Cluster Autoscaler cluster-autoscaler.yaml
 
-    ```text
-    <copy>
+    ```bash
+    $ <copy> curl -o cluster-autoscaler.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/cluster-autoscaler.yaml</copy>
+    ```
+
+2. 编辑 OKE Cluster Autoscaler配置 cluster-autoscaler.yaml
+   
+    ```bash
+    $ <copy> vim cluster-autoscaler.yaml </copy>
     ---
     apiVersion: v1
     kind: ServiceAccount
@@ -269,8 +275,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
                 value: "true"
             - name: OCI_SDK_APPEND_USER_AGENT
                 value: "oci-oke-cluster-autoscaler"  
-    </copy>
-```
+    ```
 
 2. 增加 cluster-autoscaler containers command 特定参数
    a. 在cluster-autoscaler.yaml中增加cloud-provider为oci-oke
@@ -311,6 +316,12 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
     ```bash
     $<copy> kubectl apply -f cluster-autoscaler.yaml </copy>
+    serviceaccount/cluster-autoscaler created
+    clusterrole.rbac.authorization.k8s.io/cluster-autoscaler created
+    role.rbac.authorization.k8s.io/cluster-autoscaler created
+    clusterrolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+    rolebinding.rbac.authorization.k8s.io/cluster-autoscaler created
+    deployment.apps/cluster-autoscaler created
     ```
 
 2. 检查Kubernetes Cluster Autoscaler日志信息
