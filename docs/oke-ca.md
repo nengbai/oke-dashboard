@@ -497,4 +497,12 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
     ```bash
     $<copy> kubectl get nodes </copy>
+    NAME          STATUS                     ROLES   AGE    VERSION
+    10.0.10.12    Ready                      node    58d    v1.24.1
+    10.0.10.211   Ready,SchedulingDisabled   node    59m    v1.24.1
+    10.0.10.240   Ready                      node    7h2m   v1.24.1
+    10.0.10.37    Ready                      node    7h2m   v1.24.1
+    10.0.10.68    Ready                      node    58d    v1.24.1
+    10.0.10.73    Ready                      node    58d    v1.24.1
+    10.0.10.88    Ready                      node    7h2m   v1.24.1
     ```
