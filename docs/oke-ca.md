@@ -360,34 +360,79 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     $<copy> kubectl create ns nginx </copy>
     ```
 
-3. 定义一个 Nginx 应用
+3. 为测试 Namespace 准备Secret key
+    为了能安全正常从OCI Docker Registry拉取容器镜像，需要使用该集群OCI账号和 auth token 在OKE集群中该Namespace中增加Secret Key。例如：为Namespace kuboard 增加 Secret Key。
+
+    ```bash
+    <copy>kubectl create secret docker-registry ocisecret --docker-server=<icn.ocir.io> --docker-username='<oci username>' --docker-password='<auth token>' --docker-email='<email address>' -n kuboard </copy>
+    ```
+
+4. 下载image重定向到OCI Docker Registry
+    a. 下载image
+
+    ```bash
+    $<copy> docker pull nginx:latest </copy>
+    Trying to pull repository docker.io/library/nginx ... 
+    latest: Pulling from docker.io/library/nginx
+    025c56f98b67: Pull complete 
+    ec0f5d052824: Pull complete 
+    cc9fb8360807: Pull complete 
+    defc9ba04d7c: Pull complete 
+    885556963dad: Pull complete 
+    f12443e5c9f7: Pull complete 
+    Digest: sha256:75263be7e5846fc69cb6c42553ff9c93d653d769b94917dbda71d42d3f3c00d3
+    Status: Downloaded newer image for nginx:latest
+    nginx:latest
+    ```
+
+    b. Tag 容器镜像为 OCI Docker Registry, 例如：“icn.ocir.io/cnxcypamq98c/devops-repos”
+
+    ```bash
+    $<copy> docker tag docker.io/library/nginx:latest icn.ocir.io/cnxcypamq98c/devops-repos/nginx:latest </copy>
+    ```
+    c. 上传到OCI Docker Registry镜像库存储（例如：icn.ocir.io/cnxcypamq98c/devops-repos/）
+
+    ```bash
+    $ <copy> docker push icn.ocir.io/cnxcypamq98c/devops-repos/nginx:latest </copy>
+    The push refers to repository [icn.ocir.io/cnxcypamq98c/devops-repos/nginx]
+    e83791f03918: Pushed 
+    10e506a84718: Pushed 
+    9485bb85a132: Pushed 
+    47064e0edc59: Pushed 
+    5678f6b95362: Pushed 
+    b5ebffba54d3: Pushed 
+    latest: digest: sha256:d586384381a0e6834cef73d432b1486f0b86334cb92e54256def62dd403f82ab size: 1570
+    ```
+
+5. 调整 Nginx 应用部署文件nginx.yaml，注意调整 image path为 OCI Docker Registry镜像库存储路径（例如：icn.ocir.io/cnxcypamq98c/devops-repos/nginx:latest）
 
     ```text
-    <copy>
     apiVersion: apps/v1
-        kind: Deployment
+    kind: Deployment
+    metadata:
+      name: nginx-deployment
+      namespace: nginx
+    spec:
+      selector:
+        matchLabels:
+        app: nginx
+      replicas: 2
+      template:
         metadata:
-            name: nginx-deployment
-            namespace: nginx
-        spec:
-        selector:
-            matchLabels:
+          labels:
             app: nginx
-        replicas: 2
-        template:
-            metadata:
-            labels:
-                app: nginx
-            spec:
-            containers:
-            - name: nginx
-                image: nginx:latest
-                ports:
-            - containerPort: 80
+        spec:
+          containers:
+          - name: nginx
+            image: icn.ocir.io/cnxcypamq98c/devops-repos/nginx:latest
+            imagePullPolicy: IfNotPresent
+            ports:
+              - containerPort: 80
                 resources:
-                requests:
+                  requests:
                     memory: "500Mi"
-    </copy>
+          imagePullSecrets:
+            - name: ocisecret
     ```
 
 3. 部署Nginx 应用
@@ -402,6 +447,12 @@ Kubernetes Cluster Autoscaler暂不支持参数：
     ```bash
     $<copy> kubectl get pod -n nginx
     kubectl scale deployment nginx-deployment --replicas=100 -n nginx </copy>
+    ```
+
+    删除异常Pod:
+
+    ```bash
+    $<copy> kubectl -n nginx get pod|grep "0/1" |awk '{print $1}'|xargs -I {} kubectl -n nginx delete pod {} </copy>
     ```
 
 5. 观察deployment 状态
