@@ -394,12 +394,14 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
     ```bash
     $<copy> kubectl create -f nginx.yaml </copy>
+    deployment.apps/nginx-deployment created
     ```
 
 4. 增加 deployment pods数量 从10 到100
 
     ```bash
-    $<copy> kubectl scale deployment nginx-deployment --replicas=100 -n nginx </copy>
+    $<copy> kubectl get pod -n nginx
+    kubectl scale deployment nginx-deployment --replicas=100 -n nginx </copy>
     ```
 
 5. 观察deployment 状态
