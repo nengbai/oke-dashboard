@@ -368,6 +368,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
         kind: Deployment
         metadata:
             name: nginx-deployment
+            namespace: nginx
         spec:
         selector:
             matchLabels:
@@ -398,13 +399,13 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 4. 增加 deployment pods数量 从10 到100
 
     ```bash
-    $<copy> kubectl scale deployment nginx-deployment --replicas=100 </copy>
+    $<copy> kubectl scale deployment nginx-deployment --replicas=100 -n nginx </copy>
     ```
 
 5. 观察deployment 状态
 
     ```bash
-    $<copy> kubectl get deployment nginx-deployment --watch </copy>
+    $<copy> kubectl get deployment nginx-deployment --watch -n nginx </copy>
     ```
 
 6. 检查worker nodes 数量
@@ -418,12 +419,12 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 1. 调整Nginx应用 deployment pods 数量
 
     ```bash
-    $<copy> kubectl scale deployment nginx-deployment --replicas=10 </copy>
+    $<copy> kubectl scale deployment nginx-deployment --replicas=10 -n nginx </copy>
     ```
     或者删除Nginx 应用：
 
     ```bash
-    $<copy> kubectl delete deployment nginx-deployment </copy>
+    $<copy> kubectl delete deployment nginx-deployment -n nginx </copy>
     ```
 
 2. 确认worker nodes数量减少到初始数量
