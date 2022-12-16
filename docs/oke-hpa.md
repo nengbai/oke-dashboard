@@ -53,11 +53,11 @@
 
 1. 启动一个busybox容器，为Apache web 应用增加工作负载
 
-  ```bash
-  $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh --generator=run-pod/v1 </copy>
-  NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
-  php-apache Deployment/php-apache 250%/50% 1       10      1        1m
-  ```
+   ```bash
+   $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh --generator=run-pod/v1 </copy>
+   NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
+   php-apache Deployment/php-apache 250%/50% 1       10      1        1m
+   ```
 
 2. 等待几分钟, 检查Apache web 应用的中REPLICAS数量
 
@@ -80,13 +80,13 @@
 1. 终止busybox容器，停止Apache web 应用负载加载
 
   a. 终止busybox容器
-  
-  b. 关闭终端工具
 
      ```bash
       $<copy> exit </copy>
       Session ended, resume using 'kubectl attach load-generator -c load-generator -i -t' command when the pod is running pod "load-generator" deleted
      ```
+
+  b. 关闭终端工具
 
 2. 确认Horizontal Pod Autoscaler的REPLICAS
 
