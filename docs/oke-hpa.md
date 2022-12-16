@@ -2,6 +2,7 @@
 
 ## 1. Pod 自动弹性收缩工作原理
 
+    ![Horizontal Pod Autoscaling](./img/hpa.png "Horizontal Pod Autoscaling")
 ## 2. 确认 Kubernetes Metrics Server
 
 1. 执行下面命令是否安装 Kubernetes Metrics Server
