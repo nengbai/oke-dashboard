@@ -32,10 +32,10 @@ Apache web server pod manifest文件说明:</br>
 
 1. 设置Horizontal Pod Autoscaler 资源最小Pod数量是1，最大使用10副本, 平均CPU使用率50%
 
-   ```bash
-   $<copy> kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10 </copy>
-   horizontalpodautoscaler.autoscaling/php-apache autoscaled
-   ```
+    ```bash
+    $<copy> kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10 </copy>
+    horizontalpodautoscaler.autoscaling/php-apache autoscaled
+    ```
 
 功能说明:</br>
    *维持最小Pod数量 1,最大副本数 10.</br>
@@ -53,11 +53,11 @@ Apache web server pod manifest文件说明:</br>
 
 1. 启动一个busybox容器，为Apache web 应用增加工作负载
 
-   ```bash
-   $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh --generator=run-pod/v1 </copy>
-   NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
-   php-apache Deployment/php-apache 250%/50% 1       10      1        1m
-   ```
+    ```bash
+    $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh --generator=run-pod/v1 </copy>
+    NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
+    php-apache Deployment/php-apache 250%/50% 1       10      1        1m
+    ```
 
 2. 等待几分钟, 检查Apache web 应用的中REPLICAS数量
 
@@ -90,19 +90,19 @@ Apache web server pod manifest文件说明:</br>
 
 2. 确认Horizontal Pod Autoscaler的REPLICAS
 
-   ```bash
-   $<copy> kubectl get hpa </copy>
-   NAME       REFERENCE             TARGETS MINPODS MAXPODS REPLICAS AGE
-   php-apache Deployment/php-apache 0%/50%  1       10      5        10m
-   ```
+    ```bash
+    $<copy> kubectl get hpa </copy>
+    NAME       REFERENCE             TARGETS MINPODS MAXPODS REPLICAS AGE
+    php-apache Deployment/php-apache 0%/50%  1       10      5        10m
+    ```
 
 3. 等待几分钟左右, 确认Horizontal Pod Autoscaler的REPLICAS减少
 
-   ```bash
-   $<copy> kubectl get hpa </copy>
-   NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
-   php-apache Deployment/php-apache 0%/50%   1       10      1        15m 
-   ```
+    ```bash
+    $<copy> kubectl get hpa </copy>
+    NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
+    php-apache Deployment/php-apache 0%/50%   1       10      1        15m 
+    ```
 
 4. 确认Apache web 应用的deployment scaled in
   
