@@ -48,7 +48,7 @@
    php-apache Deployment/php-apache 0%/50%  1       10      1        10s
    ```
 
-## 5. 为Apache web 应用增加工作负载
+## 5. 增加 Apache web 应用工作负载
 
 1. 启动一个busybox容器，为Apache web 应用增加工作负载
 
