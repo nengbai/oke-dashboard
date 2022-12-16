@@ -45,10 +45,10 @@ $<copy> kubectl annotate node cluster-autoscaler.kubernetes.io/scale-down-disabl
 9. Cluster Autoscaler自动调度max-node-provision-time 25分钟
 
 Kubernetes Cluster Autoscaler暂不支持参数：</br>
-*--node-group-auto-discovery : 不支持节点池自动发现
-*--node-autoprovisioning-enabled=true : Not supported.
-*--gpu-total : 不支持GPU.
-*--expander=price : 不支持根据成本自动调度.
+*--node-group-auto-discovery : 不支持节点池自动发现. </br>
+*--node-autoprovisioning-enabled=true : Not supported.</br>
+*--gpu-total : 不支持GPU. </br>
+*--expander=price : 不支持根据成本自动调度. </br>
 
 ## 2. 赋予OKE Cluster Autoscaler 操作相关资源权限
 
