@@ -12,6 +12,7 @@
     metrics-server   1/1     1            1           27d
     ```
 2. 如果未安装 Kubernetes Metrics Server
+
    参见<https://nengbai.github.io/oke-dashboard/?lab=oke-metrics>安装配置 Kubernetes Metrics Server。
 
 ## 3. 在OKE集群中部署应用
@@ -24,7 +25,7 @@
     service/php-apache created
     ```
     Apache web server pod manifest文件说明:</br>
-    *500m CPU limit: 限制CPU使用最大使用到 500 millicores, 或 1/2 core.
+    *500m CPU limit: 限制CPU使用最大使用到 500 millicores, 或 1/2 core.</br>
     *200m CPU request：容器启动希望获取 CPU资源在 200 millicores, 或 1/5 core.
 
 ## 4. 启动 Horizontal Pod Autoscaler Resource
@@ -37,7 +38,7 @@
    ```
 
    功能说明:</br>
-   *维持最小Pod数量 1,最大副本数 10.
+   *维持最小Pod数量 1,最大副本数 10.</br>
    *增加或减少Pod数量维持每个Pod的CPU使用率在 50% .
 
 2. 确认Horizontal Pod Autoscaler
@@ -79,6 +80,7 @@
 1. 终止busybox容器，停止Apache web 应用负载加载
 
   a. 终止busybox容器
+  
   b. 关闭终端工具
 
      ```bash
