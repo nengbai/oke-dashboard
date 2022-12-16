@@ -44,7 +44,7 @@ $<copy> kubectl annotate node cluster-autoscaler.kubernetes.io/scale-down-disabl
 8. 不要同一个集群中运行多个Cluster Autoscaler。
 9. Cluster Autoscaler自动调度max-node-provision-time 25分钟
 
-Kubernetes Cluster Autoscaler暂不支持参数：
+Kubernetes Cluster Autoscaler暂不支持参数：</br>
 *--node-group-auto-discovery : 不支持节点池自动发现
 *--node-autoprovisioning-enabled=true : Not supported.
 *--gpu-total : 不支持GPU.
@@ -161,7 +161,7 @@ Kubernetes Cluster Autoscaler暂不支持参数：
         resources: ["statefulsets", "replicasets", "daemonsets"]
         verbs: ["watch", "list", "get"]
     - apiGroups: ["storage.k8s.io"]
-        resources: ["storageclasses", "csinodes"]
+        resources: ["storageclasses", "csinodes","csidrivers","csistoragecapacities"]
         verbs: ["watch", "list", "get"]
     - apiGroups: ["batch", "extensions"]
         resources: ["jobs"]
