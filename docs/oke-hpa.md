@@ -37,17 +37,17 @@ Apache web server pod manifest文件说明:</br>
     horizontalpodautoscaler.autoscaling/php-apache autoscaled
     ```
 
-功能说明:</br>
-   *维持最小Pod数量 1,最大副本数 10.</br>
-   *增加或减少Pod数量维持每个Pod的CPU使用率在 50% .
+    功能说明:</br>
+    *维持最小Pod数量 1,最大副本数 10.</br>
+    *增加或减少Pod数量维持每个Pod的CPU使用率在 50% .
 
 2. 确认Horizontal Pod Autoscaler
 
-   ```bash
-   $<copy> kubectl get hpa </copy>
-   NAME       REFERENCE             TARGETS MINPODS MAXPODS REPLICAS AGE
-   php-apache Deployment/php-apache 0%/50%  1       10      1        10s
-   ```
+    ```bash
+    $<copy> kubectl get hpa </copy>
+    NAME       REFERENCE             TARGETS MINPODS MAXPODS REPLICAS AGE
+    php-apache Deployment/php-apache 0%/50%  1       10      1        10s
+    ```
 
 ## 5. 增加 Apache web 应用工作负载
 
