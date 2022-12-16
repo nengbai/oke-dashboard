@@ -53,15 +53,23 @@ Apache web server pod manifest文件说明:</br>
 
 ## 5. 增加 Apache web 应用工作负载
 
-1. 启动一个busybox容器，为Apache web 应用增加工作负载
+1. 启动一个busybox容器
 
     ```bash
-    $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh --generator=run-pod/v1 </copy>
-    NAME       REFERENCE             TARGETS  MINPODS MAXPODS REPLICAS AGE
-    php-apache Deployment/php-apache 250%/50% 1       10      1        1m
+    $<copy> kubectl run -it --rm load-generator --image=busybox /bin/sh </copy>
+    If you don't see a command prompt, try pressing enter.
+    / # 
+    / # 
     ```
 
-2. 等待几分钟, 检查Apache web 应用的中REPLICAS数量
+2. 为Apache web 应用增加工作负载
+
+    ```bash
+    / # <copy> while true; do wget -q -O- http://php-apache; done </copy>
+    OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!Ok
+    ```
+
+3. 等待几分钟, 检查Apache web 应用的中REPLICAS数量
 
     ```bash
    $<copy> kubectl get hpa </copy>
