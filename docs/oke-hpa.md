@@ -43,7 +43,7 @@ Apache web server pod manifest文件说明:</br>
     *维持最小Pod数量 1,最大副本数 10.</br>
     *增加或减少Pod数量维持每个Pod的CPU使用率在 50% .
 
-2. 确认Horizontal Pod Autoscaler
+2. 等待1分钟左右，确认Horizontal Pod Autoscaler，TARGETS：0%/50% 
 
     ```bash
     $<copy> kubectl get hpa </copy>
