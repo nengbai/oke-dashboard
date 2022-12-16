@@ -24,7 +24,7 @@
     deployment.apps/php-apache created
     service/php-apache created
     ```
-    Apache web server pod manifest文件说明:</br>
+Apache web server pod manifest文件说明:</br>
     *500m CPU limit: 限制CPU使用最大使用到 500 millicores, 或 1/2 core.</br>
     *200m CPU request：容器启动希望获取 CPU资源在 200 millicores, 或 1/5 core.
 
@@ -37,7 +37,7 @@
    horizontalpodautoscaler.autoscaling/php-apache autoscaled
    ```
 
-   功能说明:</br>
+功能说明:</br>
    *维持最小Pod数量 1,最大副本数 10.</br>
    *增加或减少Pod数量维持每个Pod的CPU使用率在 50% .
 
