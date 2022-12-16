@@ -69,7 +69,7 @@ Apache web server pod manifest文件说明:</br>
     OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!OK!Ok
     ```
 
-3. 等待几分钟, 检查Apache web 应用的中REPLICAS数量
+3. 等待几分钟, 检查Apache web 应用的中REPLICAS数量,TARGETS会维持在50%
 
     ```bash
    $<copy> kubectl get hpa </copy>
