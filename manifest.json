@@ -22,7 +22,7 @@
             "filename": "./docs/oke-ca.md"
         },
         {           
-            "title": "OKE Pod自动弹性收缩",
+            "title": "OKE Pod自动弹性伸缩",
             "filename": "./docs/oke-hpa.md"
         }
     ]
