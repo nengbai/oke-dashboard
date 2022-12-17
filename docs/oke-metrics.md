@@ -269,9 +269,9 @@ Error from server (ServiceUnavailable): the server is currently unable to handle
 
 可以看到kubectl top命令可以正常执行，说明metrics server 部署成功没有问题。
 
-## 3. Metrics Serve 原理
+## 3. Metrics Server 原理
 
-Metrics Serve从 Kubelet Summary API(类似/ap1/v1/nodes/nodename/stats/summary)采集指标信息，然后聚合，聚合数据将存储在内存中，且以metric-api的形式暴露对外提供访问。Metrics server复用api-server的库来实现自己的功能，比如鉴权、版本等。
+Metrics Server从 Kubelet Summary API(类似/ap1/v1/nodes/nodename/stats/summary)采集指标信息，然后聚合，聚合数据将存储在内存中，且以metric-api的形式暴露对外提供访问。Metrics server复用api-server的库来实现自己的功能，比如鉴权、版本等。
 因为存放在内存中，因此监控数据是没有持久化的，可以通过第三方存储来拓展。
 Metrics-Server架构：
 从Kubelet、cAdvisor获取度量数据，再由Metric Server提供给Dashboard、HPA控制器等使用. Metrics Server相当于做了一次数据的转换，把cadvisor格式的数据转换成了kubernetes的api的json格式.
