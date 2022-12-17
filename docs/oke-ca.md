@@ -1,32 +1,32 @@
 # OKE Node 自动弹性伸缩(Cluster Autoscaler)操作手册
 
-    OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应用程序工作负载需求,自动调整集群节点池的大小。同时，通过自动调整集群节点池的大小，可以确保应用程序可用性情况下，优化您的成本。
+OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应用程序工作负载需求,自动调整集群节点池的大小。同时，通过自动调整集群节点池的大小，可以确保应用程序可用性情况下，优化您的成本。
 
 ## 1. OKE Cluster Autoscaler 设计规划
 
 ### 1.1 OKE集群节点自动扩容或者缩放条件
 
-    1. 扩容：由于资源不足，某些Pod无法在任何当前节点上进行调度.
-    2. 缩容: Node节点资源利用率较低时，且此node节点上存在的pod都能被重新调度到其他node节点上运行.
+1. 扩容：由于资源不足，某些Pod无法在任何当前节点上进行调度.
+2. 缩容: Node节点资源利用率较低时，且此node节点上存在的pod都能被重新调度到其他node节点上运行.
 
 ### 1.2 什么时候OKE集群节点不会被Cluster Autoscaler删除
 
-    1. 节点上有Pod被 PodDisruptionBudget 控制器限制。
-    2. 节点上有命名空间是 kube-system 的pods。
-    3. 节点上的Pod不是被控制器创建，例如不是被Deployment,Replica Set,Job,Stateful Set创建。
-    4. 节点上有Pod使用了本地存储
-    5. 节点上Pod驱逐后无处可去，即没有其他node能调度这个pod
-    6. 节点有注解："cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"(在CA 1.0.3或更高版本中受支持)
+1. 节点上有Pod被 PodDisruptionBudget 控制器限制。
+2. 节点上有命名空间是 kube-system 的pods。
+3. 节点上的Pod不是被控制器创建，例如不是被Deployment,Replica Set,Job,Stateful Set创建。
+4. 节点上有Pod使用了本地存储
+5. 节点上Pod驱逐后无处可去，即没有其他node能调度这个pod
+6. 节点有注解："cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"(在CA 1.0.3或更高版本中受支持)
 
 ### 1.3 如何保证OKE集群节点不受OKE Cluster Autoscaler删除
 
-    特定标签保护：从CA 1.0开始，节点可以打上以下标签：
+特定标签保护：从CA 1.0开始，节点可以打上以下标签：
 
     ```text
     "cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"
     ```
 
-    使用 kubectl 将其添加到节点(或从节点删除)：
+使用 kubectl 将其添加到节点(或从节点删除)：
 
     ```bash
     $<copy> kubectl annotate node cluster-autoscaler.kubernetes.io/scale-down-disabled=true </copy>
@@ -34,17 +34,17 @@
 
 ### 1.4 OKE Cluster Autoscaler 最佳实践
 
-    1. 采用多个节点池(放在多个可用AD)，按节点池区划分功能，
-    2. 同一个节点池中的节点:有相同的容量、CPU架构和操作系统版本。
-    3. 不需要Cluster Autoscaler管理节点池，至少有一个节点池，不要把不需要自动调度的节点放到Cluster Autoscaler管理的节点池中.
-    4. 不要手动修改Cluster Autoscaler管理的节点组及节点，容器CPU,内存配置。
-    5. Pod定义多个副本，声明中带有 requests 资源限制。
-    6. 对于不需要调度Pod,使用PodDisruptionBudgets属性，防止Pod删除。
-    7. 设置节点池指定最小/最大之前，请检查您租户的配额是否足够大。
-    8. 不要同一个集群中运行多个Cluster Autoscaler。
-    9. Cluster Autoscaler自动调度max-node-provision-time 25分钟
+1. 采用多个节点池(放在多个可用AD)，按节点池区划分功能，
+2. 同一个节点池中的节点:有相同的容量、CPU架构和操作系统版本。
+3. 不需要Cluster Autoscaler管理节点池，至少有一个节点池，不要把不需要自动调度的节点放到Cluster Autoscaler管理的节点池中.
+4. 不要手动修改Cluster Autoscaler管理的节点组及节点，容器CPU,内存配置。
+5. Pod定义多个副本，声明中带有 requests 资源限制。
+6. 对于不需要调度Pod,使用PodDisruptionBudgets属性，防止Pod删除。
+7. 设置节点池指定最小/最大之前，请检查您租户的配额是否足够大。
+8. 不要同一个集群中运行多个Cluster Autoscaler。
+9. Cluster Autoscaler自动调度max-node-provision-time 25分钟
 
-    Kubernetes Cluster Autoscaler暂不支持参数：</br>
+Kubernetes Cluster Autoscaler暂不支持参数：</br>
     *--node-group-auto-discovery : 不支持节点池自动发现. </br>
     *--node-autoprovisioning-enabled=true : Not supported.</br>
     *--gpu-total : 不支持GPU. </br>
