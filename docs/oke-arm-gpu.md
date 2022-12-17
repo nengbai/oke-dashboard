@@ -4,7 +4,7 @@
 
 OKE version 1.19.7开始支持ARM-base 架构高并发么应用，需要为OKE集群定义特定ARM-base 节点池，且选择ARM-base 类型实例和支持ARM-base 操作系统的image.
 
-1. 意项目如下
+1. 注意项目如下
 
     * 定义节点池，增加Arm-based 类型实例节点。
     * Arm-based 类型实例节点需要Kubernetes version 1.19.7 或更高。
@@ -36,11 +36,11 @@ OKE version 1.19.7开始支持GPU 功能，需要为OKE集群定义特定GPU节�
 
 1. 注意项目如下
 
-* 定义节点池，增加GPU 类型实例节点。
-* GPU 类型实例节点需要Kubernetes version 1.19.7 或更高。
-* 节点节点池中不能混合GPU 类型实例和非GPU 类型实例。
-* GPU 类型实例节点需要选择兼容Oracle Linux GPU操作系统image。
-* 不是所有可用区域都有GPU 类型实例节点。
+    * 定义节点池，增加GPU 类型实例节点。
+    * GPU 类型实例节点需要Kubernetes version 1.19.7 或更高。
+    * 节点节点池中不能混合GPU 类型实例和非GPU 类型实例。
+    * GPU 类型实例节点需要选择兼容Oracle Linux GPU操作系统image。
+    * 不是所有可用区域都有GPU 类型实例节点。
 
 2. 当应用程序运行在GPU 类型OKE 节点上，下面会挂在到pod
 
