@@ -22,15 +22,15 @@ OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应�
 
 特定标签保护：从CA 1.0开始，节点可以打上以下标签：
 
-    ```text
-    "cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"
-    ```
+```text
+"cluster-autoscaler.kubernetes.io/scale-down-disabled": "true"
+```
 
 使用 kubectl 将其添加到节点(或从节点删除)：
 
-    ```bash
-    $<copy> kubectl annotate node cluster-autoscaler.kubernetes.io/scale-down-disabled=true </copy>
-    ```
+```bash
+$<copy> kubectl annotate node cluster-autoscaler.kubernetes.io/scale-down-disabled=true </copy>
+```
 
 ### 1.4 OKE Cluster Autoscaler 最佳实践
 
@@ -44,7 +44,8 @@ OKE完全兼容Kubernetes Cluster Autoscaler. OKE Cluster Autoscaler 根据应�
 8. 不要同一个集群中运行多个Cluster Autoscaler。
 9. Cluster Autoscaler自动调度max-node-provision-time 25分钟
 
-Kubernetes Cluster Autoscaler暂不支持参数：</br>
+Kubernetes Cluster Autoscaler暂不支持参数：
+
     *--node-group-auto-discovery : 不支持节点池自动发现. </br>
     *--node-autoprovisioning-enabled=true : Not supported.</br>
     *--gpu-total : 不支持GPU. </br>
