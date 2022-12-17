@@ -276,7 +276,7 @@ Metrics Server从 Kubelet Summary API(类似/ap1/v1/nodes/nodename/stats/summary
 Metrics-Server架构：
 从Kubelet、cAdvisor获取度量数据，再由Metric Server提供给Dashboard、HPA控制器等使用. Metrics Server相当于做了一次数据的转换，把cadvisor格式的数据转换成了kubernetes的api的json格式.
 
-## 4. Metrics Serve 如何获取监控数据
+## 4. Metrics Server 如何获取监控数据
 
 Metrics-Server通过kubelet获取监控数据。kubernetes 1.7版本之前，在每个节点都安装了一个叫做cAdvisor的程序，负责获取节点和容器的CPU，内存等数据; 1.7版本及之后，将cAdvisor精简化内置于kubelet中，可直接从kubelet中获取数据。
 
