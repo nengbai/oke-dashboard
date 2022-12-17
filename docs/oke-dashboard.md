@@ -1,6 +1,6 @@
 # OKE Dashboard for above version 1.24
 
-Kubernetes 从v1.24.0 开始使用的安装方式于之前很很大不同，OKE 容器服务完全兼容Kubernetes，当使用版本v1.24.0 or above v1.24.0 版本，需要参考该文档。
+Kubernetes 从v1.24.0 开始使用的安装方式较之前有很大不同，OKE 容器服务完全兼容Kubernetes，当使用版本v1.24.0 or above v1.24.0 版本，需要参考该文档。
 
 ## 1. OKE Dashboard环境准备
 
