@@ -2,7 +2,7 @@
     "workshoptitle": "OCI Install for OKE Dashboard & Metrics",
     "tutorials": [
         {
-            "title": "OKE Metrics Services配置",
+            "title": "OKE Metrics Server配置",
             "filename": "./docs/oke-metrics.md" 
         },
         {           

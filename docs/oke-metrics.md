@@ -1,4 +1,4 @@
-# OKE Kubernetes核心指标监控——Metrics Server
+# OKE Metrics Server-Kubernetes核心指标监控器
 
 ## 1. Mestrics Server概述
 
@@ -7,8 +7,8 @@
    项目地址：<https://github.com/kubernetes-sigs/metrics-server>
    需要注意：
 
-  * metric-server提供实时指标.
-  * 每个节点实时数据是由该节点上的cadvisor采集，metric-server只是发请求给cadvisor并将metric格式的数据转换成。
+  * metric-server提供实时指标.</br>
+  * 每个节点实时数据是由该节点上的cadvisor采集，metric-server只是发请求给cadvisor并将metric格式的数据转换成。</br>
   * aggregate api</br>
     aggregate api提供接口其它组件调用（kube-scheduler、HorizontalPodAutoscaler、Kubernetes集群客户端等），可获取集群监控数据。
 
