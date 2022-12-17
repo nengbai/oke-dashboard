@@ -24,6 +24,10 @@
         {           
             "title": "OKE Pod自动弹性伸缩",
             "filename": "./docs/oke-hpa.md"
+        },
+        {           
+            "title": "OKE ARM 和 GPU支持",
+            "filename": "./docs/oke-arm-gpu.md"
         }
     ]
 }
