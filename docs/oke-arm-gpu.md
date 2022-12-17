@@ -44,8 +44,8 @@ OKE version 1.19.7开始支持GPU 功能，需要为OKE集群定义特定GPU节�
 
 2. 当应用程序运行在GPU 类型OKE 节点上，下面会挂在到pod
 
-* requested number of GPU devices.
-* node's CUDA library
+    * requested number of GPU devices.
+    * node's CUDA library
 
 3. 定义运行在GPU类型Node的Pod
 
