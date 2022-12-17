@@ -1,6 +1,6 @@
 # OKE Pod自动弹性伸缩-Horizontal Pod Autoscaling
     
-OKE Horizontal Pod Autoscaler是OKE集群中Pod的工作负载资源（如Deployment或StatefulSet）管理器，可根据应用 Pod CPU资源和内存使用率自动调整Pod数量，实现水平扩展，或水平缩容，保证应用获取资源保证前提下，帮助客户优化成本。
+OKE Horizontal Pod Autoscaler是OKE集群中Pod的工作负载资源（如Deployment或StatefulSet）管理器，可根据应用 Pod CPU和内存资源使用率自动调整Pod数量，实现水平扩展，或水平缩容，保证应用获取资源保证前提下，帮助客户优化成本。
 ## 1. Pod 自动弹性伸缩工作原理
 
 ![Horizontal Pod Autoscaling](./img/hpa.png "Horizontal Pod Autoscaling")
