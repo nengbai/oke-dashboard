@@ -1,4 +1,4 @@
-# OKE Metrics Server-Kubernetes核心指标监控器
+# OKE Metrics Server - Kubernetes核心指标监控器
 
 ## 1. Mestrics Server概述
 
