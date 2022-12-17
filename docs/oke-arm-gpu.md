@@ -13,22 +13,22 @@ OKE version 1.19.7开始支持ARM-base 架构高并发么应用，需要为OKE�
 
 2. 定义运行在Arm-based nodes的pod
 
-```bash
+    ```bash
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx
-  labels:
-    env: test
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-    imagePullPolicy: IfNotPresent
-  nodeSelector:
-    kubernetes.io/arch: arm64
-```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: nginx
+    labels:
+        env: test
+    spec:
+    containers:
+    - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+    nodeSelector:
+        kubernetes.io/arch: arm64
+    ```
 
 ## 2. OKE GPU 支持
 
@@ -49,32 +49,32 @@ OKE version 1.19.7开始支持GPU 功能，需要为OKE集群定义特定GPU节�
 
 3. 定义运行在GPU类型Node的Pod
 
-```bash
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test-with-gpu-workload
-spec:
-  restartPolicy: OnFailure
-  containers:
-    - name: cuda-vector-add
-      image: k8s.gcr.io/cuda-vector-add:v0.1
-      resources:
-        limits:
-          nvidia.com/gpu: 1
-```
+    ```bash
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: test-with-gpu-workload
+    spec:
+    restartPolicy: OnFailure
+    containers:
+        - name: cuda-vector-add
+        image: k8s.gcr.io/cuda-vector-add:v0.1
+        resources:
+            limits:
+            nvidia.com/gpu: 1
+    ```
 
 4. 定义运行在No-GPU类型Node的Pod
 
-```bash
+    ```bash
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test-with-non-gpu-workload
-spec:
-  restartPolicy: OnFailure
-  containers:
-    - name: test-with-non-gpu-workload
-      image: "oraclelinux:8"
-```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: test-with-non-gpu-workload
+    spec:
+    restartPolicy: OnFailure
+    containers:
+        - name: test-with-non-gpu-workload
+        image: "oraclelinux:8"
+    ```
