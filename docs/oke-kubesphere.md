@@ -86,6 +86,8 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
 
 1. 下载kubesphere-ingress.yaml
 
+下载前，请确认下载机器可以访问https://github.com.
+
     ```bash
     $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
     ```

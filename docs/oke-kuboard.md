@@ -62,6 +62,8 @@
 
 ### 2.1 下载kuboard
 
+下载前，请确认下载机器可以访问https://github.com.
+
 ```bash
 <copy> curl -o kuboard-v3.yaml https://github.com/nengbai/oke-dashborad/blob/main/kuboard/kuboard-v3.yaml </copy> 
 <copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kuboard/kuboard-ingress.yaml </copy>

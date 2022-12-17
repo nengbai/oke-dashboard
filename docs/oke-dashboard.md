@@ -6,6 +6,8 @@ Kubernetes 从v1.24.0 开始使用的安装方式较之前有很大不同，OKE 
 
 ### 1.1 下载OKE Dashboard 安装包
 
+下载前，请确认下载机器可以访问https://github.com.
+
 ```bash
 $ <copy> curl -o recommended.yaml https://github.com/nengbai/oke-dashborad/blob/main/dashboard/recommended.yaml
 curl -o oke-admin.yaml  https://github.com/nengbai/oke-dashborad/blob/main/dashboard/oke-admin.yaml

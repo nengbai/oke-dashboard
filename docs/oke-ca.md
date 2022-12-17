@@ -100,6 +100,8 @@ Kubernetes Cluster Autoscaler暂不支持参数：
 
 1. 下载 OKE Cluster Autoscaler cluster-autoscaler.yaml
 
+下载前，请确认下载机器可以访问https://github.com.
+
     ```bash
     $ <copy> curl -o cluster-autoscaler.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/cluster-autoscaler.yaml
     curl -o nginx.yaml https://github.com/nengbai/oke-dashborad/blob/main/cluster-autoscaler/nginx.yaml

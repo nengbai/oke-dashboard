@@ -19,6 +19,8 @@
 1、下载对应的稳定版本，目前稳定版本是v0.5.2：</br>
 参照<https://github.com/kubernetes-sigs/metrics-server> 中Compatibility Matrix对应信息.
 
+下载前，请确认下载机器可以访问https://github.com.
+
   ```bash
   $<copy> curl -o components.yaml https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.2/components.yaml </copy>
   ```
