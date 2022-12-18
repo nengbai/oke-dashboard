@@ -145,9 +145,17 @@ $ <copy> kubectl apply -f dashboard-ingress.yaml </copy>
 $ <copy> kubectl -n kubernetes-dashboard get ing </copy>
 ```
 
-4. 外网访问验证 OKE Dashboard
+4.  增加域名解释
+长期使用建议使用dns服务解释，如果是临时测试，建议在本地hosts中增加，下面以mac为例增加域名解释示例。
 
-浏览器(firefox or chrome)中打开下面网址
+```bash
+$ <copy> sudo vi /etc/hosts</copy> 
+141.147.172.67  oke-dashboard.example.com
+```
+
+5. 外网访问验证 OKE Dashboard
+
+浏览器(firefox or chrome)中打开Ingress对应的域名, 例如：oke-dashboard.example.com
 
 ``` text
     https://oke-dashboard.example.com
