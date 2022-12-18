@@ -64,7 +64,7 @@ $ <copy>  kubectl apply -f oke-admin.yaml </copy>
 
 1. 启动本地Proxy
 
-在您本地终端执行下面命令（需要kubectl环境）
+在您本地或OCI VM终端执行下面命令（需要kubectl环境），不要终止该窗口，等获取token方可终止。
     ``` bash
     $ <copy> kubectl proxy </copy> 
     Starting to serve on 127.0.0.1:8001
@@ -73,7 +73,7 @@ $ <copy>  kubectl apply -f oke-admin.yaml </copy>
 
 2. 获取登录token.
 
-本地在您本地终端执行下面命令，并记录获取到"token"：
+另外开一个终端窗口（一定与上面步骤同一台机器），执行下面命令，并记录获取到"token"：
 
 ``` bash
 $ <copy> curl 127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/serviceaccounts/oke-admin/token -H "Content-Type:application/json" -X POST -d '{}' </copy> 
@@ -83,7 +83,7 @@ example:
 
 3. 网页验证
 
-在您本地终端电脑上(与上面2步骤执行同一台电脑)，用浏览器(firefox or chrome)中打开下面网址
+在电脑上(与上面1，2步骤执行同一台电脑)，用浏览器(firefox or chrome)中打开下面网址
 
 ``` text
 <copy> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ </copy>
