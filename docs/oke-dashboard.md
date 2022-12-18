@@ -139,10 +139,12 @@ spec:
 $ <copy> kubectl apply -f dashboard-ingress.yaml </copy> 
 ```
 
-3. 查看域名对应公网IP
+3. 查看域名对应公网IP，例如：域名 oke-dashboard.example.com  对应公网IP是 141.147.172.67
 
 ```bash
 $ <copy> kubectl -n kubernetes-dashboard get ing </copy>
+NAME                    CLASS   HOSTS                       ADDRESS          PORTS     AGE
+oke-dashboard-ingress   nginx   oke-dashboard.example.com   141.147.172.67   80, 443   5m29s 
 ```
 
 4.  增加域名解释
