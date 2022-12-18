@@ -89,7 +89,7 @@ KubeSphere 是集成Kubernetes集群管理，多Kubernetes集群管理，以及�
 下载前，请确认下载机器可以访问https://github.com.
 
     ```bash
-    $ <copy> curl -o kubesphere-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kubesphere/kubesphere-ingress.yaml </copy> 
+    $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/kubesphere/kubesphere-ingress.yaml </copy> 
     ```
 
 2. 编辑 kubesphere-ingress.yaml,调整域名:example.com 为您拥有域名

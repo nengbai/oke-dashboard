@@ -65,8 +65,8 @@
 下载前，请确认下载机器可以访问https://github.com.
 
 ```bash
-<copy> curl -o kuboard-v3.yaml https://github.com/nengbai/oke-dashboard/blob/main/kuboard/kuboard-v3.yaml </copy> 
-<copy> curl -o kuboard-ingress.yaml https://github.com/nengbai/oke-dashboard/blob/main/kuboard/kuboard-ingress.yaml </copy>
+<copy> curl -o kuboard-v3.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/kuboard/kuboard-v3.yaml </copy> 
+<copy> curl -o kuboard-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/kuboard/kuboard-ingress.yaml </copy>
 ```
 
 ### 2.2 调整kuboard和etcd容器参数
