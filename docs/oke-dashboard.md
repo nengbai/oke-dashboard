@@ -139,7 +139,13 @@ spec:
 $ <copy> kubectl apply -f dashboard-ingress.yaml </copy> 
 ```
 
-3. 外网访问验证 OKE Dashboard
+3. 查看域名对应公网IP
+
+```bash
+$ <copy> kubectl -n kubernetes-dashboard get ing </copy>
+```
+
+4. 外网访问验证 OKE Dashboard
 
 浏览器(firefox or chrome)中打开下面网址
 
