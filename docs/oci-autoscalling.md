@@ -41,13 +41,13 @@
 2. 在左下方的中点击 Security Lists， 选择对应的 Security List
 3. 增加 Ingress 规则 和egress 规则
 
-```text
+    ```text
     Source Type: CIDR
     Source CIDR: Enter 0.0.0.0/0
     IP Protocol: Select TCP
     Source Port Range: All
     Destination Port Range: Enter 80 (the listener port)
-```
+    ```
 ## 2. 配置 VM instance pool 和 auto scaling 策略
 
 ## 2.1 配置 VM instance pool
@@ -57,44 +57,43 @@
 2. 点击创建 Instance.  
 
 填写下面信息:
-    a. Name your instance: 实例名称
+a. Name your instance: 实例名称
 
     Create in Compartment: 选择 compartment
 
-    b. Placement：
+b. Placement：
 
     Availability Domain: 选这一个可用AD (缺省AD 1)
 
-    c. Image and shape: 选择采用的操作系统，推荐使用最新版本 Oracle Linux available
+c. Image and shape: 选择采用的操作系统，推荐使用最新版本 Oracle Linux available
 
-    d. 选择实例Network 和Storage（可选项）:
+d. 选择实例Network 和Storage（可选项）:
 
-    Primary network: Select existing virtual cloud network </br>
+   Primary network: Select existing virtual cloud network </br>
     选择您comparment下的VCN网络：Virtual cloud network in devops </br>
-
     选择IP类型： Public IPv4 address </br>
     Add SSH Keys：Upload public key files (.pub) </br>
     Boot volume </br>
-        Specify a custom boot volume size（可选项）:缺省系统盘50GB </br>
-        Use in-transit encryption：缺省选用Oracle 加密算法加密      </br>
-        Encrypt this volume with a key that you manage： 或选择您拥有加密算法加密 </br>
+        *Specify a custom boot volume size（可选项）:缺省系统盘50GB </br>
+        *Use in-transit encryption：缺省选用Oracle 加密算法加密      </br>
+        *Encrypt this volume with a key that you manage： 或选择您拥有加密算法加密 </br>
 
-    e. Show advanced options
+e. Show advanced options
 
     在表格的Management项中，增加cloud-init script:
 
-        ```text
-        #cloud-config
-        packages:
-        - httpd
-        - stress
+    ```text
+    #cloud-config
+    packages:
+    - httpd
+    - stress
 
-        runcmd:
-        - [sh, -c, echo "<html>Web Server IP `hostname --ip-address`</html>" > /var/www/html/index.html]
-        - [firewall-offline-cmd, --add-port=80/tcp]
-        - [systemctl, start, httpd]
-        - [systemctl, restart, firewalld]
-        ```
+    runcmd:
+    - [sh, -c, echo "<html>Web Server IP `hostname --ip-address`</html>" > /var/www/html/index.html]
+    - [firewall-offline-cmd, --add-port=80/tcp]
+    - [systemctl, start, httpd]
+    - [systemctl, restart, firewalld]
+    ```
 
 3. 点击"Create"
 
