@@ -2,7 +2,8 @@
 
 本操作是在有VCN 网络环境操作情况实施，如果没VCN，请参照VCN 章节创建VCN网络环境。
 
-## 第一节: 创建负载均衡器（Load Balancer） 和增加安全策略（Security List）
+## 1. 创建负载均衡器（Load Balancer） 和增加安全策略（Security List）
+### 1.1 创建负载均衡器（Load Balancer)
 
 1. 在OCI Services menu下的 Networking中 选择 Load Balancers
 
@@ -29,18 +30,22 @@
     SPECIFY THE TYPE OF TRAFFIC YOUR LISTENER HANDLES: HTTP
     SPECIFY THE PORT YOUR LISTENER MONITORS FOR INGRESS TRAFFIC: 80
 
-5. OCI Services menu->Networking->Virtual Cloud Networks
+### 1.2 增加安全策略（Security List)
 
-a. VCN name ->VCN Details
-b. Security Lists->Default Security List.
-c. Add Ingress Rules
+OCI Services menu->Networking->Virtual Cloud Networks
+
+1. VCN name ->VCN Details
+2. Security Lists->Default Security List.
+3. Add Ingress Rules
     Source Type: CIDR
     Source CIDR: Enter 0.0.0.0/0
     IP Protocol: Select TCP
     Source Port Range: All
     Destination Port Range: Enter 80 (the listener port)
 
-## 第二节：配置 VM instance pool 和 auto scaling 策略
+## 2. 配置 VM instance pool 和 auto scaling 策略
+
+## 2.1 配置 VM instance pool
 
 1. 在OCI services menu->Compute 下 点击 Instances
 
@@ -81,7 +86,7 @@ e. Show advanced options
 
 3. 点击"Create"
 
-### 创建 VM Instance Pool
+### 2.2 创建 VM Instance Pool
 
  点击 Instance name，进入Instance details页面
 
@@ -89,9 +94,11 @@ e. Show advanced options
 a. 配置实例基础信息
 b. 配置实例池
 
-2. Autoscaling configurations
+### 2.3 auto scaling 策略
 
-## 第4节: 验证测试
+1. Autoscaling configurations
+
+## 3: 验证测试
 
 自动弹性伸/缩策略是：当CPU 使用率在300秒内一直大于 80%，将自动创建1个实例. 一旦CPU 使用率在300秒内一直小于40%，将自动删除1个实例，实例池中至少有一个实例。
 
