@@ -1,6 +1,6 @@
 # OKE 适配Arm-based 和 GPU Nodes
 
-## 1. OKE Arm-based 架构高并发么应用支持
+## 1. OKE Arm-based 架构高并发应用支持
 
 OKE version 1.19.7开始支持ARM-base 架构高并发么应用，需要为OKE集群定义特定ARM-base 节点池，且选择ARM-base 类型实例和支持ARM-base 操作系统的image.
 
