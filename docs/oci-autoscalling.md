@@ -59,7 +59,7 @@
 
 ## 3. 配置 VM instance pool 和 auto scaling 策略
 
-## 3.1 配置 VM instance pool
+### 3.1 配置 VM instance pool
 
 1. 在OCI services menu->Compute 下 点击 Instances
 
