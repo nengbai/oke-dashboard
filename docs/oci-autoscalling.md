@@ -82,10 +82,9 @@
     c. Add SSH Keys：Upload public key files (.pub) </br>
 
     d. Boot volume
-
-        *Specify a custom boot volume size（可选项）: 缺省系统盘50GB /br>
-        *Use in-transit encryption：                缺省选用Oracle 加密算法加密 /br>
-        *Encrypt this volume ：                     或选择您拥有加密算法加密 /br>
+       *Specify a custom boot volume size（可选项）: 缺省系统盘50GB /br>
+       *Use in-transit encryption： 缺省选用Oracle 加密算法加密 /br>
+       *Encrypt this volume：  或选择您拥有加密算法加密 /br>
 
     e. Show advanced options
 
