@@ -24,11 +24,12 @@
 
 4. 增加健康监测策略：HEALTH CHECK POLICY
 
-||项目｜内容｜|
-｜:----:｜:----:｜
-｜PROTOCOL:｜ HTTP｜
-｜Port:｜ 80｜
-｜URL PATH (URI):｜ /｜
+    ```text
+    PROTOCOL:         HTTP
+    Port:             80 
+    URL PATH (URI):    /
+    ```
+
    
 5. 配置监听器-Configure Listener
 
@@ -43,13 +44,15 @@
 1. 点击对应的VCN name， 进入VCN Details
 2. 在左下方的中点击 Security Lists， 选择对应的 Security List
 3. 增加 Ingress 规则 和egress 规则
-    ||项目｜｜内容｜｜
-    ｜----｜-----｜
-    |Source Type:| CIDR|
-    |Source CIDR:| 0.0.0.0/0|
-    |IP Protocol:|TCP|
-    |Source Port Range:| All|
-    |Destination Port Range:|80 (the listener port)|
+
+```text
+    Source Type:            CIDR
+    Source CIDR:            0.0.0.0/0
+    IP Protocol:            TCP 
+    Source Port Range:       All
+    Destination Port Range:  80 (the listener port)
+```
+
 ## 2. 配置 VM instance pool 和 auto scaling 策略
 
 ## 2.1 配置 VM instance pool
