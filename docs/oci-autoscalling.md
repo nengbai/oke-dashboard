@@ -62,30 +62,31 @@
 2. 点击创建 Instance.  
 
     填写下面信息:
+
     a. Name your instance: 实例名称
 
-    Create in Compartment: 选择 compartment
+        Create in Compartment: 选择 compartment
 
     b. Placement：
 
-    Availability Domain: 选这一个可用AD (缺省AD 1)
+        Availability Domain: 选这一个可用AD (缺省AD 1)
 
     c. Image and shape: 选择采用的操作系统，推荐使用最新版本 Oracle Linux available
 
-    d. 选择实例Network 和Storage（可选项）:
+3. 选择实例 Network 和Storage（可选项）:
 
-    e. 选择您comparment下的VCN网络：Virtual cloud network in devops
+    a. 选择您comparment下的VCN网络：Virtual cloud network in devops
 
-    f. 选择IP类型： Public IPv4 address </br>
+    b. 选择IP类型： Public IPv4 address 
 
-    g. Add SSH Keys：Upload public key files (.pub) </br>
+    c. Add SSH Keys：Upload public key files (.pub) </br>
 
-    h. Boot volume </br>
+    d. Boot volume </br>
         *Specify a custom boot volume size（可选项）:缺省系统盘50GB </br>
         *Use in-transit encryption：缺省选用Oracle 加密算法加密      </br>
         *Encrypt this volume with a key that you manage： 或选择您拥有加密算法加密 </br>
 
-    i. Show advanced options
+    e. Show advanced options
 
     在表格的Management项中，增加cloud-init script:
 
