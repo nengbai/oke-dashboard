@@ -24,7 +24,7 @@
 
 4. 增加健康监测策略：HEALTH CHECK POLICY
 
-|项目｜内容｜
+||项目｜内容｜|
 ｜:----:｜:----:｜
 ｜PROTOCOL:｜ HTTP｜
 ｜Port:｜ 80｜
