@@ -45,13 +45,13 @@
 2. 在左下方的中点击 Security Lists， 选择对应的 Security List
 3. 增加 Ingress 规则 和egress 规则
 
-```text
+    ```text
     Source Type:            CIDR
     Source CIDR:            0.0.0.0/0
     IP Protocol:            TCP 
     Source Port Range:       All
     Destination Port Range:  80 (the listener port)
-```
+    ```
 
 ## 2. 配置 VM instance pool 和 auto scaling 策略
 
