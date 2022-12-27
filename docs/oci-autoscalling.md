@@ -79,13 +79,18 @@
 
     b. 选择IP类型： Public IPv4 address 
 
-    c. Add SSH Keys：Upload public key files (.pub) </br>
+    c. 添加 SSH Keys
 
+    ```text 
+    Upload public key files (.pub)
+    ```
     d. Boot volume
-       *Specify a custom boot volume size（可选项）: 缺省系统盘50GB /br>
-       *Use in-transit encryption： 缺省选用Oracle 加密算法加密 /br>
-       *Encrypt this volume：  或选择您拥有加密算法加密 /br>
 
+    ```text
+    *Specify a custom boot volume size（可选项）: 缺省系统盘50GB
+    *Use in-transit encryption： 缺省选用Oracle 加密算法加密
+    *Encrypt this volume：  或选择您拥有加密算法加密
+    ```
     e. Show advanced options
 
     在表格的Management项中，增加cloud-init script:
