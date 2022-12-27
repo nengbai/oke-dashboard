@@ -24,23 +24,28 @@
 
 4. 增加健康监测策略：HEALTH CHECK POLICY
 
-    ```text
-    PROTOCOL: HTTP
-    Port: 80
-    URL PATH (URI): /
+    ||项目｜｜内容｜｜
+    ｜----｜-----｜
+    ｜PROTOCOL:｜ HTTP｜
+    ｜Port:｜ 80｜
+    ｜URL PATH (URI):｜ /｜
     Leave other options as default
-    Under Configure Listener
-    SPECIFY THE TYPE OF TRAFFIC YOUR LISTENER HANDLES: HTTP
-    SPECIFY THE PORT YOUR LISTENER MONITORS FOR INGRESS TRAFFIC: 80
+   
+5. 配置监听器-Configure Listener
+
+    ```text
+    选择 LISTENER 协议: HTTP
+    输入 LISTENER Ingress Port: 80
     ```
 ### 1.2 增加安全策略（Security List)
 
-    在OCI Services menu下的 Networking->Virtual Cloud Networks，
+在OCI Services menu下的 Networking->Virtual Cloud Networks，
 
 1. 点击对应的VCN name， 进入VCN Details
 2. 在左下方的中点击 Security Lists， 选择对应的 Security List
 3. 增加 Ingress 规则 和egress 规则
-
+    ||项目｜｜内容｜｜
+    ｜----｜-----｜
     |Source Type:| CIDR|
     |Source CIDR:| 0.0.0.0/0|
     |IP Protocol:|TCP|
