@@ -1,4 +1,4 @@
-# OCI Autoscalling 基于系统负载实现自动扩容或缩容
+# OCI AutoScalling 基于系统负载实现自动扩容或缩容
 
 本操作是在有VCN 网络环境操作情况实施，如果没VCN，请参照VCN 章节创建VCN网络环境。
 
