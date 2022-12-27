@@ -1,6 +1,6 @@
 # OCI AutoScalling 基于系统负载实现自动扩容或缩容
 
-本操作是在有VCN 网络环境操作情况实施，如果没VCN，请参照VCN 章节创建VCN网络环境。
+OCI AutoScalling 基于系统负载实现自动扩容或缩容，在确保云中的资源得到有效利用，并可以根据性能指标（如CPU利用率，或内存利用率）自动调整计算资源，既可保证应用高性能，好的用户体验，也可优化您的成本。
 
 ## 1. 高可用应用部署架构
 
@@ -8,6 +8,7 @@
 
 ## 2. 创建负载均衡器(Load Balancer)和增加安全策略(Security List）
 
+本操作是在有VCN 网络环境操作情况实施，如果没VCN，请参照VCN 章节创建VCN网络环境。
 ### 2.1 创建负载均衡器（Load Balancer)
 
 1. 在OCI Services menu下的 Networking中 选择 Load Balancers
