@@ -2,9 +2,13 @@
 
 本操作是在有VCN 网络环境操作情况实施，如果没VCN，请参照VCN 章节创建VCN网络环境。
 
-## 1. 创建负载均衡器(Load Balancer)和增加安全策略(Security List）
+## 1. 高可用应用部署架构
 
-### 1.1 创建负载均衡器（Load Balancer)
+本高可用架构包括一个负载均衡器(load balancer), 基于系统负载自动伸/缩 web 应用, 和高可用数据库.
+
+## 2. 创建负载均衡器(Load Balancer)和增加安全策略(Security List）
+
+### 2.1 创建负载均衡器（Load Balancer)
 
 1. 在OCI Services menu下的 Networking中 选择 Load Balancers
 
@@ -37,7 +41,7 @@
     选择 LISTENER 协议: HTTP
     输入 LISTENER Ingress Port: 80
     ```
-### 1.2 增加安全策略（Security List)
+### 2.2 增加安全策略（Security List)
 
 在OCI Services menu下的 Networking->Virtual Cloud Networks，
 
@@ -53,9 +57,9 @@
     Destination Port Range:  80 (the listener port)
     ```
 
-## 2. 配置 VM instance pool 和 auto scaling 策略
+## 3. 配置 VM instance pool 和 auto scaling 策略
 
-## 2.1 配置 VM instance pool
+## 3.1 配置 VM instance pool
 
 1. 在OCI services menu->Compute 下 点击 Instances
 
@@ -110,7 +114,7 @@
 
 3. 点击"Create"
 
-### 2.2 创建 VM Instance Pool
+### 3.2 创建 VM Instance Pool
 
 1. 点击 Instance name，进入Instance details页面
 
@@ -120,11 +124,11 @@
 
 4. 配置实例池
 
-### 2.3 auto scaling 策略
+### 3.3 auto scaling 策略
 
 1. Autoscaling configurations
 
-## 3: 验证测试
+## 4: 验证测试
 
 自动弹性伸/缩策略是：当CPU 使用率在300秒内一直大于 80%，将自动创建1个实例. 一旦CPU 使用率在300秒内一直小于40%，将自动删除1个实例，实例池中至少有一个实例。
 
