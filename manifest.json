@@ -31,7 +31,7 @@
         },
         {           
             "title": "OCI Autoscalling 基于系统负载实现自动扩容或缩容",
-            "filename": "./docs/oci-autoscalling"
+            "filename": "./docs/oci-autoscalling.md"
         }
     ]
 }
