@@ -24,7 +24,7 @@
 
 4. 增加健康监测策略：HEALTH CHECK POLICY
 
-```text
+    ```text
     PROTOCOL: HTTP
     Port: 80
     URL PATH (URI): /
@@ -32,7 +32,7 @@
     Under Configure Listener
     SPECIFY THE TYPE OF TRAFFIC YOUR LISTENER HANDLES: HTTP
     SPECIFY THE PORT YOUR LISTENER MONITORS FOR INGRESS TRAFFIC: 80
-```
+    ```
 ### 1.2 增加安全策略（Security List)
 
 在OCI Services menu下的 Networking->Virtual Cloud Networks，
@@ -55,57 +55,58 @@
 1. 在OCI services menu->Compute 下 点击 Instances
 
 2. 点击创建 Instance.  
+
 填写下面信息:
-a. Name your instance: 实例名称
+    a. Name your instance: 实例名称
 
-   Create in Compartment: 选择 compartment
+    Create in Compartment: 选择 compartment
 
-b. Placement：
+    b. Placement：
 
-   Availability Domain: 选这一个可用AD (缺省AD 1)
+    Availability Domain: 选这一个可用AD (缺省AD 1)
 
-c. Image and shape: 选择采用的操作系统，推荐使用最新版本 Oracle Linux available
+    c. Image and shape: 选择采用的操作系统，推荐使用最新版本 Oracle Linux available
 
-d. 选择实例Network 和Storage（可选项）:
+    d. 选择实例Network 和Storage（可选项）:
 
-   Primary network: Select existing virtual cloud network </br>
-   选择您comparment下的VCN网络：Virtual cloud network in devops </br>
+    Primary network: Select existing virtual cloud network </br>
+    选择您comparment下的VCN网络：Virtual cloud network in devops </br>
 
-   选择IP类型： Public IPv4 address </br>
-   Add SSH Keys：Upload public key files (.pub) </br>
-   Boot volume </br>
-    Specify a custom boot volume size（可选项）:缺省系统盘50GB </br>
-    Use in-transit encryption：缺省选用Oracle 加密算法加密      </br>
-    Encrypt this volume with a key that you manage： 或选择您拥有加密算法加密 </br>
+    选择IP类型： Public IPv4 address </br>
+    Add SSH Keys：Upload public key files (.pub) </br>
+    Boot volume </br>
+        Specify a custom boot volume size（可选项）:缺省系统盘50GB </br>
+        Use in-transit encryption：缺省选用Oracle 加密算法加密      </br>
+        Encrypt this volume with a key that you manage： 或选择您拥有加密算法加密 </br>
 
-e. Show advanced options
+    e. Show advanced options
 
-   在表格的Management项中，增加cloud-init script:
+    在表格的Management项中，增加cloud-init script:
 
-    ```text
-    #cloud-config
-    packages:
-    - httpd
-    - stress
+        ```text
+        #cloud-config
+        packages:
+        - httpd
+        - stress
 
-    runcmd:
-    - [sh, -c, echo "<html>Web Server IP `hostname --ip-address`</html>" > /var/www/html/index.html]
-    - [firewall-offline-cmd, --add-port=80/tcp]
-    - [systemctl, start, httpd]
-    - [systemctl, restart, firewalld]
-    ```
+        runcmd:
+        - [sh, -c, echo "<html>Web Server IP `hostname --ip-address`</html>" > /var/www/html/index.html]
+        - [firewall-offline-cmd, --add-port=80/tcp]
+        - [systemctl, start, httpd]
+        - [systemctl, restart, firewalld]
+        ```
 
 3. 点击"Create"
 
 ### 2.2 创建 VM Instance Pool
 
- 点击 Instance name，进入Instance details页面
+1. 点击 Instance name，进入Instance details页面
 
-1. More actions 中选择"Create Instance Configuretion"
+2. actions 中选择"Create Instance Configuretion"
 
-a. 配置实例基础信息
+3. 配置实例基础信息
 
-b. 配置实例池
+4. 配置实例池
 
 ### 2.3 auto scaling 策略
 
@@ -129,4 +130,4 @@ b. 配置实例池
 
 3. 检查CPU使用率：在Instance Pool Details下，选择VM instance Name
 
-当CPU utilization > 80%，自动增加1个VM 实例；当CPU utilization < 40%,从实例池中减少1个VM 实例。
+    当CPU utilization > 80%，自动增加1个VM 实例；当CPU utilization < 40%,从实例池中减少1个VM 实例。
