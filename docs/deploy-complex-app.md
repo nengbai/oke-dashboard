@@ -865,19 +865,19 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 ## Task 6: 应用部署场景考虑问题思考
 
-前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
+  前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
 
 ### 常见问题 1: 配置文件提取与敏感信息加密处理
 
-OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解决。
+  OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解决。
 
-**-Configmap**：适用于应用程序公共配置信息存储，可以将配置信息和Docker镜像解耦，友好的进行配置共享。
+  **-Configmap**：适用于应用程序公共配置信息存储，可以将配置信息和Docker镜像解耦，友好的进行配置共享。
 
-**-Secret**：使用敏感信息存储。包括三种类型加密:
+  **-Secret**：使用敏感信息存储。包括三种类型加密:
 
-*Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
-*Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
-*service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
+    *Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
+    *Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
+    *service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
 
 1.  应用配置文件提取-Configmap 
     
