@@ -721,13 +721,13 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     
 4. 部署前端应用
 
-```
-  $ <copy>kubectl apply -f micro-redis.yaml -n redis</copy>
-  deployment.apps/demo-redis-dp created
-  service/demo-redis-svc created
-  Warning: networking.k8s.io/v1beta1 Ingress is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
-  ingress.networking.k8s.io/demo-redis-ingress created
-```
+    ```bash
+      $ <copy>kubectl apply -f micro-redis.yaml -n redis</copy>
+      deployment.apps/demo-redis-dp created
+      service/demo-redis-svc created
+      Warning: networking.k8s.io/v1beta1 Ingress is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
+      ingress.networking.k8s.io/demo-redis-ingress created
+    ```
 
     
 
