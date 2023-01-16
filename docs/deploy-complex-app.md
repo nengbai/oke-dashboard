@@ -1075,42 +1075,42 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 下面以 Limit Range为例解释 应用Pod资源配额。
 
-  Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
     
-    ```text
-    <copy>
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-    name: demo-app-dp
-    namespace: redis
-    spec:
-      selector:
-        matchLabels:
+  ```text
+  <copy>
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+  name: demo-app-dp
+  namespace: redis
+  spec:
+    selector:
+      matchLabels:
+        app: demo-app-dp
+    replicas: 3
+    template:
+      metadata:
+        labels:
           app: demo-app-dp
-      replicas: 3
-      template:
-        metadata:
-          labels:
-            app: demo-app-dp
-        spec:
-          containers:
-          - name: demo-redis
-            image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
-            imagePullPolicy: Always
-            ports:
-            - name: demo-port
-              containerPort: 8000
-              protocol: TCP
-            resources:
-              limits:
-                cpu: 1000m    # 1000m = 1vcpu
-                memory: 500Mi
-              requests:
-                cpu: 500m
-                memory: 200Mi     
-    </copy>
-   ```
+      spec:
+        containers:
+        - name: demo-redis
+          image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
+          imagePullPolicy: Always
+          ports:
+          - name: demo-port
+            containerPort: 8000
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 1000m    # 1000m = 1vcpu
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 200Mi     
+  </copy>
+  ```
 
 ### <font color="red"> 常见问题 3: 应用Pod volume(存储卷) </font>
 
