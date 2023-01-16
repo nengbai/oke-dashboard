@@ -32,6 +32,10 @@
         {           
             "title": "OCI AutoScalling 基于系统负载实现自动扩容或缩容",
             "filename": "./docs/oci-autoscalling.md"
+        },
+        {           
+            "title": "应用迁移到 OCI OKE 平台演示",
+            "filename": "./docs/deploy-complex-app.md"
         }
     ]
 }

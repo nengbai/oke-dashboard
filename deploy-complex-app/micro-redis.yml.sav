@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-redis-dp
+  namespace: redis
+spec:
+  selector:
+    matchLabels:
+      app: demo-redis-dp
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: demo-redis-dp
+    spec:
+      containers:
+      - name: demo-redis
+        image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-redis.v5
+        imagePullPolicy: Always
+        ports:
+        - name: demo-redis
+          containerPort: 8000
+          protocol: TCP
+      imagePullSecrets:
+        - name: ocirsecret-sh
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-redis-svc
+  labels:
+    app: demo-redis-svc
+  namespace: redis
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: demo-redis-dp
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"  
+  labels:
+    app.kubernetes.io/instance: demo-redis-dp
+  name: demo-redis-ingress
+  namespace: redis
+spec:
+  rules:
+  - host: demo-redis.demo.com 
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: demo-redis-svc
+            servicePort: 8000
