@@ -2,6 +2,7 @@
 
 ## OKE 应用迁移架构
 
+![image-20220107111007887](../deploy-complex-app/images/oke-app-ar.png)
 
 ## 简介
 
@@ -1017,39 +1018,39 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
    </copy>
    ```
   
-  Task 3: 部署重新应用
+    Task 3: 部署重新应用
 
-    ```
-    $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
-    ```
+      ```
+      $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
+      ```
   
-  Task 4: 检查应用运行状态
+    Task 4: 检查应用运行状态
 
-    ```
-    $ <copy> kubectl -n redis get pod </copy>
-    ```
+      ```
+      $ <copy> kubectl -n redis get pod </copy>
+      ```
   
-  Task 5: 检查应用服务
+    Task 5: 检查应用服务
 
-    ```
-    $ <copy> kubectl -n redis get svc </copy>
-    ```
+      ```
+      $ <copy> kubectl -n redis get svc </copy>
+      ```
 
-  Task 6: 检查应用对外访问 ingress
+    Task 6: 检查应用对外访问 ingress
 
-    ```
-    $ <copy> kubectl -n redis get ing </copy>
-    ```
+      ```
+      $ <copy> kubectl -n redis get ing </copy>
+      ```
   
-  Task 7: 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
+    Task 7: 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
 
-    ```text
-    <copy> 
-    141.147.172.67 demo-app.demo.com
-    </copy>
-    ```
+      ```text
+      <copy> 
+      141.147.172.67 demo-app.demo.com
+      </copy>
+      ```
   
-  Task 8: 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
+    Task 8: 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
 
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
@@ -1067,42 +1068,41 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
 
 下面以 Limit Range为例解释 应用Pod资源配额。
 
-    Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
-
+  Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+    
     ```text
-    ```text
-   <copy>
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-   name: demo-app-dp
-   namespace: redis
-   spec:
-    selector:
-      matchLabels:
-        app: demo-app-dp
-    replicas: 3
-    template:
-      metadata:
-        labels:
+    <copy>
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: demo-app-dp
+    namespace: redis
+    spec:
+      selector:
+        matchLabels:
           app: demo-app-dp
-      spec:
-        containers:
-        - name: demo-redis
-          image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
-          imagePullPolicy: Always
-          ports:
-          - name: demo-port
-            containerPort: 8000
-            protocol: TCP
-          resources:
-            limits:
-              cpu: 1000m    # 1000m = 1vcpu
-              memory: 500Mi
-            requests:
-              cpu: 500m
-              memory: 200Mi     
-   </copy>
+      replicas: 3
+      template:
+        metadata:
+          labels:
+            app: demo-app-dp
+        spec:
+          containers:
+          - name: demo-redis
+            image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
+            imagePullPolicy: Always
+            ports:
+            - name: demo-port
+              containerPort: 8000
+              protocol: TCP
+            resources:
+              limits:
+                cpu: 1000m    # 1000m = 1vcpu
+                memory: 500Mi
+              requests:
+                cpu: 500m
+                memory: 200Mi     
+    </copy>
    ```
 
 
