@@ -912,52 +912,52 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
 
 2. 敏感信息加密
 
-   Task 1: 加密 MySQL Password 敏感信息
+  Task 1: 加密 MySQL Password 敏感信息
 
-   ```bash
-   $ <copy> echo -n 'Ora@2021.passwd' | base64 </copy>
-    T3JhQDIwMjEucGFzc3dk
-   ```
+    ```bash
+      $ <copy> echo -n 'Ora@2021.passwd' | base64 </copy>
+      T3JhQDIwMjEucGFzc3dk
+    ```
 
     Task 2: 加密 Redis Password 敏感信息
 
     ```bash
-   $ <copy> echo -n 'I3gQqFlxxU' | base64 </copy>
+      $ <copy> echo -n 'I3gQqFlxxU' | base64 </copy>
     STNnUXFGbHh4VQ==
-   ```
+    ```
 
-   Task 3: 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
+  Task 3: 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
 
-   ```text
-   <copy>
-    ---
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: mysql-secret
-      namespace: redis
-    type: Opaque
-    data:
-      password: T3JhQDIwMjEucGFzc3dk
+    ```text
+    <copy>
+      ---
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: mysql-secret
+        namespace: redis
+      type: Opaque
+      data:
+        password: T3JhQDIwMjEucGFzc3dk
 
-    ---
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: redis-secret
-      namespace: redis
-    type: Opaque
-    data:
-      password: STNnUXFGbHh4VQ==
-   </copy>
-
-   ```
-
-    Task 4: 创建 Secret 
+      ---
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: redis-secret
+        namespace: redis
+      type: Opaque
+      data:
+        password: STNnUXFGbHh4VQ==
+    </copy>
 
    ```
-   $ <copy> kubectl apply -f app-secret.yaml </copy> 
-   ```
+
+  Task 4: 创建 Secret 
+
+    ```
+    $ <copy> kubectl apply -f app-secret.yaml </copy> 
+    ```
 
 
 3. 调整应用部署 Manifest 文件 micro-app-with-ingress.yml
@@ -970,56 +970,56 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
 
   Task 2: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
 
-   ```text
-   <copy>
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-   name: demo-app-dp
-   namespace: redis
-   spec:
-    selector:
-      matchLabels:
-        app: demo-app-dp
-    replicas: 3
-    template:
-      metadata:
-        labels:
+    ```text
+    <copy>
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: demo-app-dp
+    namespace: redis
+    spec:
+      selector:
+        matchLabels:
           app: demo-app-dp
-      spec:
-        containers:
-        - name: demo-redis
-          image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
-          imagePullPolicy: Always
-          ports:
-          - name: demo-port
-            containerPort: 8000
-            protocol: TCP
-            #command: ["/bin/sh", "-c", "env"]
-            env:
-              - name: DATABASE_PASSWORD  # 传入pod中的变量名
-                #设置 secret mysql用户的密码
-                valueFrom:
-                  secretKeyRef:
-                    name: mysql-secret    # secret 中的 name
-                    key: password          # configmap 中的 key
-              - name: REDIS_PASSWORD     # 传入pod中的变量名
-                #设置 secret redis用户的密码
-                valueFrom:
-                  secretKeyRef:
-                    name: redis-secret    # secret 中的 name 
-                    key: password          # configmap 中的 key
-            volumeMounts:
-              - name: config
-                mountPath: /app/config/config.yaml
-                subPath: config.yaml
-                readOnly: true
-        volumes:
-        - name: config
-              configMap:
-                name: demo-config # 指定我们创建的configMap的名字    
-   </copy>
-   ```
+      replicas: 3
+      template:
+        metadata:
+          labels:
+            app: demo-app-dp
+        spec:
+          containers:
+          - name: demo-redis
+            image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
+            imagePullPolicy: Always
+            ports:
+            - name: demo-port
+              containerPort: 8000
+              protocol: TCP
+              #command: ["/bin/sh", "-c", "env"]
+              env:
+                - name: DATABASE_PASSWORD  # 传入pod中的变量名
+                  #设置 secret mysql用户的密码
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-secret    # secret 中的 name
+                      key: password          # configmap 中的 key
+                - name: REDIS_PASSWORD     # 传入pod中的变量名
+                  #设置 secret redis用户的密码
+                  valueFrom:
+                    secretKeyRef:
+                      name: redis-secret    # secret 中的 name 
+                      key: password          # configmap 中的 key
+              volumeMounts:
+                - name: config
+                  mountPath: /app/config/config.yaml
+                  subPath: config.yaml
+                  readOnly: true
+          volumes:
+          - name: config
+                configMap:
+                  name: demo-config # 指定我们创建的configMap的名字    
+      </copy>
+      ```
   
     Task 3: 部署重新应用
 
