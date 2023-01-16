@@ -1,24 +1,24 @@
-# & sect;1 应用迁移到OCI OKE 平台演示
+#  应用迁移到OCI OKE 平台演示
 
-## & sect;1.1 OKE 应用迁移架构
+## 1.1 OKE 应用迁移架构
 
 ![image-20220107111007887](../deploy-complex-app/images/oke-app-art.png)
 
-应用部署流程：
-应用访问流程：
+应用部署流程：</br>
+应用访问流程：</br>
 
-## & sect;1.2 简介
+## 1.2 简介
 
 以Golang开发的微服务应用如何迁移部署到OCI OKE平台演示：包含前端应用程序、MySQL和Redis集群。其中前端应用程序的容器镜像事先已经配置好，存放在OCI容器注册表中。
 
 
 
-### & sect;1.2.1 先决条件
+### 1.2.1 先决条件
 
 - 成功部署kubernetes集群
 - 配置好集群访问
 
-## & sect;1.3 Task 1: 创建OKE Ingress控制器
+## 1.3 Task 1: 创建OKE Ingress控制器
 
 每个在kubernetes集群部署的服务，如果要允许外部访问，缺省会创建一个Load Balancer。这样会浪费Load Balancer的资源。我们可以用Ingress来统一外部的访问。Ingress是一组规则，允许入站连接到达集群服务。 它位于多个服务的前面，充当智能路由器。
 
