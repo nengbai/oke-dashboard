@@ -873,15 +873,15 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
 
 **-Configmap**：适用于应用程序公共配置信息存储，可以将配置信息和Docker镜像解耦，友好的进行配置共享。
 
-**-Secret**：使用敏感信息存储。包括三种类型加密
+**-Secret**：使用敏感信息存储。包括三种类型加密:
 
 *Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
 *Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
 *service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
 
-1.  应用配置文件提取-Configmap
+1.  应用配置文件提取-Configmap 
     
-    Task 1: 编辑应用配置文件 config.yaml
+   <font color="red">  Task 1:</font> 编辑应用配置文件 config.yaml
 
     ```text
     <copy>
@@ -906,7 +906,7 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
     </copy>
     ```
 
-    Task 2: 创建 configmap
+  <font color="red"> Task 2:</font> 创建 configmap
 
     ```bash
     $ <copy> kubectl create configmap demo-config --from-file=config.yaml -n redis </copy>
@@ -914,14 +914,14 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
 
 2. 敏感信息加密
 
-  Task 1: 加密 MySQL Password 敏感信息
+  <font color="red"> Task 1:</font> 加密 MySQL Password 敏感信息
 
     ```bash
       $ <copy> echo -n 'Ora@2021.passwd' | base64 </copy>
       T3JhQDIwMjEucGFzc3dk
     ```
 
-    Task 2: 加密 Redis Password 敏感信息
+  <font color="red">   Task 2:</font> 加密 Redis Password 敏感信息
 
     ```bash
       $ <copy> echo -n 'I3gQqFlxxU' | base64 </copy>
