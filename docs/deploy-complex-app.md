@@ -867,7 +867,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
   前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
 
-### 常见问题 1: 配置文件提取与敏感信息加密处理
+### <font color="red"> 常见问题 1: 配置文件提取与敏感信息加密处理 </font>
 
   OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解决。
 
@@ -1060,7 +1060,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
 
-### 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range
+### <font color="red"> 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range <font> 
 
   容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
 可以分成：独占资源、共享资源（主要指CPU、内存），基于优先度和公平性来提高资源的利用率。
@@ -1110,14 +1110,14 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     </copy>
    ```
 
-### 常见问题 3: 应用Pod volume(存储卷)
+### <font color="red"> 常见问题 3: 应用Pod volume(存储卷) </font>
 
 volume(存储卷)是Pod中能够被多个容器访问的共享目录,
 
-### 常见问题 4: 应用Pod健康检查
+###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
 
 
-### 常见问题 5: 应用滚动升级
+### <font color="red"> 常见问题 5: 应用滚动升级 </font>
 
 对于无状态应用，一般采用 deployment 方式部署，deployment 支持两种更新策略：重建更新(Recreate) 和 滚动更新(RollingUpdate) ，可以通过 strategy 指定策略类型，支持两个属性。
 
@@ -1151,9 +1151,9 @@ kubectl rollout status deployment nginx-deployment
 新版本确认没问题，进行全部滚动升级
 kubectl rollout resume deployment nginx-deployment -n redis
 
-### 常见问题 6: 内外网负载均衡衡器
+### <font color="red"> 常见问题 6: OKE 应用负载均衡和网络负载均衡衡器应用 </font>
 
-1. Create an internal load balancer as an OCI load balancer
+1. OKE 内网应用负载均衡器
     ```
     apiVersion: v1
     kind: Service
