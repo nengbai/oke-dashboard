@@ -1,21 +1,24 @@
-# 应用迁移到OCI OKE 平台演示
+# & sect;1 应用迁移到OCI OKE 平台演示
 
-## OKE 应用迁移架构
+## & sect;1.1 OKE 应用迁移架构
 
-![image-20220107111007887](../deploy-complex-app/images/oke-app-ar.png)
+![image-20220107111007887](../deploy-complex-app/images/oke-app-art.png)
 
-## 简介
+应用部署流程：
+应用访问流程：
+
+## & sect;1.2 简介
 
 以Golang开发的微服务应用如何迁移部署到OCI OKE平台演示：包含前端应用程序、MySQL和Redis集群。其中前端应用程序的容器镜像事先已经配置好，存放在OCI容器注册表中。
 
 
 
-### 先决条件
+### & sect;1.2.1 先决条件
 
 - 成功部署kubernetes集群
 - 配置好集群访问
 
-## Task 1: 创建OKE Ingress控制器
+## & sect;1.3 Task 1: 创建OKE Ingress控制器
 
 每个在kubernetes集群部署的服务，如果要允许外部访问，缺省会创建一个Load Balancer。这样会浪费Load Balancer的资源。我们可以用Ingress来统一外部的访问。Ingress是一组规则，允许入站连接到达集群服务。 它位于多个服务的前面，充当智能路由器。
 
@@ -613,7 +616,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 ## Task 5: 在OKE中部署微服务应用
 
-本次demo的前端应用容器镜像已经事先创建好，并保存在共享的OCI的容器注册表中。要获取该容器镜像，我们需要创建一个相应的secret。
+以上Demo应用容器镜像已经事先创建好，并保存在共享的OCI的容器注册表中。要获取该容器镜像，我们需要创建一个相应的secret。
 
 1. 运行下列命令，创建一个secret，名称为ocirsecret-sh。
 
@@ -862,9 +865,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 ## Task 6: 应用部署场景考虑问题思考
 
-前面式例演示一个微服务应用部署过程，很多技术细节已经屏蔽，应用部署场景还需考虑下面问题，从下面几个角度改造上面微服务应用。
+前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
 
-### 配置文件提取与敏感信息加密
+### 常见问题 1: 配置文件提取与敏感信息加密处理
 
 OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解决。
 
@@ -1055,9 +1058,9 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
 
-### Task 2: 应用Pod资源配额(Resource Quotas)和 Limit Range
+### 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range
 
-容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
+  容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
 可以分成：独占资源、共享资源（主要指CPU、内存），基于优先度和公平性来提高资源的利用率。
 - 资源配额（Resource Quotas）：配置限制namespace内的每种类型的k8s对象数量和资源（CPU，内存)。
 - Limit Range：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
@@ -1066,7 +1069,7 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
   *Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。
   *BestEffort：Pod中没有任何容器设置request和limit。
 
-下面以 Limit Range为例解释 应用Pod资源配额。
+  下面以 Limit Range为例解释 应用Pod资源配额。
 
   Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
     
@@ -1105,15 +1108,14 @@ OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解�
     </copy>
    ```
 
-
-### 应用Pod volume(存储卷)
+### 常见问题 3: 应用Pod volume(存储卷)
 
 volume(存储卷)是Pod中能够被多个容器访问的共享目录,
 
-### 应用Pod健康检查
+### 常见问题 4: 应用Pod健康检查
 
 
-### 应用滚动升级
+### 常见问题 5: 应用滚动升级
 
 对于无状态应用，一般采用 deployment 方式部署，deployment 支持两种更新策略：重建更新(Recreate) 和 滚动更新(RollingUpdate) ，可以通过 strategy 指定策略类型，支持两个属性。
 
@@ -1147,7 +1149,7 @@ kubectl rollout status deployment nginx-deployment
 新版本确认没问题，进行全部滚动升级
 kubectl rollout resume deployment nginx-deployment -n redis
 
-### 内外网负载均衡衡器
+### 常见问题 6: 内外网负载均衡衡器
 
 1. Create an internal load balancer as an OCI load balancer
     ```
