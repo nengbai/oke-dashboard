@@ -1060,7 +1060,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
 
-### <font color="red"> 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range </font> 
+### <font color="red"> 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range </font>
 
 容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
 可以分成：独占资源、共享资源（主要指CPU、内存），基于优先度和公平性来提高资源的利用率。
@@ -1069,11 +1069,11 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 - **Limit Range**：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
 - **容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：
 
-  *Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
-  *Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
-  *BestEffort：Pod中没有任何容器设置request和limit。</br>
+*Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
+*Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
+*BestEffort：Pod中没有任何容器设置request和limit。</br>
 
-  下面以 Limit Range为例解释 应用Pod资源配额。
+下面以 Limit Range为例解释 应用Pod资源配额。
 
   Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
     
