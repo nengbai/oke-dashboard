@@ -721,30 +721,30 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     
 4. 部署前端应用
 
-    ```
-    $ <copy>kubectl apply -f micro-redis.yaml -n redis</copy>
-    deployment.apps/demo-redis-dp created
-    service/demo-redis-svc created
-    Warning: networking.k8s.io/v1beta1 Ingress is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
-    ingress.networking.k8s.io/demo-redis-ingress created
-    ```
+```
+  $ <copy>kubectl apply -f micro-redis.yaml -n redis</copy>
+  deployment.apps/demo-redis-dp created
+  service/demo-redis-svc created
+  Warning: networking.k8s.io/v1beta1 Ingress is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
+  ingress.networking.k8s.io/demo-redis-ingress created
+```
 
     
 
 5. 检查pod状态，其中`demo-redis-dp-*`为3个应用部署的pod。
 
-    ```
-    $ <copy>kubectl get pod -n redis</copy>
-    NAME                             READY   STATUS    RESTARTS   AGE
-    demo-redis-dp-5fd4585bdd-5fqbc   1/1     Running   0          83s
-    demo-redis-dp-5fd4585bdd-hmjvr   1/1     Running   0          83s
-    demo-redis-dp-5fd4585bdd-z4ntg   1/1     Running   0          83s
-    mysql-0                          1/1     Running   0          68m
-    redis-master-0                   1/1     Running   0          4h25m
-    redis-replicas-0                 1/1     Running   0          4h25m
-    redis-replicas-1                 1/1     Running   0          4h24m
-    redis-replicas-2                 1/1     Running   0          4h22m
-    ```
+```
+  $ <copy>kubectl get pod -n redis</copy>
+  NAME                             READY   STATUS    RESTARTS   AGE
+  demo-redis-dp-5fd4585bdd-5fqbc   1/1     Running   0          83s
+  demo-redis-dp-5fd4585bdd-hmjvr   1/1     Running   0          83s
+  demo-redis-dp-5fd4585bdd-z4ntg   1/1     Running   0          83s
+  mysql-0                          1/1     Running   0          68m
+  redis-master-0                   1/1     Running   0          4h25m
+  redis-replicas-0                 1/1     Running   0          4h25m
+  redis-replicas-1                 1/1     Running   0          4h24m
+  redis-replicas-2                 1/1     Running   0          4h22m
+  ```
 
     
 
