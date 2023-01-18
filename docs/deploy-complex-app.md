@@ -1121,9 +1121,9 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 **-外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
 
-*PVC(PersistentVolumeClaim): Pod中声明需要的外部存储资源（Resources：静态或动态外部存储PV）和访问模式（AccessModes）。
-*PV（PersistentVolume）：是集群中提供Pod数据持续化存储的外部存储，可理解为系统中lv or disk。每个PV是有状态的：使用、释放、回收</br>
-*StorageClass: 由云厂商或存储厂商提供的，可以动态管理外部存储(PV)的存储操作集。
+  *PVC(PersistentVolumeClaim): Pod中声明需要的外部存储资源（Resources：静态或动态外部存储PV）和访问模式（AccessModes).</br>
+  *PV（PersistentVolume）：是集群中提供Pod数据持续化存储的外部存储，可理解为系统中lv or disk。每个PV是有状态的：使用、释放、回收.</br>
+  *StorageClass: 由云厂商或存储厂商提供的，可以动态管理外部存储(PV)的存储操作集。</br>
 
  ![image-20220107194254733](../deploy-complex-app/images/oke-external-stg.png)
 
