@@ -1293,9 +1293,9 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
       ```
       $ <copy> kubectl get pv </copy>
-      NAME                                     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM        
-      csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            Delete           Bound    default/disk-ssd-web-0   oci-bv    3d17h
-      csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            Delete           Bound    default/disk-ssd-web-1   oci-bv   3d17h
+      NAME                                     CAPACITY ACCESS MODES   RECLAIM POLICY               STATUS   CLAIM        
+      csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi    RWO   Delete  Bound    default/disk-ssd-web-0 oci-bv 3d17h
+      csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi    RWO   Delete  Bound    default/disk-ssd-web-1 oci-bv 3d17h
       ```
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
