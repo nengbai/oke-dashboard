@@ -1302,7 +1302,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 应用在运行过程，需要对运用健康状态进行检查，如程序异常，软件异常，硬件故障，网络故障等，OKE 提供Health Check健康检查机制，当发现应用异常时会自动重启容器，将应用从service服务中剔除，保障应用的高可用性。OKE支持三种探针Probe：
 
-**-startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
+**- startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
 
 ```
   startupProbe:
@@ -1314,7 +1314,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       timeoutSeconds: 1             # 探测应用超过1秒后为失败
   ```
 
-**-livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
+**- livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
 
   ```
   livenessProbe:
@@ -1327,7 +1327,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
        timeoutSeconds: 1            # 探测应用超过1秒后为失败
   ```
 
-**-readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
+**- readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
 
   ```
   readinessProbe:
@@ -1341,16 +1341,16 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 每种探测机制支持三种健康检查方法，分别是命令行exec，httpGet和tcpSocket，其中exec通用性最强，适用与大部分场景，tcpSocket适用于TCP业务，httpGet适用于web业务。
 
-  *exec         提供命令或shell的检测，在容器中执行命令检查，返回码为0健康，非0异常. </br>
-  *httpGet      http协议探测，在容器中发送http请求，根据http返回码判断业务健康情况.  </br>
-  *tcpSocket    tcp协议探测，向容器发送tcp建立连接，能建立则说明正常.  </br>
+  - exec         提供命令或shell的检测，在容器中执行命令检查，返回码为0健康，非0异常. </br>
+  - httpGet      http协议探测，在容器中发送http请求，根据http返回码判断业务健康情况.  </br>
+  - tcpSocket    tcp协议探测，向容器发送tcp建立连接，能建立则说明正常.  </br>
 
 每种探测方法能支持几个相同的检查参数，用于设置控制检查时间：
 
-  *initialDelaySeconds    初始第一次探测间隔，用于应用启动的时间，防止应用还没启动而健康检查失败. </br>
-  *periodSeconds          检查间隔，多久执行probe检查，默认为10s. </br>
-  *timeoutSeconds         检查超时时长，探测应用timeout后为失败. </br>
-  *successThreshold       成功探测阈值，表示探测多少次为健康正常，默认探测1次. </br>
+  - initialDelaySeconds    初始第一次探测间隔，用于应用启动的时间，防止应用还没启动而健康检查失败. </br>
+  - periodSeconds          检查间隔，多久执行probe检查，默认为10s. </br>
+  - timeoutSeconds         检查超时时长，探测应用timeout后为失败. </br>
+  - successThreshold       成功探测阈值，表示探测多少次为健康正常，默认探测1次. </br>
 
 
 ### <font color="red"> 常见问题 5: 应用滚动升级 </font>
