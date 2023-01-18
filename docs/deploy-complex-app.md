@@ -1133,73 +1133,73 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
 
-    ```bash
-    $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/micro-app-with-ingress.yml </copy>
-    ```
+  ```bash
+  $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/micro-app-with-ingress.yml </copy>
+  ```
 
   <font color="blue"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
 
-    ```text
-    <copy>
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
+  ```text
+  <copy>
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
     name: demo-app-dp
     namespace: redis
-    spec:
-      selector:
-        matchLabels:
+  spec:
+    selector:
+      matchLabels:
+        app: demo-app-dp
+    replicas: 3
+    template:
+      metadata:
+        labels:
           app: demo-app-dp
-      replicas: 3
-      template:
-        metadata:
-          labels:
-            app: demo-app-dp
-        spec:
-          containers:
-          - name: demo-redis
-            image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
-            imagePullPolicy: Always
-            ports:
-            - name: demo-port
-              containerPort: 8000
-              protocol: TCP
-              #command: ["/bin/sh", "-c", "env"]
-              env:
-                - name: DATABASE_PASSWORD  # 传入pod中的变量名
-                  #设置 secret mysql用户的密码
-                  valueFrom:
-                    secretKeyRef:
-                      name: mysql-secret    # secret 中的 name
-                      key: password          # configmap 中的 key
-                - name: REDIS_PASSWORD     # 传入pod中的变量名
-                  #设置 secret redis用户的密码
-                  valueFrom:
-                    secretKeyRef:
-                      name: redis-secret    # secret 中的 name 
-                      key: password          # configmap 中的 key
-              volumeMounts:
-                - name: config
-                  mountPath: /app/config/config.yaml
-                  subPath: config.yaml
-                  readOnly: true
-                - name: kubernetes
-                  mountPath: /cache 
-          volumes:
-          - name: config
-                configMap:
-                  name: demo-config # 指定我们创建的configMap的名字
-          - name: kubernetes
-            hostPath:               #emptyDir: {}
-              path: /data/kubernetes
-      </copy>
-      ```
+      spec:
+        containers:
+        - name: demo-redis
+          image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
+          imagePullPolicy: Always
+          ports:
+          - name: demo-port
+            containerPort: 8000
+            protocol: TCP
+            #command: ["/bin/sh", "-c", "env"]
+            env:
+              - name: DATABASE_PASSWORD  # 传入pod中的变量名
+                #设置 secret mysql用户的密码
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-secret    # secret 中的 name
+                    key: password          # configmap 中的 key
+              - name: REDIS_PASSWORD     # 传入pod中的变量名
+                #设置 secret redis用户的密码
+                valueFrom:
+                  secretKeyRef:
+                    name: redis-secret    # secret 中的 name 
+                    key: password          # configmap 中的 key
+            volumeMounts:
+              - name: config
+                mountPath: /app/config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+              - name: kubernetes
+                mountPath: /cache 
+        volumes:
+        - name: config
+            configMap:
+              name: demo-config # 指定我们创建的configMap的名字
+        - name: kubernetes
+          hostPath:               #emptyDir: {}
+            path: /data/kubernetes
+    </copy>
+    ```
   
   <font color="blue"> Task 3: </font> 部署重新应用
 
-      ```
-      $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
-      ```
+    ```
+    $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
+    ```
   
   <font color="blue">  Task 4: </font> 检查应用运行状态
 
@@ -1211,7 +1211,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
   <font color="blue"> Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
 
-    ```text
+  ```text
     <copy>
     apiVersion: v1
     kind: Service
@@ -1266,40 +1266,40 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
             requests:
               storage: 50Gi   
           </copy>
-      ```
+    ```
   
   <font color="blue"> Task 3: </font> 重新应用
 
-      ```
+    ```
       $ <copy> kubectl apply -f nginx-volumeclaimtempalte.yml </copy>
       service/nginx created
       statefulset.apps/web created
-      ```
+    ```
   
   <font color="blue">  Task 4: </font> 检查应用运行状态
 
-      ```
+    ```
       $ <copy> kubectl get pod </copy>
       NAME                                                    READY   STATUS              RESTARTS   AGE
       web-0                                                   1/1     Running             0          47s
       web-1                                                   0/1     ContainerCreating   0          19s
-      ```
+    ```
   <font color="blue">  Task 4: </font> 检查应用对应PVC
 
-      ```
+    ```
       $ <copy> kubectl get pvc </copy>
       NAME            STATUS   VOLUME                                   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
       disk-ssd-web-0  Bound    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            oci-bv      3d17h
       disk-ssd-web-1  Bound    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            oci-bv      3d17h
-      ```
+    ```
   <font color="blue">  Task 4: </font> 检查应用PVC 对应 PV
 
-      ```
+    ```
       $ <copy> kubectl get pv </copy>
       NAME                                     CAPACITY ACCESS MODES   RECLAIM POLICY               STATUS   CLAIM        
       csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi    RWO   Delete  Bound    default/disk-ssd-web-0 oci-bv 3d17h
       csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi    RWO   Delete  Bound    default/disk-ssd-web-1 oci-bv 3d17h
-      ```
+    ```
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
 
