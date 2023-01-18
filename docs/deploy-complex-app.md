@@ -1442,7 +1442,18 @@ $ <copy> kubectl rollout undo deployment/demo-app-dp -n redis --to-revision=3 </
 $ <copy> kubectl rollout resume deployment/demo-app-dp -n redis </copy> 
 ```
 
-6. 应用Pod 手动扩容
+6. 查看历史升级记录
+
+```bash
+$ <copy>kubectl rollout history deployment/demo-app-dp -n redis  </copy> 
+deployment.apps/demo-app-dp 
+REVISION  CHANGE-CAUSE
+3  kubectl1.25.4 set image deployment/demo-app-dp demo-app=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --namespace=redis --record=true
+4  kubectl1.25.4 set image deployment/demo-app-dp demo-redis=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --namespace=redis --record=true
+```
+
+
+7. 应用Pod 手动扩容
 
 ```bash
 $ <copy> kubectl scale deployment demo-app-dp --replicas=5 -n redis </copy> 
