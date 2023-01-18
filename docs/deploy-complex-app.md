@@ -1195,7 +1195,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     </copy>
     ```
   
-  <font color="blue"> Task 3: </font> 部署重新应用
+  <font color="blue"> Task 3: </font> 重新部署应用
 
     ```
     $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
@@ -1203,9 +1203,9 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   
   <font color="blue">  Task 4: </font> 检查应用运行状态
 
-      ```
-      $ <copy> kubectl -n redis get pod </copy>
-      ```
+    ```
+    $ <copy> kubectl -n redis get pod </copy>
+    ```
 
 2. 使用动态外部存储PV 实现Pod存储。 **注意:** 这种模式适用于有状态(StatefulSet)部署
 
@@ -1271,34 +1271,34 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   <font color="blue"> Task 3: </font> 重新应用
 
     ```
-      $ <copy> kubectl apply -f nginx-volumeclaimtempalte.yml </copy>
-      service/nginx created
-      statefulset.apps/web created
+    $ <copy> kubectl apply -f nginx-volumeclaimtempalte.yml </copy>
+    service/nginx created
+    statefulset.apps/web created
     ```
   
   <font color="blue">  Task 4: </font> 检查应用运行状态
 
     ```
-      $ <copy> kubectl get pod </copy>
-      NAME                                                    READY   STATUS              RESTARTS   AGE
-      web-0                                                   1/1     Running             0          47s
-      web-1                                                   0/1     ContainerCreating   0          19s
+    $ <copy> kubectl get pod </copy>
+    NAME                                                    READY   STATUS              RESTARTS   AGE
+    web-0                                                   1/1     Running             0          47s
+    web-1                                                   0/1     ContainerCreating   0          19s
     ```
   <font color="blue">  Task 4: </font> 检查应用对应PVC
 
     ```
-      $ <copy> kubectl get pvc </copy>
-      NAME            STATUS   VOLUME                                   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-      disk-ssd-web-0  Bound    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            oci-bv      3d17h
-      disk-ssd-web-1  Bound    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            oci-bv      3d17h
+    $ <copy> kubectl get pvc </copy>
+    NAME            STATUS   VOLUME                                   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    disk-ssd-web-0  Bound    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            oci-bv      3d17h
+    disk-ssd-web-1  Bound    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            oci-bv      3d17h
     ```
   <font color="blue">  Task 4: </font> 检查应用PVC 对应 PV
 
     ```
-      $ <copy> kubectl get pv </copy>
-      NAME                                     CAPACITY ACCESS MODES   RECLAIM POLICY               STATUS   CLAIM        
-      csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi    RWO   Delete  Bound    default/disk-ssd-web-0 oci-bv 3d17h
-      csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi    RWO   Delete  Bound    default/disk-ssd-web-1 oci-bv 3d17h
+    $ <copy> kubectl get pv </copy>
+    NAME                                     CAPACITY ACCESS MODES   RECLAIM POLICY               STATUS   CLAIM        
+    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi    RWO   Delete  Bound    default/disk-ssd-web-0 oci-bv 3d17h
+    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi    RWO   Delete  Bound    default/disk-ssd-web-1 oci-bv 3d17h
     ```
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
