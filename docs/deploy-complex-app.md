@@ -881,7 +881,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 1.  应用配置文件提取-Configmap 
     
-   <font color="red">  Task 1:</font> 编辑应用配置文件 config.yaml
+   <font color="blue">  Task 1:</font> 编辑应用配置文件 config.yaml
 
     ```text
     <copy>
@@ -906,7 +906,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     </copy>
     ```
 
-  <font color="red"> Task 2:</font> 根据应用配置文件，创建 configmap
+  <font color="blue"> Task 2:</font> 根据应用配置文件，创建 configmap
 
     ```bash
     $ <copy> kubectl create configmap demo-config --from-file=config.yaml -n redis </copy>
@@ -914,21 +914,21 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 2. 敏感信息加密
 
-  <font color="red"> Task 1:</font> 加密 MySQL Password 敏感信息
+  <font color="blue"> Task 1:</font> 加密 MySQL Password 敏感信息
 
     ```bash
       $ <copy> echo -n 'Ora@2021.passwd' | base64 </copy>
       T3JhQDIwMjEucGFzc3dk
     ```
 
-  <font color="red">   Task 2:</font> 加密 Redis Password 敏感信息
+  <font color="blue">   Task 2:</font> 加密 Redis Password 敏感信息
 
     ```bash
       $ <copy> echo -n 'I3gQqFlxxU' | base64 </copy>
     STNnUXFGbHh4VQ==
     ```
 
-  <font color="red"> Task 3: </font> 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
+  <font color="blue"> Task 3: </font> 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
 
     ```text
     <copy>
@@ -955,7 +955,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
    ```
 
-  <font color="red"> Task 4: </font> 创建 Secret 
+  <font color="blue"> Task 4: </font> 创建 Secret 
 
     ```
     $ <copy> kubectl apply -f app-secret.yaml </copy> 
@@ -964,13 +964,13 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 3. 调整应用部署 Manifest 文件 micro-app-with-ingress.yml
 
-  <font color="red"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
+  <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
 
     ```bash
     $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/micro-app-with-ingress.yml </copy>
     ```
 
-  <font color="red"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+  <font color="blue"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
 
     ```text
     <copy>
@@ -1023,31 +1023,31 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       </copy>
       ```
   
-  <font color="red"> Task 3: </font> 部署重新应用
+  <font color="blue"> Task 3: </font> 部署重新应用
 
       ```
       $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
       ```
   
-  <font color="red">  Task 4: </font> 检查应用运行状态
+  <font color="blue">  Task 4: </font> 检查应用运行状态
 
       ```
       $ <copy> kubectl -n redis get pod </copy>
       ```
   
-  <font color="red">  Task 5: </font> 检查应用服务
+  <font color="blue">  Task 5: </font> 检查应用服务
 
       ```
       $ <copy> kubectl -n redis get svc </copy>
       ```
 
-  <font color="red"> Task 6: </font> 检查应用对外访问 ingress
+  <font color="blue"> Task 6: </font> 检查应用对外访问 ingress
 
       ```
       $ <copy> kubectl -n redis get ing </copy>
       ```
   
-  <font color="red">  Task 7: </font> 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
+  <font color="blue">  Task 7: </font> 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
 
       ```text
       <copy> 
@@ -1055,7 +1055,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       </copy>
       ```
   
-  <font color="red">  Task 8: </font> 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
+  <font color="blue">  Task 8: </font> 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
 
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
