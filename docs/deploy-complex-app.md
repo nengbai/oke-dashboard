@@ -1130,6 +1130,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 下面演示使用hostPath 和外部存储 PV 两种模式实现 Pod 存储：
 
 1. 使用hostPath 实现 Pod 存储：
+
 <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
 
     ```bash
