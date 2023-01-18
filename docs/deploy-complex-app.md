@@ -1360,6 +1360,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 ### <font color="red"> 常见问题 5: 应用滚动升级 </font>
 
+
 对于无状态应用，一般采用 Deployment 方式部署，可以通过strategy 指定更新策略类型。
 
 支持两种更新策略类型：
@@ -1382,7 +1383,12 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
         maxUnavailable: 25%
   ```
 
-deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能:
+两个replicaset控制器分别控制旧版本的pod和新版本pod，replicaset2启动一个新版版本pod，相应的replicaset1停止一个旧版本pod，从而实现滚动升级。在这过程中，无法保证业务流量完全不丢失。
+
+![](../deploy-complex-app/images/oke-pod-upgrade.png)
+
+
+deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能.
 
 kubectl rollout ： 版本升级相关功能，支持下面的选项:
   - status ： 显示当前升级状态
