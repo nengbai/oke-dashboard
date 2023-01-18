@@ -875,9 +875,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
   **- Secret**：使用敏感信息存储。包括三种类型加密:
 
-    - Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
-    - Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
-    - service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
+  - Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
+  - Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
+  - service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
 
 1.  应用配置文件提取-Configmap 
     
@@ -1068,9 +1068,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 - **资源配额（Resource Quotas）**：配置限制namespace内的每种类型的k8s对象数量和资源（CPU，内存)。
 - **Limit Range**：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
 - **容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：</br>
-  *Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
-  *Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
-  *BestEffort：Pod中没有任何容器设置request和limit。</br>
+  - Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
+  - Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
+  - BestEffort：Pod中没有任何容器设置request和limit。</br>
 
 下面以 Limit Range为例解释 应用Pod资源配额。
 
@@ -1115,11 +1115,11 @@ Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: �
 
 volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存储用户数据的空间。主要有下面3种模式：
 
-**- emptyDir（空目录）：** 当Pod创建时，在所运行的OKE Worker节点上创建一个空目录，当删除Pod时，emptyDir中的数据将被永久删除，不支持持续存储。
+- **emptyDir（空目录）：** 当Pod创建时，在所运行的OKE Worker节点上创建一个空目录，当删除Pod时，emptyDir中的数据将被永久删除，不支持持续存储。
 
-**- hostPath（本地存储卷）：** 当Pod创建时，在所运行的OKE Worker节点上的指定文件系统或目录，当删除Pod时，数据仍存在该Worker节点，支持持续存储。
+- **hostPath（本地存储卷）：** 当Pod创建时，在所运行的OKE Worker节点上的指定文件系统或目录，当删除Pod时，数据仍存在该Worker节点，支持持续存储。
 
-**- 外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
+- **外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
 
   - PVC(PersistentVolumeClaim): Pod中声明需要的外部存储资源（Resources：静态或动态外部存储PV）和访问模式（AccessModes).</br>
   - PV（PersistentVolume）：是集群中提供Pod数据持续化存储的外部存储，可理解为系统中lv or disk。每个PV是有状态的：使用、释放、回收.</br>
@@ -1209,7 +1209,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 2. 使用动态外部存储PV 实现Pod存储。 **注意:** 这种模式适用于有状态(StatefulSet)部署
 
-  <font color="blue"> Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
+<font color="blue">Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
 
   ```text
     <copy>
