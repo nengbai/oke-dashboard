@@ -1405,26 +1405,32 @@ kubectl rollout ： 版本升级相关功能，支持下面的选项:
 1. 替换容器升级 images,进行升级
 
 ```bash
-$ <copy> kubectl set image deployment/demo-app-dp demo-app=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --record=true
+$ <copy> kubectl -n redis set image deployment/demo-app-dp demo-app=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --record=true
 </copy> 
 ```
 
-2. 版本回滚:
-```bash
-$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis </copy> 
-```
-
-
-3. 版本回滚特定版本：
-```bash
-$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis --to-revision=3 </copy> 
-```
-
-4. 查看上次升级状态
+2. 查看上次升级状态
 
 ```bash
 $ <copy> kubectl rollout status deployment/demo-app-dp -n redis </copy> 
+Waiting for deployment "demo-app-dp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "demo-app-dp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "demo-app-dp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "demo-app-dp" rollout to finish: 4 of 5 updated replicas are available...
 deployment "demo-app-dp" successfully rolled out
+```
+
+
+3. 版本回滚:
+```bash
+$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis </copy> 
+deployment.apps/demo-app-dp rolled back
+```
+
+
+4. 版本回滚特定版本：
+```bash
+$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis --to-revision=3 </copy> 
 ```
 
 5. 新版本确认没问题，进行全部滚动升级
