@@ -1385,7 +1385,7 @@ tcpSocket适用于TCP业务，httpGet适用于web业务。
   ```
 
 **Deployment 与 Replica Set 与 Pod 的关系**:
-
+![image-20220107194254733](../deploy-complex-app/images/oke-deployment.png)
 
 **滚动升级的实现机制**:
 
@@ -1419,7 +1419,11 @@ Waiting for deployment "demo-app-dp" rollout to finish: 1 old replicas are pendi
 Waiting for deployment "demo-app-dp" rollout to finish: 4 of 5 updated replicas are available...
 deployment "demo-app-dp" successfully rolled out
 ```
-
+查看Pod images 版本 ，确认替换成 demo-app:v7
+```bash
+$ <copy> 
+kubectl -n redis get pod demo-app-dp-7555975757-76t7p  -o yaml
+```
 
 3. 版本回滚:
 ```bash
