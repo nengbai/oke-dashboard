@@ -1113,7 +1113,16 @@ Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: �
 
 ### <font color="red"> 常见问题 3: 应用Pod volume(存储卷) </font>
 
-volume(存储卷)是Pod中能够被多个容器访问的共享目录,
+volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存储用户数据的空间。
+
+**-emptyDir（空目录）：** 当Pod创建时，在所运行的OKE Worker节点上创建一个空目录，当删除Pod时，emptyDir中的数据将被永久删除，不支持持续存储。
+**-hostPath（本地存储卷）：** 当Pod创建时，在所运行的OKE Worker节点上的指定文件系统或目录，当删除Pod时，数据仍存在该Worker节点，支持持续存储。
+**-外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
+*PVC(PersistentVolumeClaim): Pod中声明需要的外部存储资源（Resources：静态或动态外部存储PV）和访问模式（AccessModes）。
+*PV（PersistentVolume）：是集群中提供Pod数据持续化存储的外部存储，可理解为系统中lv or disk。每个PV是有状态的：使用、释放、回收</br>
+*StorageClass: 由云厂商或存储厂商提供的，可以动态管理外部存储(PV)的存储操作集。
+
+ ![image-20220107194254733](../deploy-complex-app/images/oke-external-stg.png)
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
 
