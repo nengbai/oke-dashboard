@@ -1384,10 +1384,12 @@ tcpSocket适用于TCP业务，httpGet适用于web业务。
         maxUnavailable: 25%
   ```
 
+**滚动升级的实现机制**:
+
 两个replicaset控制器分别控制旧版本的pod和新版本pod，replicaset2启动一个新版版本pod，相应的replicaset1停止一个旧版本pod，
 从而实现滚动升级。在这过程中，无法保证业务流量完全不丢失。
 
-![](../deploy-complex-app/images/oke-pod-upgrade.png)
+![image-20220107194254733](../deploy-complex-app/images/oke-pod-upgrade.png)
 
 
 deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能.
