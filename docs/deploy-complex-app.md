@@ -865,7 +865,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 ## 8. Task 6: 应用部署场景考虑问题思考
 
-  前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
+  前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但实际应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
 
 ### <font color="red"> 8.1  常见问题 1: 配置文件提取与敏感信息加密处理 </font>
 
@@ -906,7 +906,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     </copy>
     ```
 
-  <font color="red"> Task 2:</font> 创建 configmap
+  <font color="red"> Task 2:</font> 根据应用配置文件，创建 configmap
 
     ```bash
     $ <copy> kubectl create configmap demo-config --from-file=config.yaml -n redis </copy>
@@ -928,7 +928,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     STNnUXFGbHh4VQ==
     ```
 
-  Task 3: 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
+  <font color="red"> Task 3: </font> 复制加密信息到 app-secret.yaml 对应段落的 password 的值：
 
     ```text
     <copy>
@@ -955,7 +955,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
    ```
 
-  Task 4: 创建 Secret 
+  <font color="red"> Task 4: </font> 创建 Secret 
 
     ```
     $ <copy> kubectl apply -f app-secret.yaml </copy> 
@@ -964,13 +964,13 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 3. 调整应用部署 Manifest 文件 micro-app-with-ingress.yml
 
-  Task 1: 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
+  <font color="red"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
 
     ```bash
     $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/micro-app-with-ingress.yml </copy>
     ```
 
-  Task 2: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+  <font color="red"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
 
     ```text
     <copy>
@@ -1023,31 +1023,31 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       </copy>
       ```
   
-    Task 3: 部署重新应用
+  <font color="red"> Task 3: </font> 部署重新应用
 
       ```
       $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
       ```
   
-    Task 4: 检查应用运行状态
+  <font color="red">  Task 4: </font> 检查应用运行状态
 
       ```
       $ <copy> kubectl -n redis get pod </copy>
       ```
   
-    Task 5: 检查应用服务
+  <font color="red">  Task 5: </font> 检查应用服务
 
       ```
       $ <copy> kubectl -n redis get svc </copy>
       ```
 
-    Task 6: 检查应用对外访问 ingress
+  <font color="red"> Task 6: </font> 检查应用对外访问 ingress
 
       ```
       $ <copy> kubectl -n redis get ing </copy>
       ```
   
-    Task 7: 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
+  <font color="red">  Task 7: </font> 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
 
       ```text
       <copy> 
@@ -1055,7 +1055,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       </copy>
       ```
   
-    Task 8: 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
+  <font color="red">  Task 8: </font> 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
 
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
