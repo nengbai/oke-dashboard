@@ -1342,7 +1342,8 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       timeoutSeconds: 1         # 探测应用超过1秒后为失败
   ```
 
-每种探测机制支持三种健康检查方法，分别是命令行exec，httpGet和tcpSocket，其中exec通用性最强，适用与大部分场景，tcpSocket适用于TCP业务，httpGet适用于web业务。
+每种探测机制支持三种健康检查方法，分别是命令行exec，httpGet和tcpSocket，其中exec通用性最强，适用与大部分场景，
+tcpSocket适用于TCP业务，httpGet适用于web业务。
 
   - exec         提供命令或shell的检测，在容器中执行命令检查，返回码为0健康，非0异常. </br>
   - httpGet      http协议探测，在容器中发送http请求，根据http返回码判断业务健康情况.  </br>
@@ -1383,7 +1384,8 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
         maxUnavailable: 25%
   ```
 
-两个replicaset控制器分别控制旧版本的pod和新版本pod，replicaset2启动一个新版版本pod，相应的replicaset1停止一个旧版本pod，从而实现滚动升级。在这过程中，无法保证业务流量完全不丢失。
+两个replicaset控制器分别控制旧版本的pod和新版本pod，replicaset2启动一个新版版本pod，相应的replicaset1停止一个旧版本pod，
+从而实现滚动升级。在这过程中，无法保证业务流量完全不丢失。
 
 ![](../deploy-complex-app/images/oke-pod-upgrade.png)
 
