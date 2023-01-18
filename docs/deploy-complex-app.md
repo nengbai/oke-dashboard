@@ -1206,7 +1206,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       $ <copy> kubectl -n redis get pod </copy>
       ```
 
-2. 使用动态外部存储PV 实现Pod存储。 **注意：这种模式适用于有状态(StatefulSet)部署
+2. 使用动态外部存储PV 实现Pod存储。 **注意:** 这种模式适用于有状态(StatefulSet)部署
 
   <font color="blue"> Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
 
