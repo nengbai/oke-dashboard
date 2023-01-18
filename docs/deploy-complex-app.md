@@ -1127,8 +1127,9 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
  ![image-20220107194254733](../deploy-complex-app/images/oke-external-stg.png)
 
-下面演示使用hostPath 和 外部存储PV两种模式实现Pod存储：
-1. 使用hostPath 实现Pod存储：
+下面演示使用hostPath 和外部存储 PV 两种模式实现 Pod 存储：
+
+1. 使用hostPath 实现 Pod 存储：
 <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 micro-app-with-ingress.yml
 
     ```bash
@@ -1205,7 +1206,8 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       $ <copy> kubectl -n redis get pod </copy>
       ```
 
-2. 使用动态外部存储PV 实现Pod存储：注意，这种模式适用于有状态(StatefulSet)部署
+2. 使用动态外部存储PV 实现Pod存储。 **注意：这种模式适用于有状态(StatefulSet)部署
+
   <font color="blue"> Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
 
     ```text
@@ -1300,7 +1302,8 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
 
-应用在运行过程，需要对运用健康状态进行检查，如程序异常，软件异常，硬件故障，网络故障等，OKE 提供Health Check健康检查机制，当发现应用异常时会自动重启容器，将应用从service服务中剔除，保障应用的高可用性。OKE支持三种探针Probe：
+应用在运行过程，需要对运用健康状态进行检查，如程序异常，软件异常，硬件故障，网络故障等，OKE 提供Health Check健康检查机制，当发现应用异常时会自
+动重启容器，将应用从service服务中剔除，保障应用的高可用性。OKE支持三种探针Probe：
 
 **- startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
 
