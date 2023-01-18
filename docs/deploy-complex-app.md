@@ -1363,7 +1363,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 对于无状态应用，一般采用 Deployment 方式部署，可以通过strategy 指定更新策略类型。
 
 支持两种更新策略类型：
-- **重建更新(Recreate)： ** 直接全部重启Pod。
+- **重建更新(Recreate)**: 直接全部重启Pod。
 
 ```
   spec:
@@ -1383,13 +1383,14 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   ```
 
 deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能:
-kubectl rollout ： 版本升级相关功能，支持下面的选项
-    status ： 显示当前升级状态
-    history： 显示升级历史记录
-    pause： 暂停版本升级过程
-    resume： 继续已经暂停的版本升级过程
-    restart ： 重启版本升级过程
-    undo： 回滚到上一级版本（可以使用 –to-revision 回滚到指定版本）
+
+kubectl rollout ： 版本升级相关功能，支持下面的选项:
+  - status ： 显示当前升级状态
+  - history： 显示升级历史记录
+  - pause： 暂停版本升级过程
+  - resume： 继续已经暂停的版本升级过程
+  - restart ： 重启版本升级过程
+  - undo： 回滚到上一级版本（可以使用 –to-revision 回滚到指定版本）
 
 1. 版本回滚:
 ```bash
