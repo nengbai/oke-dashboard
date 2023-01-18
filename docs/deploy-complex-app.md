@@ -1,24 +1,24 @@
 #  应用迁移到OCI OKE 平台演示
 
-## 1.1 OKE 应用迁移架构
+## 1. OKE 应用迁移架构
 
 ![image-20220107111007887](../deploy-complex-app/images/oke-app-art.png)
 
 **应用部署流程**：如图中棕色数字标识</br>
 **应用访问流程**：如图中黑色数字标识</br>
 
-## 1.2 简介
+## 2. 简介
 
 以Golang开发的微服务应用如何迁移部署到OCI OKE平台演示：包含前端应用程序、MySQL和Redis集群。其中前端应用程序的容器镜像事先已经配置好，存放在OCI容器注册表中。
 
 
 
-### 1.2.1 先决条件
+### 2.1 先决条件
 
 - 成功部署kubernetes集群
 - 配置好集群访问
 
-## 1.3 Task 1: 创建OKE Ingress控制器
+## 3. Task 1: 创建OKE Ingress控制器
 
 每个在kubernetes集群部署的服务，如果要允许外部访问，缺省会创建一个Load Balancer。这样会浪费Load Balancer的资源。我们可以用Ingress来统一外部的访问。Ingress是一组规则，允许入站连接到达集群服务。 它位于多个服务的前面，充当智能路由器。
 
@@ -90,7 +90,7 @@
 
 
 
-## Task 2: 安装部署工具Helm
+## 4. Task 2: 安装部署工具Helm
 
 Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Helm Charts。有点类似于Linux中的 YUM。Helm Chart 是用来封装 Kubernetes 原生应用程序的一系列 YAML 文件。可以在你部署应用的时候自定义应用程序的一些 Metadata，以便于应用程序的分发。对于应用发布者而言，可以通过 Helm 打包应用、管理应用依赖关系、管理应用版本并发布应用到软件仓库。对于使用者而言，使用 Helm 后不用需要编写复杂的应用部署文件，可以以简单的方式在 Kubernetes 上查找、安装、升级、回滚、卸载应用程序。
 
@@ -149,7 +149,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 
 
-## Task 3: 部署Redis集群
+## 5. Task 3: 部署Redis集群
 
 下面我们将使用helm来部署Redis集群。
 
@@ -311,7 +311,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
     
 
-## Task 4: 在kubernetes集群中部署MySQL
+## 6. Task 4: 在kubernetes集群中部署MySQL
 
 1. 获取事先写好的MySQL配置文件：mysql-statusfull.yaml。
 
@@ -614,7 +614,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 
 
-## Task 5: 在OKE中部署微服务应用
+## 7. Task 5: 在OKE中部署微服务应用
 
 以上Demo应用容器镜像已经事先创建好，并保存在共享的OCI的容器注册表中。要获取该容器镜像，我们需要创建一个相应的secret。
 
@@ -863,11 +863,11 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     job.batch "ingress-nginx-admission-patch" deleted
     ```
 
-## Task 6: 应用部署场景考虑问题思考
+## 8. Task 6: 应用部署场景考虑问题思考
 
   前面Demo演示一个微服务应用部署过程，很多技术细节已经屏蔽，但应用部署场景，还需考虑下面问题，下面从客户重点关注角度改造上面微服务应用。
 
-### <font color="red"> 常见问题 1: 配置文件提取与敏感信息加密处理 </font>
+### <font color="red"> 8.1  常见问题 1: 配置文件提取与敏感信息加密处理 </font>
 
   OKE完全兼容原生Kubernetes,同样可以采取Configmap 和 Secret方式解决。
 
@@ -875,9 +875,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
   **-Secret**：使用敏感信息存储。包括三种类型加密:
 
-    *Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
-    *Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
-    *service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
+  *Opaque：使用base64编码存储信息，可以通过Base64 --decode解码获得原始数据。</br>
+  *Dockerconfigjson：用于存储Docker Registry的认证信息。</br>
+  *service-account-token：用于被 serviceaccount 引用，serviceaccout 创建时 Kubernetes 会默认创建对应的 Secret。</br>
 
 1.  应用配置文件提取-Configmap 
     
@@ -1060,18 +1060,17 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
     ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
 
 
-### <font color="red"> 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range </font>
+### <font color="red"> 8.2 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range </font>
 
 容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
 可以分成：独占资源、共享资源（主要指CPU、内存），基于优先度和公平性来提高资源的利用率。
 
 - **资源配额（Resource Quotas）**：配置限制namespace内的每种类型的k8s对象数量和资源（CPU，内存)。
 - **Limit Range**：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
-- **容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：
-
-*Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
-*Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
-*BestEffort：Pod中没有任何容器设置request和limit。</br>
+- **容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：</br>
+  *Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
+  *Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
+  *BestEffort：Pod中没有任何容器设置request和limit。</br>
 
 下面以 Limit Range为例解释 应用Pod资源配额。
 
