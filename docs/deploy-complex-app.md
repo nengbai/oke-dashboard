@@ -1360,9 +1360,19 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 ### <font color="red"> 常见问题 5: 应用滚动升级 </font>
 
-对于无状态应用，一般采用 deployment 方式部署，deployment 支持两种更新策略：重建更新(Recreate) 和 滚动更新(RollingUpdate) ，可以通过 strategy 指定策略类型，支持两个属性。
+对于无状态应用，一般采用 Deployment 方式部署，可以通过strategy 指定更新策略类型。
 
-重新编辑deployment.yaml文件，添加滚动更新策略(这个为默认策略)
+支持两种更新策略类型：
+- **重建更新(Recreate)： ** 直接全部重启Pod。
+
+```
+  spec:
+    strategy:
+      type: Recreate
+  ```
+
+- **滚动更新(RollingUpdate)**： 按照更新策略逐步替换Pod.
+
   ```
   spec:
     strategy:
@@ -1371,6 +1381,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
         maxSurge: 25%
         maxUnavailable: 25%
   ```
+
 deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能:
 kubectl rollout ： 版本升级相关功能，支持下面的选项
     status ： 显示当前升级状态
@@ -1380,17 +1391,27 @@ kubectl rollout ： 版本升级相关功能，支持下面的选项
     restart ： 重启版本升级过程
     undo： 回滚到上一级版本（可以使用 –to-revision 回滚到指定版本）
 
-版本回滚:
-kubectl rollout undo deployment nginx-deployment -n redis
+1. 版本回滚:
+```bash
+$ <copy> kubectl rollout undo deployment nginx-deployment -n redis </copy> 
+```
 
-版本回滚特定版本：
-kubectl rollout undo deployment nginx-deployment -n redis --to-revision=3
 
-查看更新状态
-kubectl rollout status deployment nginx-deployment
+2. 版本回滚特定版本：
+```bash
+$ <copy> kubectl rollout undo deployment nginx-deployment -n redis --to-revision=3 </copy> 
+```
 
-新版本确认没问题，进行全部滚动升级
-kubectl rollout resume deployment nginx-deployment -n redis
+3. 查看更新状态
+
+```bash
+$ <copy> kubectl rollout status deployment nginx-deployment </copy> 
+```
+
+4. 新版本确认没问题，进行全部滚动升级
+```bash
+$ <copy> kubectl rollout resume deployment nginx-deployment -n redis </copy> 
+```
 
 ### <font color="red"> 常见问题 6: OKE 应用负载均衡和网络负载均衡衡器应用 </font>
 
