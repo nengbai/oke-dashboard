@@ -1384,15 +1384,15 @@ tcpSocket适用于TCP业务，httpGet适用于web业务。
         maxUnavailable: 25%
   ```
 
+**Deployment 与 Replica Set 与 Pod 的关系**:
+
+
 **滚动升级的实现机制**:
 
 两个replicaset控制器分别控制旧版本的pod和新版本pod，replicaset2启动一个新版版本pod，相应的replicaset1停止一个旧版本pod，
 从而实现滚动升级。在这过程中，无法保证业务流量完全不丢失。
 
 ![image-20220107194254733](../deploy-complex-app/images/oke-pod-upgrade.png)
-
-
-deployment 支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能.
 
 kubectl rollout ： 版本升级相关功能，支持下面的选项:
   - status ： 显示当前升级状态
@@ -1402,26 +1402,41 @@ kubectl rollout ： 版本升级相关功能，支持下面的选项:
   - restart ： 重启版本升级过程
   - undo： 回滚到上一级版本（可以使用 –to-revision 回滚到指定版本）
 
-1. 版本回滚:
+1. 替换容器升级 images,进行升级
+
 ```bash
-$ <copy> kubectl rollout undo deployment nginx-deployment -n redis </copy> 
+$ <copy> kubectl set image deployment/demo-app-dp demo-app=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --record=true
+</copy> 
+```
+
+2. 版本回滚:
+```bash
+$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis </copy> 
 ```
 
 
-2. 版本回滚特定版本：
+3. 版本回滚特定版本：
 ```bash
-$ <copy> kubectl rollout undo deployment nginx-deployment -n redis --to-revision=3 </copy> 
+$ <copy> kubectl rollout undo deployment/demo-app-dp -n redis --to-revision=3 </copy> 
 ```
 
-3. 查看更新状态
+4. 查看上次升级状态
 
 ```bash
-$ <copy> kubectl rollout status deployment nginx-deployment </copy> 
+$ <copy> kubectl rollout status deployment/demo-app-dp -n redis </copy> 
+deployment "demo-app-dp" successfully rolled out
 ```
 
-4. 新版本确认没问题，进行全部滚动升级
+5. 新版本确认没问题，进行全部滚动升级
 ```bash
-$ <copy> kubectl rollout resume deployment nginx-deployment -n redis </copy> 
+$ <copy> kubectl rollout resume deployment/demo-app-dp -n redis </copy> 
+```
+
+6. 应用Pod 手动扩容
+
+```bash
+$ <copy> kubectl scale deployment demo-app-dp --replicas=5 -n redis </copy> 
+deployment.apps/demo-app-dp scaled
 ```
 
 ### <font color="red"> 常见问题 6: OKE 应用负载均衡和网络负载均衡衡器应用 </font>

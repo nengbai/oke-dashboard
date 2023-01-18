@@ -14,7 +14,7 @@ spec:
         app: demo-app-dp
     spec:
       containers:
-      - name: demo-redis
+      - name: demo-app
         image: icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v6
         imagePullPolicy: IfNotPresent #Always（默认值）、IfNotPresent、Never
         ports:
