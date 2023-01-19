@@ -982,6 +982,11 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       selector:
         matchLabels:
           app: demo-app-dp
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
       replicas: 3
       template:
         metadata:
@@ -1086,6 +1091,11 @@ Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: �
     selector:
       matchLabels:
         app: demo-app-dp
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
     replicas: 3
     template:
       metadata:
@@ -1149,6 +1159,11 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     selector:
       matchLabels:
         app: demo-app-dp
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
     replicas: 3
     template:
       metadata:
@@ -1214,7 +1229,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   $ <copy> curl -o nginx-volumeclaimtempalte.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/nginx-volumeclaimtempalte.yml </copy>
   ```
 
-<font color="blue">Task 1: </font> 参照下面内容，编辑 nginx-volumeclaimtempalte.yml
+<font color="blue">Task 2: </font> 参照下面内容，编辑 nginx-volumeclaimtempalte.yml
 
   ```text
     <copy>
@@ -1289,7 +1304,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     web-0                                                   1/1     Running             0          47s
     web-1                                                   0/1     ContainerCreating   0          19s
   ```
-  <font color="blue">  Task 4: </font> 检查应用对应PVC
+  <font color="blue">  Task 5: </font> 检查应用对应PVC
 
   ```
     $ <copy> kubectl get pvc </copy>
@@ -1297,7 +1312,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     disk-ssd-web-0  Bound    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            oci-bv      3d17h
     disk-ssd-web-1  Bound    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            oci-bv      3d17h
   ```
-  <font color="blue">  Task 4: </font> 检查应用PVC 对应 PV
+  <font color="blue">  Task 6: </font> 检查应用PVC 对应 PV
 
   ```
     $ <copy> kubectl get pv </copy>
