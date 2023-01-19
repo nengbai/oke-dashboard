@@ -1208,7 +1208,13 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 2. 使用动态外部存储PV 实现Pod存储。 **注意:** 这种模式适用于有状态(StatefulSet)部署
 
-<font color="blue">Task 1: </font> 新建 nginx-volumeclaimtempalte.yml
+<font color="blue">Task 1: </font> 下载应用部署 Manifest 文件 nginx-volumeclaimtempalte.yml
+
+  ```bash
+  $ <copy> curl -o nginx-volumeclaimtempalte.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/nginx-volumeclaimtempalte.yml </copy>
+  ```
+
+<font color="blue">Task 1: </font> 参照下面内容，编辑 nginx-volumeclaimtempalte.yml
 
   ```text
     <copy>
