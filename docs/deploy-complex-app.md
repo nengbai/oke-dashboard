@@ -1061,7 +1061,7 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
   
   <font color="blue">  Task 8: </font> 打开浏览器，访问地址`https://demo-app.demo.com`，显示如下界面。
 
-    ![image-20220107194254733](../deploy-complex-app/images/image-20220107194254733.png)
+    ![image-20220107194254733](../deploy-complex-app/images/demo-app.png)
 
 
 ### <font color="red"> 8.2 常见问题 2: 应用资源配额(Resource Quotas)和 Pod Limit Range </font>
