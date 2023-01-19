@@ -1491,10 +1491,16 @@ deployment.apps/demo-app-dp scaled
         protocol: TCP
         targetPort: 8000
       selector:
-        app: demo-redis-dp
+        app: demo-app-dp
+  ```
+<font color="blue"> Task 3: </font> 执行Manifest 文件  internal-lb.yaml
+
+  ```bash
+  $ <copy> kubectl apply -f internal-lb.yaml
+  service/demo-app-lb-svc created
   ```
 
- <font color="blue"> Task 3: </font> 验证修改后状态与结果: 对应EXTERNAL-IP 和 PORT(S) 
+ <font color="blue"> Task 4: </font> 验证修改后状态与结果: 对应EXTERNAL-IP 和 PORT(S) 
 
   ```bash
   $ <copy> kubectl -n redis get svc </copy>
@@ -1502,7 +1508,7 @@ deployment.apps/demo-app-dp scaled
   demo-app-lb-svc     LoadBalancer   10.96.175.65   10.0.20.78    8000:32097/TCP   5d18h
   ```
 
-<font color="blue"> Task 4: </font> 验证是否正常
+<font color="blue"> Task 5: </font> 验证是否正常
 
   ```bash
   $ <copy> curl http://10.0.20.78:32097 -vv </copy>
@@ -1510,64 +1516,107 @@ deployment.apps/demo-app-dp scaled
   ```
 
 
-2. Create an internal network load balancer as an OCI network load balancer
+2. OKE 内网网络负载均衡器
+
+  ```bash
+  $ <copy> curl -o internal-nlb.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/internal-nlb.yaml </copy>
+  ```
+  
+  <font color="blue"> Task 2: </font> 参照下面内容核实编辑 Manifest 文件 internal-lb.yaml
 
   ```
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: my-nginx-svc
-    labels:
-      app: nginx
-    annotations:
-      oci.oraclecloud.com/load-balancer-type: "nlb"
-      oci-network-load-balancer.oraclecloud.com/internal: "true"
-      oci-network-load-balancer.oraclecloud.com/subnet: "ocid1.subnet.oc1..aaaaaa....vdfw"
-  spec:
-    type: LoadBalancer
-    ports:
-    - port: 80
-    selector:
-      app: nginx
-  ```
-
-3. Assign a reserved public IP address to a public load balancer
-    ```
     apiVersion: v1
     kind: Service
     metadata:
-      name: my-nginx-svc
+      name: demo-app-nlb-svc
       labels:
-        app: nginx
-      annotations:
-        oci.oraclecloud.com/load-balancer-type: "lb"
-    spec:
-      loadBalancerIP: 144.25.97.173
-      type: LoadBalancer
-      ports:
-      - port: 80
-      selector:
-        app: nginx
-    ```
-Assign a reserved public IP address to a public network load balancer
-
-    ```
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: my-nginx-svc
-      labels:
-        app: nginx
+        app: demo-app-nlb-svc
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        #service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1..aaaaaa....vdfw"
+      namespace: redis
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
+      selector:
+        app: demo-app-dp
+  ```
+
+<font color="blue"> Task 3: </font> 执行Manifest 文件  internal-nlb.yaml
+
+  ```bash
+  $ <copy> kubectl apply -f internal-nlb.yaml
+  service/demo-app-nlb-svc created
+  ```
+
+<font color="blue"> Task 4: </font> 验证修改后状态与结果: 对应EXTERNAL-IP 和 PORT(S) 
+
+  ```bash
+  $ <copy> kubectl -n redis get svc </copy>
+  NAME             TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+  NAME               TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+  demo-app-nlb-svc   LoadBalancer   10.96.107.132   <pending>     8000:30955/TCP   4m56s
+  ```
+
+<font color="blue"> Task 5: </font> 验证是否正常
+
+  ```bash
+  $ <copy> curl http://10.0.20.78:32097 -vv </copy>
+
+  ```
+
+3. OKE 应用负载均衡器使用reserved public IP
+
+```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: demo-app-lbrp-svc
+      labels:
+        app: demo-app-lbrp-svc
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "lb"      # nlb 则为网络负载均衡
+        service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+        #service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1..aaaaaa....vdfw"
+      namespace: redis
     spec:
       loadBalancerIP: 144.25.97.173
       type: LoadBalancer
       ports:
-      - port: 80
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
       selector:
-        app: nginx
-    ```
+        app: demo-app-dp
+  ```
+
+<font color="blue"> Task 3: </font> 执行Manifest 文件  lbrp.yaml
+
+  ```bash
+  $ <copy> kubectl apply -f lbrp.yaml
+  service/demo-app-lbrp-svc created
+  ```
+
+<font color="blue"> Task 4: </font> 验证修改后状态与结果: 对应EXTERNAL-IP 和 PORT(S) 
+
+  ```bash
+  $ <copy> kubectl -n redis get svc </copy>
+  NAME             TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+  NAME               TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+  demo-app-nlb-svc   LoadBalancer   10.96.107.132   144.25.97.173     8000:30955/TCP   4m56s
+  ```
+
+<font color="blue"> Task 5: </font> 验证是否正常（注意：确定security policy已经开通该端口）
+
+  ```bash
+  $ <copy> curl http://144.25.97.173:32097 -vv </copy>
+
+  ```
+
 
 4. 调整 Load Balancer Shapes
 
