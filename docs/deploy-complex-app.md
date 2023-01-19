@@ -1467,7 +1467,7 @@ deployment.apps/demo-app-dp scaled
   <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 internal-lb.yaml
 
   ```bash
-  $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/internal-lb.yaml </copy>
+  $ <copy> curl -o internal-lb.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/internal-lb.yaml </copy>
   ```
   
   <font color="blue"> Task 2: </font> 参照下面内容核实编辑 Manifest 文件 internal-lb.yaml
@@ -1506,7 +1506,7 @@ deployment.apps/demo-app-dp scaled
 
   ```bash
   $ <copy> curl http://10.0.20.78:32097 -vv </copy>
-  
+
   ```
 
 
