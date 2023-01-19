@@ -87,8 +87,6 @@ spec:
     targetPort: 8000
   selector:
     app: demo-redis-dp
-
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

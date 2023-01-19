@@ -1405,7 +1405,7 @@ kubectl rollout ： 版本升级相关功能，支持下面的选项:
 1. 替换容器升级 images,进行升级
 
 ```bash
-$ <copy> kubectl -n redis set image deployment/demo-app-dp demo-app=icn.ocir.io/cnxcypamq98c/devops-repos/demo-app:v7 --record=true
+$ <copy> kubectl -n redis set image deployment/demo-app-dp demo-app=icn.ocir.io/oraclepartnersas/baineng-oke-registry:demo-app.v7 --record=true
 </copy> 
 ```
 
@@ -1463,24 +1463,53 @@ deployment.apps/demo-app-dp scaled
 ### <font color="red"> 常见问题 6: OKE 应用负载均衡和网络负载均衡衡器应用 </font>
 
 1. OKE 内网应用负载均衡器
-    ```
+
+  <font color="blue"> Task 1: </font> 下载应用部署 Manifest 文件 internal-lb.yaml
+
+  ```bash
+  $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/internal-lb.yaml </copy>
+  ```
+  
+  <font color="blue"> Task 2: </font> 参照下面内容核实编辑 Manifest 文件 internal-lb.yaml
+
+  ```
     apiVersion: v1
     kind: Service
     metadata:
-      name: my-nginx-svc
+      name: demo-app-lb-svc
       labels:
-        app: nginx
+        app: demo-app-lb-svc
       annotations:
         oci.oraclecloud.com/load-balancer-type: "lb"
         service.beta.kubernetes.io/oci-load-balancer-internal: "true"
-        service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1..aaaaaa....vdfw"
+        #service.beta.kubernetes.io/oci-load-balancer-subnet1: "ocid1.subnet.oc1..aaaaaa....vdfw"
+      namespace: redis
     spec:
       type: LoadBalancer
       ports:
-      - port: 8100
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
       selector:
-        app: nginx
-    ```
+        app: demo-redis-dp
+  ```
+
+ <font color="blue"> Task 3: </font> 验证修改后状态与结果: 对应EXTERNAL-IP 和 PORT(S) 
+
+  ```bash
+  $ <copy> kubectl -n redis get svc </copy>
+  NAME             TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+  demo-app-lb-svc     LoadBalancer   10.96.175.65   10.0.20.78    8000:32097/TCP   5d18h
+  ```
+
+<font color="blue"> Task 4: </font> 验证是否正常
+
+  ```bash
+  $ <copy> curl http://10.0.20.78:32097 -vv </copy>
+  
+  ```
+
+
 2. Create an internal network load balancer as an OCI network load balancer
 
   ```
