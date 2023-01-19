@@ -1136,7 +1136,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   $ <copy> curl -o micro-app-with-ingress.yml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/deploy-complex-app/micro-app-with-ingress.yml </copy>
   ```
 
-  <font color="blue"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+  <font color="blue"> Task 2: </font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从volumes and volumemounts内容。
 
   ```text
   <copy>
