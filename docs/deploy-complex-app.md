@@ -1051,7 +1051,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
       $ <copy> kubectl -n redis get ing </copy>
       ```
   
-  <font color="blue">  Task 7: </font> 因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
+  <font color="blue">  Task 7: </font> 域名解释
+  
+  因为ingress控制器需要通过域名来分发连接后端的服务，而不是通过IP地址，所以我们需要添加加域名解析。Mac系统编辑文件：`sudo vi /etc/hosts`, Windows系统编辑：`“windows”→“System32”→“drivers”→“etc” →“hosts”` 文件。在hosts文件中增加以下条目，请使用自己查出的IP地址和HOST名。
 
       ```text
       <copy> 
