@@ -1559,13 +1559,13 @@ deployment.apps/demo-app-dp scaled
   $ <copy> kubectl -n redis get svc </copy>
   NAME             TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
   NAME               TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-  demo-app-nlb-svc   LoadBalancer   10.96.107.132   <pending>     8000:30955/TCP   4m56s
+  demo-app-nlb-svc   LoadBalancer   10.96.107.132   10.0.30.78     8000:30955/TCP   4m56s
   ```
 
 <font color="blue"> Task 5: </font> 验证是否正常
 
   ```bash
-  $ <copy> curl http://10.0.20.78:32097 -vv </copy>
+  $ <copy> curl http://10.0.30.78:32097 -vv </copy>
 
   ```
 
@@ -1620,102 +1620,92 @@ deployment.apps/demo-app-dp scaled
 
 4. 调整 Load Balancer Shapes
 
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-  labels:
-    app: nginx
-  annotations:
-    oci.oraclecloud.com/load-balancer-type: "lb"
-    service.beta.kubernetes.io/oci-load-balancer-shape: 400Mbps
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: nginx
-```
+ ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: demo-app-lb-svc
+      labels:
+        app: demo-app-lb-svc
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "lb"
+        service.beta.kubernetes.io/oci-load-balancer-shape: 400Mbps
+      namespace: redis
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
+      selector:
+        app: demo-app-dp
+  ```
 
-Flexible Load Balancer Shapes
+5. Flexible Load Balancer Shapes
 
-```
+  ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: demo-app-lb-svc
+      labels:
+        app: demo-app-lb-svc
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "lb"
+        service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+        service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+        service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
+      namespace: redis
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
+      selector:
+        app: demo-app-dp
+  ```
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-  labels:
-    app: nginx
-  annotations:
-    oci.oraclecloud.com/load-balancer-type: "lb"
-    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
-    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
-    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: nginx
-```
+6. Specifying Listener Protocols : alid protocols include "HTTP", "HTTPS", and "TCP". 
 
-Specifying Listener Protocols : alid protocols include "HTTP", "HTTPS", and "TCP". 
-```
+  ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: demo-app-lb-svc
+      labels:
+        app: demo-app-lb-svc
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "lb"
+        service.beta.kubernetes.io/oci-load-balancer-backend-protocol: "HTTP"
+      namespace: redis
+    spec:
+      type: LoadBalancer
+      ports:
+      - port: 8000
+        protocol: TCP
+        targetPort: 8000
+      selector:
+        app: demo-app-dp
+  ```
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-  labels:
-    app: nginx
-  annotations:
-    oci.oraclecloud.com/load-balancer-type: "lb"
-    service.beta.kubernetes.io/oci-load-balancer-backend-protocol: "HTTP"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: nginx
-```
+7. Exposing TCP and UDP Applications: Valid protocols include "UDP" and "TCP".
 
-OCI Network Load Balancer 
-
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-  labels:
-    app: nginx
-  annotations:
-    oci.oraclecloud.com/load-balancer-type: "nlb"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: nginx
-```
-
-Exposing TCP and UDP Applications: Valid protocols include "UDP" and "TCP". 
-```
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-  labels:
-    app: nginx
-  annotations:
-    oci.oraclecloud.com/load-balancer-type: "nlb"
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    protocol: UDP
-  selector:
-    app: nginx
-```
+  
+  ```
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: my-nginx-svc
+    labels:
+      app: nginx
+    annotations:
+      oci.oraclecloud.com/load-balancer-type: "nlb"
+  spec:
+    type: LoadBalancer
+    ports:
+    - port: 80
+      protocol: UDP
+    selector:
+      app: nginx
+  ```
