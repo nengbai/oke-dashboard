@@ -1274,63 +1274,63 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 <font color="blue">Task 2: </font> 参照下面内容，编辑 nginx-volumeclaimtempalte.yml
 
   ```text
-    <copy>
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: nginx
-      labels:
-        app: nginx
-    spec:
-      ports:
-      - port: 80
-        name: web
-      clusterIP: None
-      selector:
-        app: nginx
-    ---
-    apiVersion: apps/v1
-    kind: StatefulSet
-    metadata:
+  <copy>
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx
+    labels:
+      app: nginx
+  spec:
+    ports:
+    - port: 80
       name: web
-    spec:
-      selector:
-        matchLabels:
+    clusterIP: None
+    selector:
+      app: nginx
+  ---
+  apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    name: web
+  spec:
+    selector:
+      matchLabels:
+        app: nginx
+    serviceName: "nginx"
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+    replicas: 2
+    template:
+      metadata:
+        labels:
           app: nginx
-      serviceName: "nginx"
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxSurge: 25%
-          maxUnavailable: 25%
-      replicas: 2
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - name: nginx
-            image: nginx
-            ports:
-            - containerPort: 80
-              name: web
-            volumeMounts:
-            - name: disk-ssd
-              mountPath: /data
-      volumeClaimTemplates:
-      - metadata:
-          name: disk-ssd
-        spec:
-          accessModes: [ "ReadWriteOnce" ]
-          storageClassName: "oci-bv"
-          resources:
-            requests:
-              storage: 50Gi   
-          </copy>
-    ```
+      spec:
+        containers:
+        - name: nginx
+          image: nginx
+          ports:
+          - containerPort: 80
+            name: web
+          volumeMounts:
+          - name: disk-ssd
+            mountPath: /data
+    volumeClaimTemplates:
+    - metadata:
+        name: disk-ssd
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "oci-bv"
+        resources:
+          requests:
+            storage: 50Gi   
+    </copy>
+  ```
   
-  <font color="blue"> Task 3: </font> 重新应用
+<font color="blue"> Task 3: </font> 部署应用
 
   ```
   $ <copy> kubectl apply -f nginx-volumeclaimtempalte.yml </copy>
@@ -1338,7 +1338,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
   statefulset.apps/web created
   ```
   
-  <font color="blue">  Task 4: </font> 检查应用运行状态
+<font color="blue">  Task 4: </font> 检查应用运行状态
 
   ```
     $ <copy> kubectl get pod </copy>
@@ -1346,7 +1346,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     web-0                                                   1/1     Running             0          47s
     web-1                                                   0/1     ContainerCreating   0          19s
   ```
-  <font color="blue">  Task 5: </font> 检查应用对应PVC
+<font color="blue">  Task 5: </font> 检查应用对应PVC
 
   ```
     $ <copy> kubectl get pvc </copy>
@@ -1354,7 +1354,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
     disk-ssd-web-0  Bound    csi-c1ef55a8-a025-45cb-a05d-b6c0edf0247b   50Gi       RWO            oci-bv      3d17h
     disk-ssd-web-1  Bound    csi-d3b0784c-4fa3-4891-a856-770f4f880c5e   50Gi       RWO            oci-bv      3d17h
   ```
-  <font color="blue">  Task 6: </font> 检查应用PVC 对应 PV
+<font color="blue">  Task 6: </font> 检查应用PVC 对应 PV
 
   ```
     $ <copy> kubectl get pv </copy>
@@ -1369,7 +1369,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 1. OKE支持三种探针Probe：
 
-**- startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
+- **startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
 
 ```
   startupProbe:
@@ -1381,7 +1381,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       timeoutSeconds: 1             # 探测应用超过1秒后为失败
   ```
 
-**- livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
+- **livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
 
   ```
   livenessProbe:
@@ -1394,7 +1394,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
        timeoutSeconds: 1            # 探测应用超过1秒后为失败
   ```
 
-**- readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
+- **readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
 
   ```
   readinessProbe:
