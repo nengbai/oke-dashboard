@@ -1080,7 +1080,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 下面以 Limit Range为例解释 应用Pod资源配额。
 
-Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: 开始章节内容。
+1.  增加应用Pod资源配额
+
+<font color="blue"> Task 1:</font> 编辑 micro-app-with-ingress.yml，参照下面信息，增加从resources: 开始章节内容。
     
   ```text
   <copy>
@@ -1120,6 +1122,42 @@ Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: �
               cpu: 500m
               memory: 200Mi     
   </copy>
+  ```
+
+<font color="blue"> Task 2:</font> 部署重新应用
+
+      ```
+      $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
+      ```
+  
+  <font color="blue">  Task 3: </font> 检查应用运行状态
+
+      ```
+      $ <copy> kubectl -n redis get pod </copy>
+      ```
+  
+  <font color="blue">  Task 4: </font> 检查应用服务
+
+      ```
+      $ <copy> kubectl -n redis get svc </copy>
+      ```
+
+2. Pod 资源使用状况监测
+
+  ```bash
+  $ <copy> kubect top pod -n redis </copy>
+  NAME                             CPU(cores)   MEMORY(bytes)   
+  demo-app-dp-79fcbf6c56-8pwdq     1m           16Mi            
+  demo-app-dp-79fcbf6c56-gnz8r     1m           13Mi            
+  demo-app-dp-79fcbf6c56-w8tc8     1m           15Mi            
+  demo-redis-dp-7bdd9c4d94-qkr7x   0m           10Mi            
+  demo-redis-dp-7bdd9c4d94-tm8kk   1m           12Mi            
+  demo-redis-dp-7bdd9c4d94-xts9x   1m           10Mi            
+  mysql-0                          3m           414Mi           
+  redis-master-0                   8m           8Mi             
+  redis-replicas-0                 10m          8Mi             
+  redis-replicas-1                 11m          8Mi             
+  redis-replicas-2                 10m          8Mi
   ```
 
 ### <font color="red"> 常见问题 3: 应用Pod volume(存储卷) </font>
@@ -1325,7 +1363,9 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 ###<font color="red">  常见问题 4: 应用Pod健康检查 </font>
 
-应用在运行过程，需要进行健康检查，如程序异常，容器异常，硬件故障，网络故障等，OKE 提供 Health Check健康检查机制，当发现应用异常时，将应用从service服务中剔除，保障应用的高可用性，并自动重启容器。OKE支持三种探针Probe：
+应用在运行过程，需要进行健康检查，如程序异常，容器异常，硬件故障，网络故障等，OKE 提供 Health Check健康检查机制，当发现应用异常时，将应用从service服务中剔除，保障应用的高可用性，并自动重启容器。
+
+1. OKE支持三种探针Probe：
 
 **- startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
 
@@ -1377,7 +1417,6 @@ tcpSocket适用于TCP业务，httpGet适用于web业务。
   - periodSeconds          检查间隔，多久执行probe检查，默认为10s. </br>
   - timeoutSeconds         检查超时时长，探测应用timeout后为失败. </br>
   - successThreshold       成功探测阈值，表示探测多少次为健康正常，默认探测1次. </br>
-
 
 
 
@@ -1688,7 +1727,7 @@ deployment.apps/demo-app-dp scaled
         app: demo-app-dp
   ```
 
-6. Specifying Listener Protocols : alid protocols include "HTTP", "HTTPS", and "TCP". 
+6. Specifying Listener Protocols : valid protocols include "HTTP", "HTTPS", and "TCP". 
 
   ```
     apiVersion: v1
