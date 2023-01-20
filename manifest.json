@@ -36,6 +36,10 @@
         {           
             "title": "应用迁移到 OCI OKE 平台演示",
             "filename": "./docs/deploy-complex-app.md"
+        },
+        {           
+            "title": "OKE Istio Service Mesh",
+            "filename": "./docs/oke-istio.md"
         }
     ]
 }
