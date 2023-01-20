@@ -7,7 +7,7 @@
 **应用部署流程**：如图中棕色数字标识</br>
 **应用访问流程**：如图中黑色数字标识</br>
 
-## 2. 简介
+## 2. OKE 应用部署简介
 
 以Golang开发的微服务应用如何迁移部署到OCI OKE平台演示：包含前端应用程序、MySQL和Redis集群。其中前端应用程序的容器镜像事先已经配置好，存放在OCI容器注册表中。
  
@@ -1071,9 +1071,9 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 容器作为每一个资源使用单位，OKE将各种服务器资源合理分配给容器使用，以保证在容器的生命周期内有足够的资源供其使用。
 可以分成：独占资源、共享资源（主要指CPU、内存），基于优先度和公平性来提高资源的利用率。
 
-- **资源配额（Resource Quotas）**：配置限制namespace内的每种类型的k8s对象数量和资源（CPU，内存)。
-- **Limit Range**：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
-- **容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：</br>
+**- 资源配额（Resource Quotas）**：配置限制namespace内的每种类型的k8s对象数量和资源（CPU，内存)。
+**- Limit Range**：是用来设置 Namespace 中 Pod 的默认的资源 Requests 和 Limits 值，以及大小范围。
+**- 容器服务质量(QoS)**：提供服务质量管理，根据容器的资源配置，Pod 分为Guaranteed, Burstable, BestEffort 3个级别。当资源紧张时根据分级决定调度和驱逐策略：</br>
   - Guaranteed：Pod中所有容器都设置了limit和request， 并且相等（设置limit后假如没有设置request会自动设置为limit值）。</br>
   - Burstable： Pod中有容器未设置limit， 或者limit和request不相等。这种类型的pod在调度节点时， 可能出现节点超频的情况。</br>
   - BestEffort：Pod中没有任何容器设置request和limit。</br>
@@ -1126,11 +1126,11 @@ Task 1: 编辑 micro-app-with-ingress.yml，参照下面信息，增加从env: �
 
 volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存储用户数据的空间。主要有下面3种模式：
 
-- **emptyDir（空目录）：** 当Pod创建时，在所运行的OKE Worker节点上创建一个空目录，当删除Pod时，emptyDir中的数据将被永久删除，不支持持续存储。
+**- emptyDir（空目录）：** 当Pod创建时，在所运行的OKE Worker节点上创建一个空目录，当删除Pod时，emptyDir中的数据将被永久删除，不支持持续存储。
 
-- **hostPath（本地存储卷）：** 当Pod创建时，在所运行的OKE Worker节点上的指定文件系统或目录，当删除Pod时，数据仍存在该Worker节点，支持持续存储。
+**- hostPath（本地存储卷）：** 当Pod创建时，在所运行的OKE Worker节点上的指定文件系统或目录，当删除Pod时，数据仍存在该Worker节点，支持持续存储。
 
-- **外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
+**- 外部存储:** 当Pod创建时，通过PVC静态或动态Storageclass创建外部存储PV，当删除Pod时，数据仍存在存储PV，支持持续存储。
 
   - PVC(PersistentVolumeClaim): Pod中声明需要的外部存储资源（Resources：静态或动态外部存储PV）和访问模式（AccessModes).</br>
   - PV（PersistentVolume）：是集群中提供Pod数据持续化存储的外部存储，可理解为系统中lv or disk。每个PV是有状态的：使用、释放、回收.</br>
@@ -1327,7 +1327,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
 
 应用在运行过程，需要进行健康检查，如程序异常，容器异常，硬件故障，网络故障等，OKE 提供 Health Check健康检查机制，当发现应用异常时，将应用从service服务中剔除，保障应用的高可用性，并自动重启容器。OKE支持三种探针Probe：
 
-- **startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
+**- startupProbe:** Pod启动检查机制，一些应用启动缓慢，避免业务长时间启动而被前面的探针kill掉
 
 ```
   startupProbe:
@@ -1339,7 +1339,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
       timeoutSeconds: 1             # 探测应用超过1秒后为失败
   ```
 
-- **livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
+**- livenessProbe:** Pod在线检查机制,在Pod 中定义健康检查条件及其周期性，如果探测失败，OKE 就会重启容器。
 
   ```
   livenessProbe:
@@ -1352,7 +1352,7 @@ volume(存储卷)是Pod中能够被多个容器访问的共享目录,用于存�
        timeoutSeconds: 1            # 探测应用超过1秒后为失败
   ```
 
-- **readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
+**- readinessProbe:** Pod准备就绪检查,在Pod启动时，对容器将容器健康检查检查，确认正常将该Pod加入到 Service 负载均衡池中，对外提供服务。
 
   ```
   readinessProbe:
@@ -1441,7 +1441,7 @@ Waiting for deployment "demo-app-dp" rollout to finish: 1 old replicas are pendi
 Waiting for deployment "demo-app-dp" rollout to finish: 4 of 5 updated replicas are available...
 deployment "demo-app-dp" successfully rolled out
 ```
-查看Pod images 版本 ，确认替换成 demo-app:v7
+查看Pod images 版本 ，确认替换成 demo-app.v7
 ```bash
 $ <copy> 
 kubectl -n redis get pod demo-app-dp-7555975757-76t7p  -o yaml
