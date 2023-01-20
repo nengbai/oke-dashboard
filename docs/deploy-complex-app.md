@@ -1,6 +1,6 @@
 #  应用迁移到OCI OKE 平台演示
 
-## 1. OKE 应用迁移架构
+## 1. OKE 应用部署架构
 
 ![image-20220107111007887](../deploy-complex-app/images/oke-app-art.png)
 
