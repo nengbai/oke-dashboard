@@ -1486,7 +1486,7 @@ deployment "demo-app-dp" successfully rolled out
 查看Pod images 版本 ，确认替换成 demo-app.v7
 ```bash
 $ <copy> 
-kubectl -n redis get pod demo-app-dp-7555975757-76t7p  -o yaml
+kubectl -n redis get pod <pod-name>  -o yaml
 ```
 
 3. 版本回滚:
