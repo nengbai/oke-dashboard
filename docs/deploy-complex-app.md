@@ -1126,21 +1126,21 @@ Helm 是一个用于 Kubernetes 应用的包管理工具，主要用来管理Hel
 
 <font color="blue"> Task 2:</font> 部署重新应用
 
-      ```
-      $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
-      ```
+  ```
+  $ <copy> kubectl apply -f micro-app-with-ingress.yml </copy>
+  ```
   
   <font color="blue">  Task 3: </font> 检查应用运行状态
 
-      ```
-      $ <copy> kubectl -n redis get pod </copy>
-      ```
+  ```
+  $ <copy> kubectl -n redis get pod </copy>
+  ```
   
   <font color="blue">  Task 4: </font> 检查应用服务
 
-      ```
-      $ <copy> kubectl -n redis get svc </copy>
-      ```
+  ```
+  $ <copy> kubectl -n redis get svc </copy>
+  ```
 
 2. Pod 资源使用状况监测
 
