@@ -48,3 +48,66 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 ## 无侵入式为应用植入 Istio功能   
 
 ![](../oke-istio/images/istio-exp.png)
+
+上图是Bookinfo 微服务应用架构图，其功能组件包括：
+
+- Product Page Service: Calls the Details and Reviews services to create a product page.
+
+- Details Service: Returns book information.
+
+- Reviews Service: Returns book reviews and calls the Ratings service.
+
+- Ratings Service: Returns ranking information for a book review.
+
+下面演示 Bookinfo application 无侵入式Istio 功能：
+1. 在Namespace 中启动 istio-injection 标识
+    ```bash
+    $ <copy> kubectl label namespace default istio-injection=enabled </copy>
+    ```
+2. 部署 Bookinfo application
+    ```bash
+     $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/bookinfo/platform/kube/bookinfo.yaml </copy>
+    ```
+3. 检查该 Namespace 所有 services 和 pods 
+    ```bash
+     $ <copy> kubectl get services
+        kubectl get pods
+    </copy>
+    ```
+
+4. 验证 微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+     $ <copy> kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>" </copy>
+    ```
+5. 增加 book application 访问集群外网功能
+    ```bash
+     $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/bookinfo/networking/bookinfo-gateway.yaml </copy>
+    ```
+6. 集群外验证微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+     $ <copy> curl -s "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage" | grep -o "<title>.*</title>" </copy>
+    ```
+
+## Istio 与其他服务集成
+
+1. Istio 与 Prometheus 集成
+    ```bash
+    $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/prometheus.yaml </copy>
+    ```
+2. Istio 与 Grafana 集成
+    ```bash
+    $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/grafana.yaml </copy>
+    ```
+3. Istio 与 Jaeger 集成
+    ```bash
+    $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/jaeger.yaml </copy>
+    ```
+4. Istio 与 Zipkin 集成
+    ```bash
+    $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/extras/zipkin.yaml </copy>
+    ```
+5. Istio 与 Kiali  集成
+    ```bash
+    $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/kiali.yaml </copy>
+    ```
+## Istio 与OCI Observability服务集成
