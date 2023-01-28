@@ -88,7 +88,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
      $ <copy> curl -s "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage" | grep -o "<title>.*</title>" </copy>
     ```
 
-## Istio 与其他服务集成
+## Istio 与其他开源组件集成
 
 1. Istio 与 Prometheus 集成
     ```bash
