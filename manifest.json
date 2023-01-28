@@ -40,6 +40,11 @@
         {           
             "title": "OKE Istio Service Mesh",
             "filename": "./docs/oke-istio.md"
+        },
+        {           
+            "title": "OKE Service Mesh",
+            "filename": "./docs/oke-service-mesh.md"
         }
+    ]
     ]
 }
