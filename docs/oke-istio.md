@@ -1,4 +1,4 @@
-# OKE Istio Service Mesh
+# Istio Service Mesh on OKE
 
 本章节介绍如何在 OKE 上安装Istio，并演示如何在OKE平台无侵入式在应用中植入 Istio 功能。
 

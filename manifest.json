@@ -38,7 +38,7 @@
             "filename": "./docs/deploy-complex-app.md"
         },
         {           
-            "title": "OKE Istio Service Mesh",
+            "title": "Istio Service Mesh on OKE",
             "filename": "./docs/oke-istio.md"
         },
         {           
