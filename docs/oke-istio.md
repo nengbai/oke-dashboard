@@ -155,7 +155,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```
 5. Istio 与 Kiali  集成
     ```bash
-    $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/kiali.yaml </copy>
+    $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/kiali.yaml </copy>
     serviceaccount/kiali created
     configmap/kiali created
     clusterrole.rbac.authorization.k8s.io/kiali-viewer created
@@ -166,4 +166,34 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     service/kiali created
     deployment.apps/kiali created
     ```
-## Istio 与OCI Observability服务集成
+## Istio Dashbaord 可视化展现
+
+### Prometheus 展示 Bookinfo application 性能指标Metrics 
+
+1. 确认Prometheus 是否安装
+    ```bash
+     $ <copy> kubectl -n istio-system get svc prometheus </copy>
+    ```
+2. 启动 Prometheus UI 
+    ```bash
+    $ <copy> istioctl dashboard prometheus </copy>
+    ```
+3. 执行Prometheus 查询
+   在 “Expression” 中输入下面： 
+    ```bash
+     $ <copy> istio_requests_total </copy>
+    ```
+    ![](../oke-istio/images/istio-prem.png)
+
+### 管理 Grafana Dashboards
+
+1. 确认 Prometheus 和 Grafana 已经安装
+    ```bash
+    $ <copy> kubectl -n istio-system get svc prometheus；kubectl -n istio-system get svc grafana </copy>
+
+    ```
+2. 启动 Istio Grafana dashboard
+    ```bash
+    $ <copy> istioctl dashboard grafana </copy>
+    ```
+3. 
