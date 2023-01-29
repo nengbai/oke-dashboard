@@ -275,7 +275,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> curl -o custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
     ```
-
+    参照下面说明调整相关内容：
     ```txt
     apiVersion: v1
     kind: ConfigMap
@@ -338,7 +338,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
      $ <copy> curl -o bookinfo.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/bookinfo.yaml </copy>
     ```
-
+    参照下面说明调整相关内容：
     ```text
     apiVersion: apps/v1
     kind: Deployment
@@ -387,6 +387,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
      $ <copy> curl -o ingress-custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/ingress-custom-bootstrap.yaml </copy>
     ```
+    参照下面说明调整相关内容：
 
     ```text
     apiVersion: v1
@@ -449,6 +450,11 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
  
 8. 下载 gateway-patch.yaml
+     ```bash
+     $ <copy> curl -o ingress-custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/gateway-patch.yaml </copy>
+    ```
+    参照下面说明调整相关内容：
+
     ```text
     spec:
     template:
