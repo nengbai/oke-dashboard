@@ -202,3 +202,23 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
     更多Dashboard 展示参照下图所示：
     ![](../oke-istio/images/istio-grafana-1.png)
+
+### Jaeger 分布式跟踪
+
+1. 使用 istioctl 启用 tracing 功能
+    ```bash
+    $ <copy> istioctl install --set meshConfig.enableTracing=true </copy>
+    ```
+2. 启用 Jaeger UI 
+    ```bash
+    $ <copy> istioctl dashboard jaeger </copy>
+    ```
+3. 获取 INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $3}'` </copy>
+    ```
+
+4. 发送requests 到 product 页面，使用 Jaeger 跟踪分析
+    ```bash
+    $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
+    ```
