@@ -21,7 +21,7 @@ data:
         },
         "static_resources": {
             "clusters": [{
-                "name": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain:443]
+                "name": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain:443]
                 "type": "STRICT_DNS",
                 "lb_policy": "ROUND_ROBIN",
                 "load_assignment": {
