@@ -253,7 +253,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 1. 开通OCI APM 权限
 
     - <a href="https://docs.oracle.com/iaas/Content/Identity/Reference/apmpolicyreference.htm">APM Policy Reference</a>
-    - <a href="https://docs-uat.us.oracle.com/en/cloud/paas/application-performance-monitoring/apmgn/perform-oracle-cloud-infrastructure-prerequisite-tasks.html">APM Policy Example</a> 
+    - <a href="https://docs.oracle.com/en-us/iaas/application-performance-monitoring/doc/perform-oracle-cloud-infrastructure-prerequisite-tasks.html#GUID-6F390B5F-DCF5-4299-A9E5-0C7F81A75E61">APM Policy Example</a> 
 
 2. 新建 OCI APM Domain
 
@@ -267,7 +267,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 ### Istio 与OCI APM 服务集成
 1. 激活 到OCI APM tracing 跟踪功能
     ```bash
-    $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
+    $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
     Error: accepts 0 arg(s), received 1
     ```
 2. 下载配置文件 custom-bootstrap.yaml
