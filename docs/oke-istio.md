@@ -34,15 +34,15 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 2. 安装 Istioctl 命令行操作工具, 例如下载包为：istio-1.16.1
 
     ```bash
-    $ <copy> cd istio-1.16.1/bin &&
-    ./istioctl x precheck </copy>
+    $ <copy> cd istio-1.16.1/bin;sudo cp istioctl /usr/bin/;istioctl x precheck </copy>
     ✔ No issues found when checking the cluster. Istio is safe to install or upgrade!
     To get started, check out https://istio.io/latest/docs/setup/getting-started/
     ```
 3. 安装 Istio
 
     ```bash
-    $ <copy> istioctl install </copy>
+    $ <copy> istioctl install --set profile=demo -y </copy>
+    ✔ Istio core installed                                                                                                              ✔ Istiod installed                                                                                                              ✔ Egress gateways installed                                                                                                              ✔ Ingress gateways installed                                                                                                              ✔ Installation complete                                                                                                               validation.
     ```
 
 ## 无侵入式为应用植入 Istio功能   
@@ -60,32 +60,62 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 - Ratings Service: Returns ranking information for a book review.
 
 下面演示 Bookinfo application 无侵入式Istio 功能：
-1. 在Namespace 中启动 istio-injection 标识
+1. 在Namespace default 中启动 istio-injection 标识
     ```bash
     $ <copy> kubectl label namespace default istio-injection=enabled </copy>
     ```
 2. 部署 Bookinfo application
     ```bash
      $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/bookinfo/platform/kube/bookinfo.yaml </copy>
+     service/details created
+     service/details created
+     serviceaccount/bookinfo-details created
+     deployment.apps/details-v1 created
+     service/ratings created
+     serviceaccount/bookinfo-ratings created
+     deployment.apps/ratings-v1 created
+     service/reviews created
+     serviceaccount/bookinfo-reviews created
+     deployment.apps/reviews-v1 created
+     deployment.apps/reviews-v2 created
+     deployment.apps/reviews-v3 created
+     service/productpage created
+     serviceaccount/bookinfo-productpage created
+     deployment.apps/productpage-v1 created
     ```
 3. 检查该 Namespace 所有 services 和 pods 
     ```bash
      $ <copy> kubectl get services
         kubectl get pods
-    </copy>
+       </copy>
+      NAME                                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+      details                                           ClusterIP   10.96.72.97     <none>        9080/TCP            100s
+      productpage                                       ClusterIP   10.96.162.188   <none>        9080/TCP            100s
+      ratings                                           ClusterIP   10.96.54.128    <none>        9080/TCP            100s
+      reviews                                           ClusterIP   10.96.40.17     <none>        9080/TCP            100s
     ```
 
-4. 验证 微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
+4. 验证 微服务应用使用 ingress IP and port：INGRESS_HOST 和 INGRESS_PORT
     ```bash
      $ <copy> kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>" </copy>
+     <title>Simple Bookstore App</title>
     ```
 5. 增加 book application 访问集群外网功能
     ```bash
      $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/bookinfo/networking/bookinfo-gateway.yaml </copy>
+     gateway.networking.istio.io/bookinfo-gateway created
+     virtualservice.networking.istio.io/bookinfo created
     ```
-6. 集群外验证微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
+6. 获取 INGRESS_HOST 和 INGRESS_PORT
     ```bash
-     $ <copy> curl -s "http://${INGRESS_HOST}:${INGRESS_PORT}/productpage" | grep -o "<title>.*</title>" </copy>
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $3}'` </copy>
+    ```
+
+7. 集群外验证微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
+
+    ```bash
+     $ <copy> curl -s "http://${INGRESS_HOST}/productpage" | grep -o "<title>.*</title>" </copy>
+     <title>Simple Bookstore App</title>
     ```
 
 ## Istio 与其他开源组件集成
