@@ -248,7 +248,23 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
 ## Istio 与OCI APM 服务集成
+### 准备与OCI APM 服务
 
+1. 开通OCI APM 权限
+
+    - <a href="https://docs.oracle.com/iaas/Content/Identity/Reference/apmpolicyreference.htm">APM Policy Reference</a>，
+    - <a href="https://docs-uat.us.oracle.com/en/cloud/paas/application-performance-monitoring/apmgn/perform-oracle-cloud-infrastructure-prerequisite-tasks.html">APM Policy Example</a> 
+
+2. 新建 OCI APM Domain
+
+    ![](../oke-istio/images/istio-apm-0.png)
+
+3. 获取 OCI APM endpoint
+    ![](../oke-istio/images/istio-apm-1.png)
+
+4. 获取 OCI APM 访问密钥
+    ![](../oke-istio/images/istio-apm-2.png)
+### Istio 与OCI APM 服务集成
 1. 激活 到OCI APM tracing 跟踪功能
     ```bash
     $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
