@@ -208,6 +208,8 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 1. 使用 istioctl 启用 tracing 功能
     ```bash
     $ <copy> istioctl install --set meshConfig.enableTracing=true </copy>
+    This will install the Istio 1.16.1 default profile with ["Istio core" "Istiod" "Ingress gateways"] components into the cluster. Proceed? (y/N) y
+    ✔ Istio core installed                                                                                                              ✔ Istiod installed                                                                                                              ✔ Ingress gateways installed                                                                                                              ✔ Installation complete                                                                                                               Thank you for installing Istio 1.16.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/99uiMML96AmsXY5d6
     ```
 2. 启用 Jaeger UI 
     ```bash
@@ -215,10 +217,33 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```
 3. 获取 INGRESS_HOST 和 INGRESS_PORT
     ```bash
-    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $3}'` </copy>
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
     ```
 
 4. 发送requests 到 product 页面，使用 Jaeger 跟踪分析
+    ```bash
+    $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
+    ```
+
+### Zipkin 分布式跟踪
+
+1. 激活 Zipkin 功能
+    ```bash
+    $ <copy> istioctl install --set meshConfig.enableTracing=true </copy>
+    This will install the Istio 1.16.1 default profile with ["Istio core" "Istiod" "Ingress gateways"] components into the cluster. Proceed? (y/N) y
+    ✔ Istio core installed                                                                                                              ✔ Istiod installed                                                                                                              ✔ Ingress gateways installed                                                                                                              ✔ Installation complete                                                                                                               Making this installation the default for injection and validation.
+    Thank you for installing Istio 1.16.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/99uiMML96AmsXY5d6
+    ```
+2. 启用 Zipkin Dashboard
+    ```bash
+    $ <copy> istioctl dashboard zipkin </copy>
+    ```
+3. 获取 INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
+    ```
+
+4. 发送requests 到 product 页面，使用 Zipkin 跟踪分析
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
