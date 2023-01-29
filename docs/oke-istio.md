@@ -274,6 +274,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
     ```bash
     $ <copy> curl -o custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
+    configmap/istio-custom-bootstrap-config created
     ```
     参照下面说明调整相关内容：
     ```txt
@@ -340,6 +341,13 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```
     参照下面说明调整相关内容：
     ```text
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+    name: bookinfo-productpage
+    labels:
+        account: productpage
+    ---
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -358,29 +366,29 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
         labels:
             app: productpage
             version: v1
-        annotations:
-            sidecar.istio.io/bootstrapOverride: "istio-custom-bootstrap-config" #[Name of custom configmap]
         spec:
         serviceAccountName: bookinfo-productpage
         containers:
-            - name: productpage
-            image: docker.io/istio/examples-bookinfo-productpage-v1:1.16.2
+        - name: productpage
+            image: docker.io/istio/examples-bookinfo-productpage-v1:1.17.0
             imagePullPolicy: IfNotPresent
             ports:
-                - containerPort: 9080
+            - containerPort: 9080
             volumeMounts:
-                - name: tmp
-                mountPath: /tmp
-            securityContext:
-                runAsUser: 1000
-        volumes:
             - name: tmp
+            mountPath: /tmp
+            securityContext:
+            runAsUser: 1000
+        volumes:
+        - name: tmp
             emptyDir: {}
-    ---
+        ---
+
     ```
 5. 执行bookinfo.yaml,调整Bookinfo 应用的sidecar 为 custom bootstrap
     ```bash
      $ <copy> kubectl apply -f bookinfo.yaml </copy>
+     deployment.apps/productpage-v1 configured
     ```
 
 6.  下载 ingress-gateway 配置文件：ingress-custom-bootstrap.yaml
@@ -446,12 +454,13 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 7. 执行ingress-custom-bootstrap.yaml， 启用ingress-gateway 发送 traces, 
     ```bash
      $ <copy> kubectl apply -f ingress-custom-bootstrap.yaml </copy>
+     configmap/istio-custom-bootstrap-config created
     ```
 
  
 8. 下载 gateway-patch.yaml
      ```bash
-     $ <copy> curl -o ingress-custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/gateway-patch.yaml </copy>
+     $ <copy> curl -o gateway-patch.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/gateway-patch.yaml </copy>
     ```
     参照下面说明调整相关内容：
 
@@ -479,6 +488,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 9. Patch ingress gateway
     ```bash
      $ <copy> kubectl --namespace istio-system patch deployment istio-ingressgateway --patch "$(cat gateway-patch.yaml)" </copy>
+     deployment.apps/istio-ingressgateway patched
     ```
 10.  获取 INGRESS_HOST 和 INGRESS_PORT
     ```bash
