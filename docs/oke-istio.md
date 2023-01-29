@@ -123,21 +123,47 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 1. Istio 与 Prometheus 集成
     ```bash
     $ <copy> kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/prometheus.yaml </copy>
+    serviceaccount/prometheus created
+    configmap/prometheus created
+    clusterrole.rbac.authorization.k8s.io/prometheus created
+    clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+    service/prometheus created
+    deployment.apps/prometheus created
     ```
 2. Istio 与 Grafana 集成
     ```bash
     $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/grafana.yaml </copy>
+    serviceaccount/grafana created
+    configmap/grafana created
+    service/grafana created
+    deployment.apps/grafana created
+    configmap/istio-grafana-dashboards created
+    configmap/istio-services-grafana-dashboards created
     ```
 3. Istio 与 Jaeger 集成
     ```bash
     $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/jaeger.yaml </copy>
+
     ```
 4. Istio 与 Zipkin 集成
     ```bash
     $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/extras/zipkin.yaml </copy>
+    deployment.apps/jaeger created
+    service/tracing created
+    service/zipkin created
+    service/jaeger-collector created
     ```
 5. Istio 与 Kiali  集成
     ```bash
     $ <copy>kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.16/samples/addons/kiali.yaml </copy>
+    serviceaccount/kiali created
+    configmap/kiali created
+    clusterrole.rbac.authorization.k8s.io/kiali-viewer created
+    clusterrole.rbac.authorization.k8s.io/kiali created
+    clusterrolebinding.rbac.authorization.k8s.io/kiali created
+    role.rbac.authorization.k8s.io/kiali-controlplane created
+    rolebinding.rbac.authorization.k8s.io/kiali-controlplane created
+    service/kiali created
+    deployment.apps/kiali created
     ```
 ## Istio 与OCI Observability服务集成
