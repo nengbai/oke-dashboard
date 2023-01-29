@@ -252,7 +252,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
 1. 开通OCI APM 权限
 
-    - <a href="https://docs.oracle.com/iaas/Content/Identity/Reference/apmpolicyreference.htm">APM Policy Reference</a>，
+    - <a href="https://docs.oracle.com/iaas/Content/Identity/Reference/apmpolicyreference.htm">APM Policy Reference</a>
     - <a href="https://docs-uat.us.oracle.com/en/cloud/paas/application-performance-monitoring/apmgn/perform-oracle-cloud-infrastructure-prerequisite-tasks.html">APM Policy Example</a> 
 
 2. 新建 OCI APM Domain
@@ -273,7 +273,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 2. 下载配置文件 custom-bootstrap.yaml
 
     ```bash
-    $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
+    $ <copy> curl -o custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
     ```
 
     ```txt
@@ -336,7 +336,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```
 4. 下载 Bookinfo 应用 bookinfo.yaml
     ```bash
-     $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/bookinfo.yaml </copy>
+     $ <copy> curl -o bookinfo.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/bookinfo.yaml </copy>
     ```
 
     ```text
@@ -385,7 +385,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
 6.  下载 ingress-gateway 配置文件：ingress-custom-bootstrap.yaml
     ```bash
-     $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/ingress-custom-bootstrap.yaml </copy>
+     $ <copy> curl -o ingress-custom-bootstrap.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/ingress-custom-bootstrap.yaml </copy>
     ```
 
     ```text
