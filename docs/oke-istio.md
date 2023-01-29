@@ -254,7 +254,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
     Error: accepts 0 arg(s), received 1
     ```
-2. 配置从Envoy  发送 zipkin traces 到OCI APM
+2. 下载配置文件 custom-bootstrap.yaml
 
     ```bash
     $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
@@ -312,4 +312,158 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
                 }]
             }
         }
+    ```
+3. 执行custom-bootstrap.yaml， 配置从Envoy  发送 zipkin traces 到OCI APM
+
+    ```bash
+     $ <copy> kubectl apply -f custom-bootstrap.yaml </copy>
+    ```
+4. 下载 Bookinfo 应用 bookinfo.yaml
+    ```bash
+     $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/bookinfo.yaml </copy>
+    ```
+
+    ```text
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: productpage-v1
+    labels:
+        app: productpage
+        version: v1
+    spec:
+    replicas: 1
+    selector:
+        matchLabels:
+        app: productpage
+        version: v1
+    template:
+        metadata:
+        labels:
+            app: productpage
+            version: v1
+        annotations:
+            sidecar.istio.io/bootstrapOverride: "istio-custom-bootstrap-config" #[Name of custom configmap]
+        spec:
+        serviceAccountName: bookinfo-productpage
+        containers:
+            - name: productpage
+            image: docker.io/istio/examples-bookinfo-productpage-v1:1.16.2
+            imagePullPolicy: IfNotPresent
+            ports:
+                - containerPort: 9080
+            volumeMounts:
+                - name: tmp
+                mountPath: /tmp
+            securityContext:
+                runAsUser: 1000
+        volumes:
+            - name: tmp
+            emptyDir: {}
+    ---
+    ```
+5. 执行bookinfo.yaml,调整Bookinfo 应用的sidecar 为 custom bootstrap
+    ```bash
+     $ <copy> kubectl apply -f bookinfo.yaml </copy>
+    ```
+
+6.  下载 ingress-gateway 配置文件：ingress-custom-bootstrap.yaml
+    ```bash
+     $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/ingress-custom-bootstrap.yaml </copy>
+    ```
+
+    ```text
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+    name: istio-custom-bootstrap-config
+    namespace: istio-system
+    data:
+    custom_bootstrap.json: |
+        {
+            "tracing": {
+                "http": {
+                    "name": "envoy.tracers.zipkin",
+                    "typed_config": {
+                        "@type": "type.googleapis.com/envoy.config.trace.v3.ZipkinConfig",
+                        "collector_cluster": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                        "collector_endpoint": "/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=2C6YOLQSUZ5Q7IGN", // [Replace with the private datakey of your apm domain. You can also use public datakey but change the observation type to public-span]
+                        "collectorEndpointVersion": "HTTP_JSON",
+                        "trace_id_128bit": true,
+                        "shared_span_context": false
+                    }
+                }
+            },
+            "static_resources": {
+                "clusters": [{
+                    "name": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain:443]
+                    "type": "STRICT_DNS",
+                    "lb_policy": "ROUND_ROBIN",
+                    "load_assignment": {
+                        "cluster_name": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                        "endpoints": [{
+                            "lb_endpoints": [{
+                                "endpoint": {
+                                    "address": {
+                                        "socket_address": {
+                                            "address": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                                            "port_value": 443
+                                        }
+                                    }
+                                }
+                            }]
+                        }]
+                    },
+                    "transport_socket": {
+                        "name": "envoy.transport_sockets.tls",
+                        "typed_config": {
+                            "@type": "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext",
+                            "sni": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com" // [Replace this with data upload endpoint of your apm domain]
+                        }
+                    }
+                }]
+            }
+        }
+    ```
+
+7. 执行ingress-custom-bootstrap.yaml， 启用ingress-gateway 发送 traces, 
+    ```bash
+     $ <copy> kubectl apply -f ingress-custom-bootstrap.yaml </copy>
+    ```
+
+ 
+8. 下载 gateway-patch.yaml
+    ```text
+    spec:
+    template:
+        spec:
+        containers:
+        - name: istio-proxy
+            env:
+            - name: ISTIO_BOOTSTRAP_OVERRIDE
+            value: /etc/istio/custom-bootstrap/custom_bootstrap.json
+            volumeMounts:
+            - mountPath: /etc/istio/custom-bootstrap
+            name: custom-bootstrap-volume
+            readOnly: true
+        volumes:
+        - configMap:
+            name: istio-custom-bootstrap-config
+            defaultMode: 420
+            optional: false
+            name: custom-bootstrap-volume
+    ```
+
+9. Patch ingress gateway
+    ```bash
+     $ <copy> kubectl --namespace istio-system patch deployment istio-ingressgateway --patch "$(cat gateway-patch.yaml)" </copy>
+    ```
+10.  获取 INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
+    ```
+
+11. 发送requests 到 product 页面，使用 Zipkin 跟踪分析
+    ```bash
+    $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
