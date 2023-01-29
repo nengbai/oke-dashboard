@@ -196,4 +196,9 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> istioctl dashboard grafana </copy>
     ```
-3. 
+3. Grafana Dashboard展示
+
+    ![](../oke-istio/images/istio-grafana-0.png)
+
+    更多Dashboard 展示参照下图所示：
+    ![](../oke-istio/images/istio-grafana-1.png)
