@@ -495,7 +495,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
     ```
 
-11. 发送requests 到 product 页面，使用 Zipkin 跟踪分析
+11. 发送requests 到 product 页面，使用 OCI API endpoint 跟踪分析
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
