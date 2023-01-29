@@ -247,3 +247,69 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
+## Istio 与OCI APM 服务集成
+
+1. 激活 到OCI APM tracing 跟踪功能
+    ```bash
+    $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
+    Error: accepts 0 arg(s), received 1
+    ```
+2. 配置从Envoy  发送 zipkin traces 到OCI APM
+
+    ```bash
+    $ <copy> curl -o kubesphere-ingress.yaml https://raw.githubusercontent.com/nengbai/oke-dashboard/main/oke-istio/custom-bootstrap.yaml </copy>
+    ```
+
+    ```txt
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+    name: istio-custom-bootstrap-config
+    namespace: default
+    data:
+    custom_bootstrap.json: |
+        {
+            "tracing": {
+                "http": {
+                    "name": "envoy.tracers.zipkin",
+                    "typed_config": {
+                        "@type": "type.googleapis.com/envoy.config.trace.v3.ZipkinConfig",
+                        "collector_cluster": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                        "collector_endpoint": "/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=Z5CV4WELEOSGVM5XH5VOBOZ6QEFQUESU", // [Replace with the private datakey of your apm domain. You can also use public datakey but change the observation type to public-span]
+                        "collectorEndpointVersion": "HTTP_JSON",
+                        "trace_id_128bit": true,
+                        "shared_span_context": false
+                    }
+                }
+            },
+            "static_resources": {
+                "clusters": [{
+                    "name": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain:443]
+                    "type": "STRICT_DNS",
+                    "lb_policy": "ROUND_ROBIN",
+                    "load_assignment": {
+                        "cluster_name": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                        "endpoints": [{
+                            "lb_endpoints": [{
+                                "endpoint": {
+                                    "address": {
+                                        "socket_address": {
+                                            "address": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                                            "port_value": 443
+                                        }
+                                    }
+                                }
+                            }]
+                        }]
+                    },
+                    "transport_socket": {
+                        "name": "envoy.transport_sockets.tls",
+                        "typed_config": {
+                            "@type": "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext",
+                            "sni": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com" // [Replace this with data upload endpoint of your apm domain]
+                        }
+                    }
+                }]
+            }
+        }
+    ```

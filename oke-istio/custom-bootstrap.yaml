@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio-custom-bootstrap-config
+  namespace: default
+data:
+  custom_bootstrap.json: |
+    {
+        "tracing": {
+            "http": {
+                "name": "envoy.tracers.zipkin",
+                "typed_config": {
+                    "@type": "type.googleapis.com/envoy.config.trace.v3.ZipkinConfig",
+                    "collector_cluster": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                    "collector_endpoint": "/20200101/observations/private-span?dataFormat=zipkin&dataFormatVersion=2&dataKey=Z5CV4WELEOSGVM5XH5VOBOZ6QEFQUESU", // [Replace with the private datakey of your apm domain. You can also use public datakey but change the observation type to public-span]
+                    "collectorEndpointVersion": "HTTP_JSON",
+                    "trace_id_128bit": true,
+                    "shared_span_context": false
+                }
+            }
+        },
+        "static_resources": {
+            "clusters": [{
+                "name": "aaaabbbb.apm-agt.us-ashburn-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain:443]
+                "type": "STRICT_DNS",
+                "lb_policy": "ROUND_ROBIN",
+                "load_assignment": {
+                    "cluster_name": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                    "endpoints": [{
+                        "lb_endpoints": [{
+                            "endpoint": {
+                                "address": {
+                                    "socket_address": {
+                                        "address": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com", // [Replace this with data upload endpoint of your apm domain]
+                                        "port_value": 443
+                                    }
+                                }
+                            }
+                        }]
+                    }]
+                },
+                "transport_socket": {
+                    "name": "envoy.transport_sockets.tls",
+                    "typed_config": {
+                        "@type": "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext",
+                        "sni": "aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com" // [Replace this with data upload endpoint of your apm domain]
+                    }
+                }
+            }]
+        }
+    }
