@@ -11,8 +11,9 @@ spec:
           name: custom-bootstrap-volume
           readOnly: true
       volumes:
-      - configMap:
+      - name: custom-bootstrap-volume
+        configMap:
           name: istio-custom-bootstrap-config
           defaultMode: 420
           optional: false
-        name: custom-bootstrap-volume
+        
