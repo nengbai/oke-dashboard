@@ -488,23 +488,23 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 
     ```text
     spec:
-    template:
-        spec:
-        containers:
-        - name: istio-proxy
-            env:
-            - name: ISTIO_BOOTSTRAP_OVERRIDE
-            value: /etc/istio/custom-bootstrap/custom_bootstrap.json
-            volumeMounts:
-            - mountPath: /etc/istio/custom-bootstrap
-            name: custom-bootstrap-volume
-            readOnly: true
-        volumes:
-        - configMap:
-            name: istio-custom-bootstrap-config
-            defaultMode: 420
-            optional: false
-            name: custom-bootstrap-volume
+        template:
+            spec:
+            containers:
+            - name: istio-proxy
+                env:
+                - name: ISTIO_BOOTSTRAP_OVERRIDE
+                value: /etc/istio/custom-bootstrap/custom_bootstrap.json
+                volumeMounts:
+                - mountPath: /etc/istio/custom-bootstrap
+                name: custom-bootstrap-volume
+                readOnly: true
+            volumes:
+            - configMap:
+                name: istio-custom-bootstrap-config
+                defaultMode: 420
+                optional: false
+              name: custom-bootstrap-volume
     ```
 
 9. Patch ingress gateway
