@@ -224,7 +224,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
-
+    ![](../oke-istio/images/istio-jaeger.png)
 ### Zipkin 分布式跟踪
 
 1. 激活 Zipkin 功能
@@ -247,6 +247,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
+    ![](../oke-istio/images/istio-zipkin.png)
 ### Kiali 管理
 1. 确认 Kiali是否安装
     ```bash
@@ -265,6 +266,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
+    ![](../oke-istio/images/istio-kiali.png)
 ## Istio 与OCI APM 服务集成
 ### 准备与OCI APM 服务
 
