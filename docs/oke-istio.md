@@ -288,7 +288,9 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 1. 激活 到OCI APM tracing 跟踪功能
     ```bash
     $ <copy> istioctl install --set meshConfig.defaultConfig.tracing.zipkin.address=aaaadbp426m2aaaaaaaaaabpwa.apm-agt.ap-tokyo-1.oci.oraclecloud.com:443 </copy>
-    Error: accepts 0 arg(s), received 1
+    This will install the Istio 1.16.1 default profile with ["Istio core" "Istiod" "Ingress gateways"] components into the cluster. Proceed? (y/N) y
+    ✔ Istio core installed                                                                                                              ✔ Istiod installed                                                                                                              ✔ Ingress gateways installed                                                                                                              ✔ Installation complete                                                                                                               Making this installation the default for injection and validation.
+    Thank you for installing Istio 1.16.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/99uiMML96AmsXY5d6
     ```
 2. 下载配置文件 custom-bootstrap.yaml
 
@@ -525,6 +527,9 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 1. 激活 envoy access OCI Logging
     ```bash
     $ <copy> istioctl install --set meshConfig.accessLogFile=/dev/stdout </copy>
+    This will install the Istio 1.16.1 default profile with ["Istio core" "Istiod" "Ingress gateways"] components into the cluster. Proceed? (y/N) y
+    ✔ Istio core installed                                                                                                              ✔ Istiod installed                                                                                                              ✔ Ingress gateways installed                                                                                                              ✔ Installation complete                                                                                                                    Making this installation the default for injection and validation.
+    Thank you for installing Istio 1.16.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/99uiMML96AmsXY5d6
     ```
 2. 检查access logs
     ```bash
