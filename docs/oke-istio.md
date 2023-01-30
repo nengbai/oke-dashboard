@@ -247,6 +247,24 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
     ```
+### Kiali 管理
+1. 确认 Kiali是否安装
+    ```bash
+    $ <copy> kubectl -n istio-system get svc kiali </copy>
+    ```
+2. 启用 Kiali UI 
+    ```bash
+    $ <copy> istioctl dashboard kiali </copy>
+    ```
+3. 获取 INGRESS_HOST 和 INGRESS_PORT
+    ```bash
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
+    ```
+
+4. 发送requests 到 product 页面，使用 Kiali 查看
+    ```bash
+    $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
+    ```
 ## Istio 与OCI APM 服务集成
 ### 准备与OCI APM 服务
 
@@ -498,4 +516,15 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
 11. 发送requests 到 product 页面，使用 OCI API endpoint 跟踪分析
     ```bash
     $ <copy> for i in $(seq 1 100); do curl -s -o /dev/null "http://$INGRESS_HOST/productpage"; done </copy>
+    ```
+
+### Istio 与OCI Logging 服务集成
+
+1. 激活 envoy access OCI Logging
+    ```bash
+    $ <copy> istioctl install --set meshConfig.accessLogFile=/dev/stdout </copy>
+    ```
+2. 检查access logs
+    ```bash
+    $ <copy> kubectl logs -l app=productpage -c istio-proxy </copy>
     ```
