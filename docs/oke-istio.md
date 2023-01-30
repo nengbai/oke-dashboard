@@ -108,7 +108,7 @@ Istio 是一个开源的Service Mesh（服务网格），可为分布式微服�
     ```
 6. 获取 INGRESS_HOST 和 INGRESS_PORT
     ```bash
-    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $3}'` </copy>
+    $ <copy> export INGRESS_HOST=`kubectl -n istio-system get svc|grep istio-ingressgateway|awk '{print $4}'` </copy>
     ```
 
 7. 集群外验证微服务应用使用 gateway：INGRESS_HOST 和 INGRESS_PORT
