@@ -22,7 +22,7 @@
 下载前，请确认下载机器可以访问https://github.com.
 
   ```bash
-  $<copy> kubectl apply -f kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml </copy>
+  $<copy> kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml </copy>
   ```
 
 注意：如果没有特殊要求，不用执行下面这一步，components.yaml 修改部署清单内容：
