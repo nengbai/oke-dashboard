@@ -44,6 +44,10 @@
         {           
             "title": "OKE Service Mesh",
             "filename": "./docs/oke-service-mesh.md"
+        },
+        {
+            "title": "OKE 证书管理器",
+            "filename": "./doc/oke-cert-manager.md"
         }
     ]
 }
