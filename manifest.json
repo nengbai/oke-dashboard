@@ -47,7 +47,7 @@
         },
         {
             "title": "OKE 证书管理器",
-            "filename": "./doc/oke-cert-manager.md"
+            "filename": "./docs/oke-cert-manager.md"
         }
     ]
 }
