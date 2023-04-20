@@ -120,10 +120,12 @@ $ <copy> kubectl delete -f test-resources.yaml </copy>
 ```
 
 ## 故障排除
-如果您在使用 cert-manager 时遇到任何问题，我们可以通过多种方式获得帮助：
-我们网站上的[故障排除指南](https://cert-manager.io/docs/faq/troubleshooting/) 。
-我们的官方[Kubernetes Slack频道](https://cert-manager.io/docs/contributing/#slack) - 最快的提问方式！
-搜索现[已知问题](https://github.com/cert-manager/cert-manager/issues)。
+如果您在使用 cert-manager 时遇到任何问题，我们可以通过多种方式获得帮助:
+
+1. 我们网站上的[故障排除指南](https://cert-manager.io/docs/faq/troubleshooting/) 。
+2. 我们的官方[Kubernetes Slack频道](https://cert-manager.io/docs/contributing/#slack) - 最快的提问方式！
+3. 搜索现[已知问题](https://github.com/cert-manager/cert-manager/issues)。
+
 如果你认为你已经找到了一个错误并且找不到现有的问题，请随时打开一个新问题！请务必包含尽可能多的关于您的环境的信息。
 
 ### 社区
